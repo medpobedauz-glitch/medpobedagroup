@@ -1,0 +1,399 @@
+{
+  "chrome": {
+    "navigation": {
+      "home": "Home",
+      "medicalTourism": "Medical Tourism",
+      "hospitals": "Hospitals",
+      "internationalPatients": "International Patients",
+      "partnerships": "Partnerships",
+      "studentMobility": "Student Mobility",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "actions": {
+      "partnerWithUs": "Partner With Us",
+      "requestPatientAssistance": "Request Patient Assistance",
+      "contactMedpobeda": "Contact MedPobeda Group",
+      "contactDesk": "Contact Desk",
+      "openContactDesk": "Open Contact Desk",
+      "chooseBestRoute": "Choose Best Route",
+      "continueBrowsing": "Continue Browsing",
+      "contactOnWhatsApp": "Contact on WhatsApp"
+    },
+    "languageSwitcher": {
+      "label": "Language",
+      "ariaLabel": "Select language",
+      "desktopTitle": "Language & Region",
+      "mobileTitle": "Language",
+      "helper": "Saved preference"
+    },
+    "mobileNav": {
+      "description": "Medical tourism, international patients, hospital partnerships, and healthcare collaboration."
+    },
+    "footer": {
+      "description": "MedPobeda Group is positioned as a premium healthcare collaboration platform connecting patients, hospitals, and institutions through medical tourism, international patient support, and cross-border partnership development.",
+      "quickLinks": "Quick Links",
+      "services": "Services",
+      "contact": "Contact",
+      "serviceList": [
+        "Medical tourism facilitation",
+        "International patient services",
+        "Hospital collaboration",
+        "Healthcare partnerships",
+        "Student mobility",
+        "Clinical training collaboration"
+      ],
+      "addressHelper": "Address details available during deployment or on request.",
+      "rightsReserved": "All rights reserved."
+    },
+    "floatingButtons": {
+      "badge": "Live Coordination",
+      "title": "Need the fastest route?",
+      "description": "Use the direct desk or messaging channels for healthcare coordination.",
+      "whatsAppLabel": "WhatsApp",
+      "telegramLabel": "Telegram",
+      "directMessage": "Hello MedPobeda Group, I would like to discuss a healthcare inquiry."
+    },
+    "stickyMobileBar": {
+      "contact": "Contact",
+      "whatsApp": "WhatsApp",
+      "telegram": "Telegram",
+      "directMessage": "Hello MedPobeda Group, I would like to discuss a healthcare inquiry."
+    },
+    "inquiryConcierge": {
+      "supportedPaths": [
+        "/",
+        "/contact",
+        "/medical-tourism",
+        "/hospital-partnerships",
+        "/international-patients",
+        "/international-patient-services"
+      ],
+      "storageKey": "medpobeda-concierge-dismissed",
+      "badge": "Inquiry Concierge",
+      "inlineDescription": "Route hospitals, patients, and families into the right healthcare workflow.",
+      "modalBadge": "Conversion Assist",
+      "modalTitle": "Choose the fastest enterprise intake path",
+      "modalDescription": "Use the correct route for hospital partnerships, patient cases, or live coordination requests. This reduces handoff friction and speeds up follow-up.",
+      "routes": [
+        {
+          "href": "/contact",
+          "title": "General Coordination",
+          "description": "Best for healthcare operators, institutional discussions, and broad collaboration requests."
+        },
+        {
+          "href": "/medical-tourism",
+          "title": "Patient Case Intake",
+          "description": "Best for treatment planning, specialist matching, second opinions, and travel readiness."
+        },
+        {
+          "href": "/hospital-partnerships",
+          "title": "Hospital Partnerships",
+          "description": "Best for referral pathways, international desk models, and cross-border institutional relationships."
+        }
+      ],
+      "whatsAppLabel": "WhatsApp Concierge",
+      "telegramLabel": "Telegram Concierge",
+      "routeMessage": "Hello MedPobeda Group, I need help selecting the right inquiry route."
+    },
+    "pageHero": {
+      "focusAreas": "Focus Areas"
+    },
+    "ctaSection": {
+      "eyebrow": "Strategic Next Step"
+    },
+    "progress": {
+      "step": "Step"
+    },
+    "blogCard": {
+      "featured": "Featured",
+      "fallbackCategory": "Healthcare Insights",
+      "fallbackExcerpt": "Read the latest MedPobeda insight.",
+      "readArticle": "Read article",
+      "minRead": "min read",
+      "dateLocale": "en-US"
+    },
+    "common": {
+      "search": "Search",
+      "clearFilters": "Clear filters",
+      "categoryPrefix": "Category:",
+      "tagPrefix": "Tag:",
+      "queryPrefix": "Search:",
+      "back": "Back",
+      "nextStep": "Next Step",
+      "step": "Step",
+      "of": "of",
+      "clearDraft": "Clear draft"
+    }
+  },
+  "routes": {
+    "home": {
+      "title": "Global Healthcare Collaboration",
+      "description": "MedPobeda Group connects Uzbekistan and international healthcare stakeholders across medical tourism, hospital partnerships, and patient coordination."
+    },
+    "about": {
+      "title": "About MedPobeda Group",
+      "description": "Learn about MedPobeda Group’s healthcare collaboration model across hospital partnerships, medical tourism, and patient coordination."
+    },
+    "services": {
+      "title": "Healthcare Services",
+      "description": "Explore MedPobeda Group services for medical tourism, hospital partnerships, international patient support, and student mobility."
+    },
+    "medical-tourism": {
+      "title": "Medical Tourism Coordination",
+      "description": "Structured treatment planning, hospital matching, travel preparation, and patient support for cross-border medical care."
+    },
+    "hospital-partnerships": {
+      "title": "Hospital Partnerships",
+      "description": "Institutional healthcare collaboration, referral pathways, international desk support, and partnership development."
+    },
+    "international-patients": {
+      "title": "International Patient Assistance",
+      "description": "Support for international patients requiring coordination, reports review, treatment planning, and hospital communication."
+    },
+    "student-mobility": {
+      "title": "Student Mobility Support",
+      "description": "Institutional student mobility coordination with operational support for cross-border academic pathways."
+    },
+    "contact": {
+      "title": "Contact MedPobeda Group",
+      "description": "Contact MedPobeda Group for healthcare partnerships, medical tourism coordination, patient support, and institutional collaboration."
+    },
+    "blog": {
+      "title": "Healthcare Insights",
+      "description": "Read MedPobeda Group insights on medical tourism, hospital partnerships, patient coordination, and international healthcare operations."
+    },
+    "privacy-policy": {
+      "title": "Privacy Policy",
+      "description": "Review MedPobeda Group privacy practices for healthcare inquiries, patient information, and operational communications."
+    },
+    "terms": {
+      "title": "Terms",
+      "description": "Review MedPobeda Group terms for healthcare coordination, public information use, and website access."
+    }
+  },
+  "forms": {
+    "contactFunnel": {
+      "steps": ["Contact Profile", "Inquiry Details", "Review & Submit"],
+      "draftRestored": "Draft restored on this device.",
+      "draftSaved": "Draft auto-saves locally while you complete the funnel.",
+      "draftIdle": "This funnel can auto-save progress on this device.",
+      "platformAlert": "This funnel is connected to server-side validation, CRM capture, follow-up routing, and stakeholder notification flows.",
+      "successMessage": "Thank you. Our coordination team will contact you shortly.",
+      "errorMessage": "Some required fields were missing or invalid. Please review the current step and submit again.",
+      "fields": {
+        "name": "Name",
+        "namePlaceholder": "Your full name",
+        "organization": "Organization / Hospital Name",
+        "organizationPlaceholder": "Hospital, institution, or company",
+        "country": "Country",
+        "countryPlaceholder": "Country",
+        "email": "Email",
+        "emailPlaceholder": "name@organization.com",
+        "phone": "Phone / WhatsApp",
+        "phonePlaceholder": "Primary contact number",
+        "telegram": "Telegram",
+        "telegramPlaceholder": "@username or number",
+        "academicBackground": "Academic background",
+        "academicBackgroundPlaceholder": "Current level, degree track, or background",
+        "preferredContactTime": "Preferred contact time",
+        "preferredContactTimePlaceholder": "Morning, afternoon, or flexible",
+        "message": "Message",
+        "messagePlaceholder": "Describe the coordination need, partnership goal, or patient support requirement."
+      },
+      "validation": {
+        "nameRequired": "Name is required.",
+        "emailRequired": "Email is required.",
+        "emailInvalid": "Use a valid email address.",
+        "messageTooShort": "Please provide at least 20 characters of detail.",
+        "programInterestRequired": "Program interest is required.",
+        "collaborationInterestRequired": "Please specify the primary focus."
+      },
+      "review": {
+        "snapshotLabel": "Inquiry Snapshot",
+        "namePending": "Name not provided yet",
+        "organizationPending": "Independent or not specified",
+        "countryPending": "Country not specified",
+        "summaryPlaceholder": "Your message summary will appear here before submission.",
+        "reviewAlert": "Final review complete. Files and contact details will submit into the CRM with the selected route context.",
+        "medicalReports": "Medical reports",
+        "medicalReportsHelp": "PDF or image uploads for initial case review.",
+        "passportCopy": "Passport copy",
+        "passportCopyHelp": "Optional for travel-readiness review."
+      },
+      "actions": {
+        "submit": "Contact MedPobeda Group",
+        "submitting": "Submitting inquiry..."
+      },
+      "aside": {
+        "focusLabel": "Funnel Focus",
+        "channelsLabel": "Direct Channels",
+        "channelsTitle": "Mobile-ready contact actions for faster coordination",
+        "channelsDescription": "Use direct channels when a hospital team, family, or institution prefers faster live communication."
+      },
+      "variants": {
+        "general": {
+          "eyebrow": "General Contact",
+          "title": "A guided contact workflow for healthcare collaboration enquiries",
+          "description": "Use this funnel for cross-border healthcare discussions, coordination questions, and general stakeholder outreach.",
+          "detailLabel": "Inquiry focus",
+          "detailPlaceholder": "General healthcare collaboration, institutional introduction, or patient coordination context",
+          "preferredCountryLabel": "Preferred geography",
+          "preferredCountryPlaceholder": "Uzbekistan, India, or a regional stakeholder context",
+          "uploadLabel": "Supporting documents",
+          "uploadHelper": "Optional PDF or image attachments for faster review.",
+          "asidePoints": [
+            "Structured route into the MedPobeda CRM",
+            "Server-side validation and rate limiting",
+            "Confirmation email and internal alerting"
+          ]
+        },
+        "partnership": {
+          "eyebrow": "Hospital Partnership Inquiry",
+          "title": "A partnership funnel for hospitals and healthcare institutions",
+          "description": "Use this workflow for referral models, international desk support, patient access planning, and strategic hospital collaboration.",
+          "detailLabel": "Collaboration interest",
+          "detailPlaceholder": "Patient referrals, specialist access, desk enablement, training collaboration, or knowledge exchange",
+          "preferredCountryLabel": "Target collaboration geography",
+          "preferredCountryPlaceholder": "India, Uzbekistan, or bilateral collaboration corridor",
+          "uploadLabel": "Hospital profile or supporting documents",
+          "uploadHelper": "Optional hospital profiles, cooperation notes, or institutional material.",
+          "asidePoints": [
+            "Designed for directors, administrators, and international desks",
+            "Supports specialist access and cross-border referral structure",
+            "Routes directly into partnership lead management"
+          ]
+        },
+        "international-patient": {
+          "eyebrow": "International Patient Assistance",
+          "title": "A patient support funnel designed for international case coordination",
+          "description": "Use this for second opinions, travel readiness, treatment planning, and patient-family support across borders.",
+          "detailLabel": "Support required",
+          "detailPlaceholder": "Second opinion, treatment planning, specialist matching, visa planning, or travel coordination",
+          "preferredCountryLabel": "Preferred treatment country",
+          "preferredCountryPlaceholder": "India or another relevant destination",
+          "uploadLabel": "Supporting documents",
+          "uploadHelper": "Optional general documents. Medical reports can be added separately.",
+          "asidePoints": [
+            "Built for patient-centric cross-border coordination",
+            "Supports confidential medical information handling",
+            "Creates a structured trail for follow-up communication"
+          ]
+        },
+        "student-mobility": {
+          "eyebrow": "Student Mobility Inquiry",
+          "title": "A guided student mobility and clinical exposure inquiry funnel",
+          "description": "Use this for healthcare-focused academic mobility, clinical exposure planning, and institution-linked collaboration support.",
+          "detailLabel": "Program interest",
+          "detailPlaceholder": "Clinical exposure, observership, hospital visit, or mobility planning",
+          "preferredCountryLabel": "Preferred destination country",
+          "preferredCountryPlaceholder": "India or another relevant destination",
+          "uploadLabel": "Academic documents",
+          "uploadHelper": "Optional transcripts, CV, or supporting documents.",
+          "asidePoints": [
+            "Healthcare-focused positioning for serious applicants",
+            "Clear documentation and communication workflow",
+            "Direct CRM capture for follow-up handling"
+          ]
+        }
+      }
+    },
+    "medicalTourismFunnel": {
+      "steps": ["Contact Profile", "Case Profile", "Documents & Submit"],
+      "draftRestored": "Case draft restored on this device.",
+      "draftSaved": "Case details auto-save locally while you complete the form.",
+      "draftIdle": "This medical intake can auto-save progress on this device.",
+      "eyebrow": "Medical Tourism Inquiry",
+      "title": "A premium treatment intake flow for international patient coordination",
+      "description": "This funnel captures the patient context, treatment requirement, urgency, and supporting documents needed for structured review and follow-up.",
+      "platformAlert": "Files are processed through the secure upload layer and the case is recorded directly in the medical tourism CRM workflow.",
+      "successMessage": "Thank you. Our coordination team will contact you shortly.",
+      "errorMessage": "Some required fields were incomplete or invalid. Please review the form and submit again.",
+      "fields": {
+        "contactName": "Contact name",
+        "contactNamePlaceholder": "Primary family or hospital contact",
+        "patientName": "Patient name",
+        "patientNamePlaceholder": "Patient full name",
+        "organization": "Referring organization / hospital",
+        "organizationPlaceholder": "Optional referring institution",
+        "country": "Country",
+        "countryPlaceholder": "Country of inquiry origin",
+        "email": "Email",
+        "emailPlaceholder": "contact@example.com",
+        "phone": "Phone / WhatsApp",
+        "phonePlaceholder": "Primary contact number",
+        "telegram": "Telegram",
+        "telegramPlaceholder": "@username or number",
+        "patientNationality": "Patient nationality",
+        "patientNationalityPlaceholder": "Patient nationality",
+        "treatmentType": "Treatment type",
+        "treatmentTypePlaceholder": "Cardiology, oncology, surgery, orthopedics, etc.",
+        "preferredCountry": "Preferred country",
+        "preferredCountryPlaceholder": "India",
+        "preferredHospital": "Preferred hospital",
+        "preferredHospitalPlaceholder": "Optional target hospital",
+        "budgetRange": "Budget range",
+        "budgetRangePlaceholder": "Estimated budget",
+        "urgencyLevel": "Urgency level",
+        "passportNumber": "Passport number",
+        "passportNumberPlaceholder": "Optional passport number",
+        "reportsSummary": "Medical reports summary",
+        "reportsSummaryPlaceholder": "Diagnosis summary or case overview",
+        "message": "Message",
+        "messagePlaceholder": "Describe the diagnosis, symptoms, care objective, or treatment requirement."
+      },
+      "validation": {
+        "nameRequired": "Contact name is required.",
+        "emailRequired": "Email is required.",
+        "emailInvalid": "Use a valid email address.",
+        "patientNationalityRequired": "Patient nationality is required.",
+        "treatmentTypeRequired": "Treatment type is required.",
+        "messageRequired": "Please provide enough treatment detail for review."
+      },
+      "urgencyNotes": {
+        "high": "High-urgency cases should also use a direct channel after submission for rapid coordination.",
+        "medium": "Medium-urgency cases benefit from complete reports and a clear diagnosis summary.",
+        "low": "Routine cases can use the full intake flow for structured review and planning."
+      },
+      "urgencyOptions": {
+        "LOW": "Low",
+        "MEDIUM": "Medium",
+        "HIGH": "High"
+      },
+      "review": {
+        "snapshotLabel": "Case Snapshot",
+        "patientPending": "Patient",
+        "treatmentPending": "Treatment type not entered",
+        "summaryPlaceholder": "The treatment requirement summary will appear here before submission.",
+        "reviewAlert": "Final review complete. Supporting files and case details will be routed into the medical tourism CRM for coordinated follow-up.",
+        "medicalReports": "Medical reports",
+        "passportCopy": "Passport copy",
+        "treatmentDocuments": "Treatment documents",
+        "acceptedFormats": "Accepted formats: PDF, JPG, and PNG. Files are stored through the secure document workflow for case review."
+      },
+      "actions": {
+        "submit": "Submit Medical Inquiry",
+        "submitting": "Submitting case..."
+      },
+      "aside": {
+        "scopeLabel": "Treatment Coordination Scope",
+        "scopeItems": [
+          {
+            "title": "Specialist matching",
+            "text": "Initial routing toward suitable hospitals or specialists based on the case profile."
+          },
+          {
+            "title": "Travel readiness",
+            "text": "Support for timing, documentation, and practical international movement planning."
+          },
+          {
+            "title": "Secure document intake",
+            "text": "Medical reports, passports, and treatment files are organized for review workflow."
+          }
+        ],
+        "confidentialLabel": "Confidential Handling",
+        "confidentialText": "MedPobeda Group is structured to handle case information with a more disciplined communication flow between the family, local stakeholders, and destination hospitals."
+      }
+    }
+  }
+}

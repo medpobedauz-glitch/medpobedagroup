@@ -1,0 +1,941 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  STAFF
+  EDITOR
+  ANALYST
+}
+
+enum InquiryType {
+  CONTACT
+  PARTNERSHIP
+  MEDICAL_TOURISM
+  INTERNATIONAL_PATIENT
+  STUDENT_MOBILITY
+}
+
+enum InquiryStatus {
+  NEW
+  ACKNOWLEDGED
+  REVIEWING
+  QUALIFIED
+  CONTACTED
+  IN_PROGRESS
+  REJECTED
+  WON
+  CLOSED
+  LOST
+  SPAM
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum LeadSource {
+  WEBSITE
+  ADMIN_IMPORT
+  REFERRAL
+}
+
+enum PipelineStage {
+  NEW
+  CONTACTED
+  QUALIFIED
+  NEGOTIATION
+  CONVERTED
+  CLOSED
+}
+
+enum UrgencyLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum PartnershipStatus {
+  PROSPECT
+  CONTACTED
+  MEETING_SCHEDULED
+  PROPOSAL_SENT
+  ACTIVE
+  ON_HOLD
+  CLOSED
+  WON
+  LOST
+}
+
+enum AgreementStatus {
+  NONE
+  DRAFTING
+  REVIEWING
+  SIGNED
+  EXPIRED
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum FileCategory {
+  MEDICAL_REPORT
+  PASSPORT
+  TREATMENT_DOCUMENT
+  PARTNERSHIP_DOCUMENT
+  AGREEMENT_DOCUMENT
+  BLOG_COVER
+  GENERAL
+}
+
+enum MeetingType {
+  CALL
+  VIDEO
+  IN_PERSON
+}
+
+enum AnalyticsEventType {
+  PAGE_VIEW
+  CTA_CLICK
+  FORM_START
+  FORM_SUBMIT
+  FORM_SUCCESS
+}
+
+enum LanguageCode {
+  EN
+  RU
+  UZ
+  AR
+  HI
+}
+
+enum PatientCaseStatus {
+  NEW
+  TRIAGED
+  COORDINATING
+  TRAVEL_READY
+  ADMITTED
+  FOLLOW_UP
+  CLOSED
+}
+
+enum TreatmentJourneyStage {
+  INQUIRY_RECEIVED
+  REPORTS_REVIEW
+  HOSPITAL_MATCHING
+  TREATMENT_PLANNING
+  TRAVEL_PREPARATION
+  TREATMENT_IN_PROGRESS
+  FOLLOW_UP
+}
+
+enum CaseTimelineEntryType {
+  STATUS_UPDATE
+  DOCUMENT
+  COMMUNICATION
+  TASK
+  NOTE
+}
+
+enum CommunicationChannel {
+  EMAIL
+  PHONE
+  TELEGRAM
+  WHATSAPP
+  INTERNAL_NOTE
+}
+
+enum CommunicationDirection {
+  INBOUND
+  OUTBOUND
+  INTERNAL
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  DONE
+}
+
+enum NotificationType {
+  INFO
+  URGENT
+  TASK
+  PARTNERSHIP
+  CASE
+}
+
+enum NotificationStatus {
+  UNREAD
+  READ
+  ARCHIVED
+}
+
+enum AIAssessmentStatus {
+  PENDING
+  READY
+  APPLIED
+  DISMISSED
+}
+
+enum FileVisibility {
+  PRIVATE
+  ADMIN_ONLY
+  PUBLIC
+}
+
+model User {
+  id                              String                   @id @default(cuid())
+  name                            String
+  email                           String                   @unique
+  passwordHash                    String
+  role                            UserRole                 @default(ADMIN)
+  isActive                        Boolean                  @default(true)
+  lastLoginAt                     DateTime?
+  lastSeenAt                      DateTime?
+  createdAt                       DateTime                 @default(now())
+  updatedAt                       DateTime                 @updatedAt
+  leadNotes                       LeadNote[]
+  partnershipNotes                PartnershipNote[]
+  meetingsCreated                 Meeting[]                @relation("CreatedMeetings")
+  blogPosts                       BlogPost[]               @relation("AuthorBlogPosts")
+  uploadedFiles                   UploadedFile[]           @relation("UploadedByUser")
+  assignedContactSubmissions      ContactSubmission[]      @relation("AssignedContactSubmissions")
+  assignedPartnershipLeads        PartnershipLead[]        @relation("AssignedPartnershipLeads")
+  assignedStudentMobilityInquiries StudentMobilityInquiry[] @relation("AssignedStudentMobilityInquiries")
+  assignedMedicalTourismInquiries MedicalTourismInquiry[]  @relation("AssignedMedicalTourismInquiries")
+  auditLogs                       AuditLog[]
+  sentEmails                      EmailLog[]               @relation("SentEmailLogs")
+  createdLeadReminders            LeadReminder[]           @relation("CreatedLeadReminders")
+  assignedLeadReminders           LeadReminder[]           @relation("AssignedLeadReminders")
+  assignedTasks                   StaffTask[]              @relation("AssignedTasks")
+  createdTasks                    StaffTask[]              @relation("CreatedTasks")
+  notifications                   InternalNotification[]   @relation("NotificationRecipient")
+  regionalCoordinatorProfile      RegionalCoordinator?
+  managedPatientCases             PatientCase[]            @relation("AssignedCaseManager")
+  caseTimelineEntries             CaseTimelineEntry[]      @relation("CaseTimelineAuthor")
+  caseCommunicationLogs           CaseCommunicationLog[]   @relation("CaseCommunicationAuthor")
+
+  @@index([role, isActive])
+}
+
+model Hospital {
+  id                               String                  @id @default(cuid())
+  name                             String
+  slug                             String                  @unique
+  country                          String
+  countryId                        String?
+  city                             String?
+  region                           String?
+  website                          String?
+  description                      String?
+  hospitalType                     String?
+  internationalDeskEmail           String?
+  internationalDeskPhone           String?
+  status                           PartnershipStatus       @default(PROSPECT)
+  createdAt                        DateTime                @default(now())
+  updatedAt                        DateTime                @updatedAt
+  contacts                         ContactPerson[]
+  partnerships                     Partnership[]
+  partnerLeads                     PartnershipLead[]
+  meetings                         Meeting[]
+  assignedMedicalTourismInquiries  MedicalTourismInquiry[] @relation("AssignedHospitalMedicalTourism")
+  uploadedFiles                    UploadedFile[]
+  patientCases                     PatientCase[]
+  countryRecord                    Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
+
+  @@index([country, status])
+  @@index([name])
+  @@index([countryId])
+}
+
+model Patient {
+  id                     String                  @id @default(cuid())
+  fullName               String
+  nationality            String
+  country                String?
+  countryId              String?
+  phone                  String?
+  telegram               String?
+  email                  String?
+  passportNumber         String?
+  preferredLanguage      LanguageCode?
+  notes                  String?                 @db.Text
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  medicalTourismInquiries MedicalTourismInquiry[]
+  uploadedFiles          UploadedFile[]
+  patientCases           PatientCase[]
+  countryRecord          Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
+
+  @@index([nationality, createdAt])
+  @@index([countryId])
+}
+
+model ContactSubmission {
+  id           String        @id @default(cuid())
+  name         String
+  organization String?
+  country      String?
+  phone        String?
+  telegram     String?
+  email        String
+  inquiryType  InquiryType   @default(CONTACT)
+  message      String        @db.Text
+  preferredCountry String?
+  preferredContactTime String?
+  collaborationInterest String?
+  status       InquiryStatus @default(NEW)
+  pipelineStage PipelineStage @default(NEW)
+  priority     LeadPriority  @default(MEDIUM)
+  assignedToId String?
+  source       LeadSource    @default(WEBSITE)
+  sourcePath   String?
+  tags         String[]      @default([])
+  adminNotes   String?       @db.Text
+  closedReason String?
+  firstContactedAt DateTime?
+  qualifiedAt  DateTime?
+  convertedAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  notes        LeadNote[]
+  uploadedFiles UploadedFile[]
+  emailLogs    EmailLog[]
+  assignedTo   User?         @relation("AssignedContactSubmissions", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assignedToId, priority])
+  @@index([email])
+  @@index([country])
+  @@index([pipelineStage, createdAt])
+  @@index([sourcePath])
+}
+
+model PartnershipLead {
+  id                    String        @id @default(cuid())
+  name                  String
+  organization          String?
+  country               String?
+  phone                 String?
+  telegram              String?
+  email                 String
+  inquiryType           InquiryType   @default(PARTNERSHIP)
+  message               String        @db.Text
+  status                InquiryStatus @default(NEW)
+  pipelineStage         PipelineStage @default(NEW)
+  priority              LeadPriority  @default(MEDIUM)
+  assignedToId          String?
+  collaborationInterest String?
+  preferredContactTime  String?
+  hospitalId            String?
+  partnershipId         String?
+  source                LeadSource    @default(WEBSITE)
+  sourcePath            String?
+  tags                  String[]      @default([])
+  closedReason          String?
+  firstContactedAt      DateTime?
+  qualifiedAt           DateTime?
+  convertedAt           DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  hospital              Hospital?     @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  partnership           Partnership?  @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+  notes                 LeadNote[]
+  uploadedFiles         UploadedFile[]
+  emailLogs             EmailLog[]
+  assignedTo            User?         @relation("AssignedPartnershipLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assignedToId, priority])
+  @@index([country])
+  @@index([email])
+  @@index([pipelineStage, createdAt])
+  @@index([sourcePath])
+}
+
+model StudentMobilityInquiry {
+  id                 String        @id @default(cuid())
+  name               String
+  organization       String?
+  country            String?
+  phone              String?
+  telegram           String?
+  email              String
+  inquiryType        InquiryType   @default(STUDENT_MOBILITY)
+  message            String        @db.Text
+  status             InquiryStatus @default(NEW)
+  pipelineStage      PipelineStage @default(NEW)
+  priority           LeadPriority  @default(MEDIUM)
+  assignedToId       String?
+  nationality        String?
+  programInterest    String?
+  preferredCountry   String?
+  intakePeriod       String?
+  academicBackground String?
+  source             LeadSource    @default(WEBSITE)
+  sourcePath         String?
+  tags               String[]      @default([])
+  closedReason       String?
+  firstContactedAt   DateTime?
+  qualifiedAt        DateTime?
+  convertedAt        DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  notes              LeadNote[]
+  uploadedFiles      UploadedFile[]
+  emailLogs          EmailLog[]
+  assignedTo         User?         @relation("AssignedStudentMobilityInquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assignedToId, priority])
+  @@index([country])
+  @@index([email])
+  @@index([pipelineStage, createdAt])
+  @@index([sourcePath])
+}
+
+model MedicalTourismInquiry {
+  id                 String         @id @default(cuid())
+  name               String
+  organization       String?
+  country            String?
+  phone              String?
+  telegram           String?
+  email              String
+  inquiryType        InquiryType    @default(MEDICAL_TOURISM)
+  message            String         @db.Text
+  status             InquiryStatus  @default(NEW)
+  pipelineStage      PipelineStage  @default(NEW)
+  priority           LeadPriority   @default(MEDIUM)
+  assignedToId       String?
+  treatmentType      String
+  preferredCountry   String?
+  budgetRange        String?
+  preferredHospital  String?
+  assignedHospitalId String?
+  patientNationality String
+  urgencyLevel       UrgencyLevel   @default(MEDIUM)
+  reportsSummary     String?        @db.Text
+  patientId          String?
+  source             LeadSource     @default(WEBSITE)
+  sourcePath         String?
+  tags               String[]       @default([])
+  closedReason       String?
+  firstContactedAt   DateTime?
+  qualifiedAt        DateTime?
+  convertedAt        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  patient            Patient?       @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  uploadedFiles      UploadedFile[]
+  notes              LeadNote[]
+  emailLogs          EmailLog[]
+  patientCase        PatientCase?
+  assignedTo         User?          @relation("AssignedMedicalTourismInquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedHospital   Hospital?      @relation("AssignedHospitalMedicalTourism", fields: [assignedHospitalId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assignedToId, priority])
+  @@index([assignedHospitalId])
+  @@index([country])
+  @@index([patientNationality])
+  @@index([urgencyLevel])
+  @@index([pipelineStage, createdAt])
+  @@index([sourcePath])
+}
+
+model UploadedFile {
+  id                       String                  @id @default(cuid())
+  originalName             String
+  fileName                 String
+  mimeType                 String
+  sizeBytes                Int
+  storagePath              String
+  category                 FileCategory
+  visibility               FileVisibility          @default(PRIVATE)
+  version                  Int                     @default(1)
+  versionGroup             String?
+  documentLabel            String?
+  uploadedByUserId         String?
+  patientId                String?
+  medicalTourismInquiryId  String?
+  contactSubmissionId      String?
+  partnershipLeadId        String?
+  studentMobilityInquiryId String?
+  hospitalId               String?
+  partnershipId            String?
+  blogPostId               String?
+  patientCaseId            String?
+  uploadedAt               DateTime                @default(now())
+  uploadedBy               User?                   @relation("UploadedByUser", fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  patient                  Patient?                @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  medicalTourismInquiry    MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
+  contactSubmission        ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: SetNull)
+  partnershipLead          PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: SetNull)
+  studentMobilityInquiry   StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: SetNull)
+  hospital                 Hospital?               @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  partnership              Partnership?            @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+  blogPost                 BlogPost?               @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+  patientCase              PatientCase?            @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
+
+  @@index([category, uploadedAt])
+  @@index([visibility, uploadedAt])
+  @@index([versionGroup, version])
+  @@index([medicalTourismInquiryId])
+  @@index([contactSubmissionId])
+  @@index([partnershipLeadId])
+  @@index([studentMobilityInquiryId])
+  @@index([hospitalId])
+  @@index([partnershipId])
+  @@index([blogPostId])
+  @@index([patientCaseId])
+}
+
+model Partnership {
+  id                  String            @id @default(cuid())
+  hospitalId          String
+  country             String
+  collaborationStatus PartnershipStatus @default(PROSPECT)
+  agreementStatus     AgreementStatus   @default(NONE)
+  summary             String?           @db.Text
+  nextStep            String?
+  source              LeadSource        @default(WEBSITE)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  hospital            Hospital          @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  leads               PartnershipLead[]
+  contacts            ContactPerson[]
+  notes               PartnershipNote[]
+  meetings            Meeting[]
+  uploadedFiles       UploadedFile[]
+  tasks               StaffTask[]
+
+  @@index([collaborationStatus, createdAt])
+  @@index([country])
+}
+
+model ContactPerson {
+  id            String       @id @default(cuid())
+  hospitalId    String?
+  partnershipId String?
+  name          String
+  role          String?
+  email         String?
+  phone         String?
+  telegram      String?
+  country       String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  hospital      Hospital?    @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  partnership   Partnership? @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+
+  @@index([hospitalId])
+  @@index([partnershipId])
+}
+
+model Meeting {
+  id          String      @id @default(cuid())
+  partnershipId String
+  hospitalId  String?
+  createdById String?
+  title       String
+  meetingType MeetingType @default(CALL)
+  meetingAt   DateTime
+  location    String?
+  notes       String?     @db.Text
+  outcome     String?     @db.Text
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  partnership Partnership @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
+  hospital    Hospital?   @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  createdBy   User?       @relation("CreatedMeetings", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([meetingAt])
+  @@index([partnershipId])
+}
+
+model PartnershipNote {
+  id            String       @id @default(cuid())
+  partnershipId String
+  authorId      String
+  content       String       @db.Text
+  createdAt     DateTime     @default(now())
+  partnership   Partnership  @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
+  author        User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([partnershipId, createdAt])
+}
+
+model LeadNote {
+  id                      String                  @id @default(cuid())
+  authorId                String
+  content                 String                  @db.Text
+  contactSubmissionId     String?
+  partnershipLeadId       String?
+  studentMobilityInquiryId String?
+  medicalTourismInquiryId String?
+  createdAt               DateTime                @default(now())
+  author                  User                    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  contactSubmission       ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
+  partnershipLead         PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
+  studentMobilityInquiry  StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry   MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([contactSubmissionId])
+  @@index([partnershipLeadId])
+  @@index([studentMobilityInquiryId])
+  @@index([medicalTourismInquiryId])
+}
+
+model BlogPost {
+  id             String      @id @default(cuid())
+  title          String
+  slug           String      @unique
+  excerpt        String?     @db.Text
+  content        String      @db.Text
+  coverImage     String?
+  category       String?
+  tags           String[]    @default([])
+  featured       Boolean     @default(false)
+  focusKeyword   String?
+  seoTitle       String?
+  seoDescription String?     @db.Text
+  authorName     String?
+  authorRole     String?
+  authorBio      String?     @db.Text
+  status         BlogStatus  @default(DRAFT)
+  publishedAt    DateTime?
+  authorId       String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  author         User?       @relation("AuthorBlogPosts", fields: [authorId], references: [id], onDelete: SetNull)
+  uploadedFiles  UploadedFile[]
+
+  @@index([status, publishedAt])
+  @@index([createdAt])
+  @@index([featured, publishedAt])
+  @@index([category])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorId     String?
+  action      String
+  entityType  String?
+  entityId    String?
+  description String
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  actor       User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model LeadReminder {
+  id          String       @id @default(cuid())
+  leadModel   String
+  leadId      String
+  title       String
+  note        String?      @db.Text
+  dueAt       DateTime
+  priority    LeadPriority @default(MEDIUM)
+  isCompleted Boolean      @default(false)
+  assignedToId String?
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  assignedTo  User?        @relation("AssignedLeadReminders", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdBy   User?        @relation("CreatedLeadReminders", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([leadModel, leadId, dueAt])
+  @@index([assignedToId, dueAt])
+  @@index([isCompleted, dueAt])
+}
+
+model EmailLog {
+  id                       String                  @id @default(cuid())
+  direction                String
+  templateKey              String?
+  subject                  String
+  toEmail                  String
+  ccEmail                  String?
+  bccEmail                 String?
+  status                   String
+  provider                 String?
+  providerMessageId        String?
+  errorMessage             String?
+  sentByUserId             String?
+  contactSubmissionId      String?
+  partnershipLeadId        String?
+  studentMobilityInquiryId String?
+  medicalTourismInquiryId  String?
+  metadata                 Json?
+  createdAt                DateTime                @default(now())
+  sentByUser                User?                  @relation("SentEmailLogs", fields: [sentByUserId], references: [id], onDelete: SetNull)
+  contactSubmission         ContactSubmission?     @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
+  partnershipLead           PartnershipLead?       @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
+  studentMobilityInquiry    StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry     MedicalTourismInquiry? @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([toEmail, createdAt])
+  @@index([contactSubmissionId])
+  @@index([partnershipLeadId])
+  @@index([studentMobilityInquiryId])
+  @@index([medicalTourismInquiryId])
+}
+
+model AnalyticsEvent {
+  id          String             @id @default(cuid())
+  eventType   AnalyticsEventType
+  path        String
+  referrer    String?
+  country     String?
+  inquiryType InquiryType?
+  sessionId   String?
+  metadata    Json?
+  createdAt   DateTime           @default(now())
+
+  @@index([eventType, createdAt])
+  @@index([path, createdAt])
+  @@index([inquiryType, createdAt])
+  @@index([country, createdAt])
+}
+
+model PlatformSetting {
+  id                       String   @id @default("main")
+  brandName                String   @default("MedPobeda Group")
+  shortName                String   @default("MedPobeda")
+  siteUrl                  String?
+  seoDefaultTitle          String?
+  seoDefaultDescription    String?  @db.Text
+  seoKeywords              String[] @default([])
+  ogImage                  String?
+  twitterHandle            String?
+  linkedinUrl              String?
+  xUrl                     String?
+  youtubeUrl               String?
+  whatsappNumber           String?
+  telegramHandle           String?
+  contactEmail             String?
+  contactPhone             String?
+  medicalTourismEmail      String?
+  partnershipEmail         String?
+  studentMobilityEmail     String?
+  generalInquiryEmail      String?
+  highUrgencyEmail         String?
+  inquiryRouting           Json?
+  brandingPrimary          String?  @default("#0B1F4D")
+  brandingSecondary        String?  @default("#1D4ED8")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model Country {
+  id                String                @id @default(cuid())
+  code              String                @unique
+  name              String
+  localName         String?
+  region            String
+  timezone          String
+  languages         LanguageCode[]        @default([EN])
+  isPriorityMarket  Boolean               @default(false)
+  isActive          Boolean               @default(true)
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  hospitals         Hospital[]
+  patients          Patient[]
+  offices           CountryOffice[]
+  coordinators      RegionalCoordinator[]
+  patientCases      PatientCase[]
+
+  @@index([region, isActive])
+}
+
+model CountryOffice {
+  id            String                @id @default(cuid())
+  countryId     String
+  officeName    String
+  city          String
+  address       String?               @db.Text
+  contactEmail  String?
+  contactPhone  String?
+  telegram      String?
+  timezone      String
+  isPrimary     Boolean               @default(false)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  country       Country               @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  coordinators  RegionalCoordinator[]
+
+  @@index([countryId, city])
+}
+
+model RegionalCoordinator {
+  id              String                @id @default(cuid())
+  userId          String?               @unique
+  countryId       String
+  officeId        String?
+  name            String
+  email           String
+  phone           String?
+  telegram        String?
+  specialization  String?
+  languages       LanguageCode[]        @default([EN])
+  timezone        String
+  isActive        Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  user            User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  country         Country               @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  office          CountryOffice?        @relation(fields: [officeId], references: [id], onDelete: SetNull)
+  patientCases    PatientCase[]
+  aiAssessments   AILeadAssessment[]
+
+  @@index([countryId, isActive])
+}
+
+model PatientCase {
+  id                    String                 @id @default(cuid())
+  caseNumber            String                 @unique
+  patientId             String
+  medicalTourismInquiryId String?              @unique
+  countryId             String?
+  coordinatorId         String?
+  assignedHospitalId    String?
+  assignedManagerId     String?
+  status                PatientCaseStatus      @default(NEW)
+  journeyStage          TreatmentJourneyStage  @default(INQUIRY_RECEIVED)
+  summary               String?                @db.Text
+  treatmentPlan         String?                @db.Text
+  nextAction            String?
+  targetTravelDate      DateTime?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  patient               Patient                @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry MedicalTourismInquiry? @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
+  country               Country?               @relation(fields: [countryId], references: [id], onDelete: SetNull)
+  coordinator           RegionalCoordinator?   @relation(fields: [coordinatorId], references: [id], onDelete: SetNull)
+  assignedHospital      Hospital?              @relation(fields: [assignedHospitalId], references: [id], onDelete: SetNull)
+  assignedManager       User?                  @relation("AssignedCaseManager", fields: [assignedManagerId], references: [id], onDelete: SetNull)
+  timelineEntries       CaseTimelineEntry[]
+  communications        CaseCommunicationLog[]
+  uploadedFiles         UploadedFile[]
+  tasks                 StaffTask[]
+
+  @@index([status, journeyStage])
+  @@index([coordinatorId, status])
+  @@index([assignedHospitalId])
+}
+
+model CaseTimelineEntry {
+  id            String                @id @default(cuid())
+  patientCaseId String
+  title         String
+  description   String?               @db.Text
+  entryType     CaseTimelineEntryType @default(STATUS_UPDATE)
+  createdById   String?
+  createdAt     DateTime              @default(now())
+  patientCase   PatientCase           @relation(fields: [patientCaseId], references: [id], onDelete: Cascade)
+  createdBy     User?                 @relation("CaseTimelineAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([patientCaseId, createdAt])
+}
+
+model CaseCommunicationLog {
+  id            String                 @id @default(cuid())
+  patientCaseId String
+  channel       CommunicationChannel
+  direction     CommunicationDirection
+  subject       String?
+  content       String                 @db.Text
+  createdById   String?
+  createdAt     DateTime               @default(now())
+  patientCase   PatientCase            @relation(fields: [patientCaseId], references: [id], onDelete: Cascade)
+  createdBy     User?                  @relation("CaseCommunicationAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([patientCaseId, createdAt])
+}
+
+model StaffTask {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?       @db.Text
+  status        TaskStatus    @default(TODO)
+  priority      LeadPriority  @default(MEDIUM)
+  assignedToId  String?
+  createdById   String?
+  leadModel     String?
+  leadId        String?
+  patientCaseId String?
+  partnershipId String?
+  dueAt         DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  assignedTo    User?         @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdBy     User?         @relation("CreatedTasks", fields: [createdById], references: [id], onDelete: SetNull)
+  patientCase   PatientCase?  @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
+  partnership   Partnership?  @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+
+  @@index([assignedToId, status, dueAt])
+  @@index([leadModel, leadId])
+  @@index([patientCaseId])
+}
+
+model InternalNotification {
+  id        String             @id @default(cuid())
+  userId    String
+  title     String
+  message   String             @db.Text
+  type      NotificationType   @default(INFO)
+  status    NotificationStatus @default(UNREAD)
+  link      String?
+  metadata  Json?
+  readAt    DateTime?
+  createdAt DateTime           @default(now())
+  user      User               @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, createdAt])
+}
+
+model AILeadAssessment {
+  id                     String             @id @default(cuid())
+  leadModel              String
+  leadId                 String
+  language               LanguageCode?
+  suggestedCoordinatorId String?
+  leadScore              Int?
+  routingRecommendation  String?
+  summary                String?            @db.Text
+  status                 AIAssessmentStatus @default(PENDING)
+  metadata               Json?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  suggestedCoordinator   RegionalCoordinator? @relation(fields: [suggestedCoordinatorId], references: [id], onDelete: SetNull)
+
+  @@index([leadModel, leadId])
+  @@index([status, createdAt])
+}
