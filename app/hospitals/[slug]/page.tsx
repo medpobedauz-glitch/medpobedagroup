@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ArrowRight, MapPin, ShieldCheck } from "lucide-react";
 
 import { PremiumCtaBanner } from "@/components/marketing/premium-cta-banner";
 import { PremiumPageHero } from "@/components/marketing/premium-page-hero";
 import { FAQAccordion } from "@/components/shared/faq-accordion";
 import { JsonLd } from "@/components/shared/json-ld";
+import { HospitalDetailPageContent } from "@/components/pages/hospital-detail-page";
 import { Card } from "@/components/ui/card";
 import { featuredHospitals, getFeaturedHospital } from "@/lib/hospital-pages";
 import { localizePath } from "@/lib/i18n/config";
@@ -15,6 +17,7 @@ import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
 import { createPremiumVisual } from "@/lib/premium-visuals";
 import { createBreadcrumbSchema, createFaqSchema, createWebPageSchema } from "@/lib/schema";
+import { getHospitalPartnerBySlug, getAllHospitalPartnerSlugs } from "@/lib/data/hospital-partner-profile";
 
 type HospitalPageProps = {
   params: {
@@ -22,14 +25,57 @@ type HospitalPageProps = {
   };
 };
 
-export function generateStaticParams() {
-  return featuredHospitals.map((hospital) => ({ slug: hospital.slug }));
+export async function generateStaticParams() {
+  const staticSlugs = featuredHospitals.map((hospital) => ({ slug: hospital.slug }));
+  
+  // Also add DB hospital partner slugs
+  let dbSlugs: string[] = [];
+  try {
+    dbSlugs = await getAllHospitalPartnerSlugs();
+  } catch {
+    // DB may not be available during build
+  }
+  
+  const allSlugs = [...staticSlugs, ...dbSlugs.map((s) => ({ slug: s }))];
+  // Remove duplicates
+  const seen = new Set<string>();
+  return allSlugs.filter((item) => {
+    const isDuplicate = seen.has(item.slug);
+    seen.add(item.slug);
+    return !isDuplicate;
+  });
 }
 
-export function generateMetadata({ params }: HospitalPageProps): Metadata {
+export async function generateMetadata({ params }: HospitalPageProps): Promise<Metadata> {
   const locale = getRequestLocale();
-  const hospital = getFeaturedHospital(params.slug);
+  
+  // Try DB first
+  try {
+    const dbHospital = await getHospitalPartnerBySlug(params.slug);
+    if (dbHospital) {
+      return createMetadata({
+        title: `${dbHospital.name} | Partner Hospital in India | MedPobeda Group`,
+        description: dbHospital.description ?? `Comprehensive profile of ${dbHospital.name} - a trusted partner hospital in India for international patients from Central Asia.`,
+        path: `/hospitals/${dbHospital.slug}`,
+        locale,
+        keywords: [
+          dbHospital.name,
+          `${dbHospital.shortName || dbHospital.name} international patients`,
+          `treatment at ${dbHospital.name}`,
+          "hospital India international patients",
+          "medical tourism India",
+          ...dbHospital.specialties,
+        ],
+        ogTitle: `${dbHospital.name} - Partner Hospital for Medical Treatment in India`,
+        ogDescription: dbHospital.description ?? `Learn about ${dbHospital.name}, our trusted partner hospital in India.`,
+      });
+    }
+  } catch {
+    // DB not available, fall through to static
+  }
 
+  // Fall back to static
+  const hospital = getFeaturedHospital(params.slug);
   if (!hospital) {
     return createMetadata({
       title: "Hospital in India | MedPobeda Group",
@@ -50,11 +96,44 @@ export function generateMetadata({ params }: HospitalPageProps): Metadata {
   });
 }
 
-export default function HospitalDetailPage({ params }: HospitalPageProps) {
+export default async function HospitalDetailPage({ params }: HospitalPageProps) {
   const locale = getRequestLocale();
   const messages = getMessages(locale);
-  const hospital = getFeaturedHospital(params.slug);
+  
+  // Try DB partner profile first
+  try {
+    const dbHospital = await getHospitalPartnerBySlug(params.slug);
+    if (dbHospital) {
+      return (
+        <>
+          <JsonLd
+            data={[
+              createWebPageSchema({
+                name: dbHospital.name,
+                description: dbHospital.description ?? `Partner hospital profile for ${dbHospital.name}.`,
+                path: `/hospitals/${dbHospital.slug}`,
+                locale,
+              }),
+              createBreadcrumbSchema(
+                [
+                  { name: messages.chrome.navigation.home, path: "/" },
+                  { name: messages.chrome.navigation.hospitals, path: "/hospitals" },
+                  { name: dbHospital.name, path: `/hospitals/${dbHospital.slug}` },
+                ],
+                locale,
+              ),
+            ]}
+          />
+          <HospitalDetailPageContent hospital={dbHospital} />
+        </>
+      );
+    }
+  } catch {
+    // DB not available, fall through to static
+  }
 
+  // Fall back to static SEO hospital page
+  const hospital = getFeaturedHospital(params.slug);
   if (!hospital) {
     notFound();
   }
