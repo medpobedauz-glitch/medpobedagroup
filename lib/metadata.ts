@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 
+import type { AppLocale } from "@/lib/i18n/config";
+import {
+  defaultLocale,
+  localeHreflangMap,
+  localeOpenGraphMap,
+  locales,
+  localizePath,
+  stripLocaleFromPath,
+} from "@/lib/i18n/config";
+import { media } from "@/lib/media";
+import { resolveSeoImage } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
-export const defaultKeywords = [
-  "MedPobeda Group",
-  "medical tourism Uzbekistan",
-  "hospital partnerships India Uzbekistan",
-  "international patient support",
-  "healthcare collaboration Central Asia",
-  "student mobility clinical training",
-  "international healthcare facilitation",
-  "India Uzbekistan healthcare bridge",
-];
+export const defaultKeywords: string[] = [];
 
 export function absoluteUrl(path = "/", baseUrl = siteConfig.siteUrl) {
   return new URL(path, baseUrl).toString();
@@ -21,7 +23,10 @@ type CreateMetadataParams = {
   title: string;
   description: string;
   path?: string;
+  locale?: AppLocale;
   keywords?: string[];
+  ogTitle?: string;
+  ogDescription?: string;
   image?: string;
   type?: "website" | "article";
   noindex?: boolean;
@@ -36,8 +41,11 @@ export function createMetadata({
   title,
   description,
   path = "/",
+  locale,
   keywords = [],
-  image = "/opengraph-image",
+  ogTitle,
+  ogDescription,
+  image,
   type = "website",
   noindex = false,
   publishedTime,
@@ -46,29 +54,46 @@ export function createMetadata({
   section,
   tags,
 }: CreateMetadataParams): Metadata {
-  const url = absoluteUrl(path);
-  const imageUrl = absoluteUrl(image);
+  const normalizedPath = locale ? stripLocaleFromPath(path) : path;
+  const localizedPath = locale ? localizePath(normalizedPath, locale) : path;
+  const url = absoluteUrl(localizedPath);
+  const seoImage = resolveSeoImage(normalizedPath, image);
+  const imageUrl = absoluteUrl(seoImage.src);
+  const alternates = locale
+    ? {
+        canonical: url,
+        languages: Object.fromEntries(
+          [
+            ...locales.map((item) => [
+              localeHreflangMap[item],
+              absoluteUrl(localizePath(normalizedPath, item)),
+            ]),
+            ["x-default", absoluteUrl(localizePath(normalizedPath, defaultLocale))],
+          ],
+        ),
+      }
+    : {
+        canonical: url,
+      };
 
   return {
     title,
     description,
     keywords: [...defaultKeywords, ...keywords],
-    alternates: {
-      canonical: url,
-    },
+    alternates,
     openGraph: {
-      title,
-      description,
+      title: ogTitle ?? title,
+      description: ogDescription ?? description,
       url,
       siteName: siteConfig.name,
       type,
-      locale: "en_US",
+      locale: locale ? localeOpenGraphMap[locale] : "en_US",
       images: [
         {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} social preview`,
+          alt: seoImage.alt || siteConfig.socialPreviewAlt || media.brand.openGraph.alt,
         },
       ],
       publishedTime,
@@ -79,8 +104,8 @@ export function createMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: ogTitle ?? title,
+      description: ogDescription ?? description,
       images: [imageUrl],
     },
     robots: {

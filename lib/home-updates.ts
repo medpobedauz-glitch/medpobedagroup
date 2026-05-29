@@ -1,4 +1,4 @@
-import { getLegacyImageSrc } from "@/lib/images";
+import { getBlogFeaturedImage, media } from "@/lib/media";
 
 export type HomepageEvent = {
   id: string;
@@ -31,7 +31,7 @@ export const homepageEvents: HomepageEvent[] = [
     dateLabel: "June 18-19, 2026",
     href: "/contact",
     ctaLabel: "Request event details",
-    image: getLegacyImageSrc("/images/home/healthcare-conference.jpg"),
+    image: media.hospitals.conference.src,
   },
   {
     id: "india-specialist-visit-program",
@@ -42,7 +42,7 @@ export const homepageEvents: HomepageEvent[] = [
     dateLabel: "July 04-07, 2026",
     href: "/hospital-partnerships",
     ctaLabel: "Discuss collaboration",
-    image: getLegacyImageSrc("/images/home/hospital-partnership-meeting.jpg"),
+    image: media.hospitals.partnershipDiscussion.src,
   },
   {
     id: "transplant-awareness-camp",
@@ -51,9 +51,9 @@ export const homepageEvents: HomepageEvent[] = [
       "Patient awareness programming focused on transplant education, treatment readiness, and cross-border care navigation.",
     location: "Samarkand, Uzbekistan",
     dateLabel: "August 12, 2026",
-    href: "/medical-tourism",
+    href: "/international-patient-care",
     ctaLabel: "Open patient inquiry",
-    image: getLegacyImageSrc("/images/home/surgery-treatment-support.jpg"),
+    image: media.medicalTourism.patientSupport.src,
   },
   {
     id: "medical-camp-and-screening-day",
@@ -64,7 +64,7 @@ export const homepageEvents: HomepageEvent[] = [
     dateLabel: "September 05, 2026",
     href: "/contact",
     ctaLabel: "Get updates",
-    image: getLegacyImageSrc("/images/home/global-patient-assistance.jpg"),
+    image: media.patients.doctorDiscussion.src,
   },
 ];
 
@@ -76,7 +76,7 @@ export const fallbackHomepageBlogs: HomepageEditorialBlog[] = [
       "How stronger communication, pre-arrival planning, and cleaner case routing improve confidence for cross-border care journeys.",
     publishedAt: "May 12, 2026",
     href: "/blog",
-    image: getLegacyImageSrc("/images/blog/healthcare-news-02.jpg"),
+    image: getBlogFeaturedImage("medical-tourism-from-uzbekistan-to-india-guide").src,
     category: "Medical Tourism",
   },
   {
@@ -86,7 +86,7 @@ export const fallbackHomepageBlogs: HomepageEditorialBlog[] = [
       "A clearer view of why oncology pathways now require better specialist access, faster review cycles, and stronger international support.",
     publishedAt: "May 08, 2026",
     href: "/blog",
-    image: getLegacyImageSrc("/images/blog/cancer-breakthrough.jpg"),
+    image: getBlogFeaturedImage("questions-before-traveling-for-treatment-abroad").src,
     category: "Oncology",
   },
   {
@@ -96,7 +96,7 @@ export const fallbackHomepageBlogs: HomepageEditorialBlog[] = [
       "What modern transplant workflows demand from international hospital communication, family preparation, and treatment logistics.",
     publishedAt: "May 02, 2026",
     href: "/blog",
-    image: getLegacyImageSrc("/images/blog/transplant-innovation.jpg"),
+    image: getBlogFeaturedImage("medical-tourism-from-kyrgyzstan-to-india-guide").src,
     category: "Transplants",
   },
   {
@@ -106,7 +106,7 @@ export const fallbackHomepageBlogs: HomepageEditorialBlog[] = [
       "Why hospital collaboration models increasingly depend on premium patient handling, referral structure, and coordination quality.",
     publishedAt: "April 26, 2026",
     href: "/blog",
-    image: getLegacyImageSrc("/images/blog/hospital-partnership-news.jpg"),
+    image: getBlogFeaturedImage("hospital-partnership-opportunities-in-uzbekistan").src,
     category: "Partnerships",
   },
 ];

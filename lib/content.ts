@@ -57,11 +57,11 @@ export const trustIndicators = [
 
 export const coreServices: FeatureItem[] = [
   {
-    title: "Medical Tourism",
+    title: "International Patient Care",
     description:
-      "Structured treatment planning, referral coordination, and patient support for care pathways into India.",
+      "Structured hospital coordination, treatment planning, and patient support for advanced care pathways into India.",
     icon: Plane,
-    href: "/medical-tourism",
+    href: "/international-patient-care",
   },
   {
     title: "Hospital Partnerships",
@@ -111,7 +111,7 @@ export const medicalTourismPoints = [
 export const hospitalPartnershipPoints = [
   "Patient referrals to India",
   "Specialist consultation access",
-  "Telemedicine coordination",
+  "Doctor-to-doctor case discussions",
   "Doctor-to-doctor collaboration",
   "CME and knowledge exchange",
   "Treatment package coordination",
@@ -690,11 +690,11 @@ export const stakeholderPerspectives = [
 
 export const serviceArchitectureItems: FeatureItem[] = [
   {
-    title: "Medical Tourism Coordination",
+    title: "International Patient Care Services",
     description:
-      "Structured case intake, specialist matching, travel readiness, and treatment support for international care pathways.",
+      "Structured case intake, specialist matching, travel readiness, and treatment support for international patients seeking care in India.",
     icon: Plane,
-    href: "/medical-tourism",
+    href: "/international-patient-care",
   },
   {
     title: "Hospital Partnership Models",

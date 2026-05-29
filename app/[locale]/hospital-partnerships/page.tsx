@@ -1,3 +1,4 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import { notFound } from "next/navigation";
 
 import HospitalPartnershipsPage from "@/app/hospital-partnerships/page";
@@ -15,14 +16,14 @@ type LocalePageProps = {
 };
 
 export async function generateMetadata({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
   return createLocalizedPageMetadata(
-    params.locale,
+    getRouteLocale(params?.locale),
     "hospital-partnerships",
-    localizePath("/hospital-partnerships", params.locale),
+    localizePath("/hospital-partnerships", getRouteLocale(params?.locale)),
   );
 }
 
@@ -30,7 +31,7 @@ export default function LocalizedHospitalPartnershipsPage({
   params,
   searchParams,
 }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 

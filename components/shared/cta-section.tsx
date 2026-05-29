@@ -13,6 +13,9 @@ type CtaSectionProps = {
   primary: { label: string; href: string };
   secondary: { label: string; href: string };
   imageKey?: SiteImageKey;
+  imageTitle?: string;
+  imageDescription?: string;
+  imageAlt?: string;
 };
 
 export function CtaSection({
@@ -21,9 +24,14 @@ export function CtaSection({
   primary,
   secondary,
   imageKey,
+  imageTitle,
+  imageDescription,
+  imageAlt,
 }: CtaSectionProps) {
   const messages = getMessages(getRequestLocale());
-  const image = imageKey ? getSiteImage(imageKey) : null;
+  const image = imageKey
+    ? { ...getSiteImage(imageKey), alt: imageAlt ?? getSiteImage(imageKey).alt }
+    : null;
 
   return (
     <section className="px-6 py-20 lg:px-8">
@@ -56,8 +64,8 @@ export function CtaSection({
             {image ? (
               <ImageCard
                 asset={image}
-                title={image.title}
-                description={image.alt}
+                title={imageTitle ?? image.title}
+                description={imageDescription ?? image.alt}
                 aspectClassName="aspect-[16/11]"
               />
             ) : null}

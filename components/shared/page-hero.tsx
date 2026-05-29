@@ -18,6 +18,8 @@ type PageHeroProps = {
   secondaryCta?: { label: string; href: string };
   imageKey?: SiteImageKey;
   secondaryImageKey?: SiteImageKey;
+  imageAlt?: string;
+  secondaryImageAlt?: string;
 };
 
 export function PageHero({
@@ -29,10 +31,19 @@ export function PageHero({
   secondaryCta,
   imageKey,
   secondaryImageKey,
+  imageAlt,
+  secondaryImageAlt,
 }: PageHeroProps) {
   const messages = getMessages(getRequestLocale());
-  const heroImage = imageKey ? getSiteImage(imageKey) : null;
-  const secondaryImage = secondaryImageKey ? getSiteImage(secondaryImageKey) : null;
+  const heroImage = imageKey
+    ? { ...getSiteImage(imageKey), alt: imageAlt ?? getSiteImage(imageKey).alt }
+    : null;
+  const secondaryImage = secondaryImageKey
+    ? {
+        ...getSiteImage(secondaryImageKey),
+        alt: secondaryImageAlt ?? getSiteImage(secondaryImageKey).alt,
+      }
+    : null;
 
   return (
     <section className="relative overflow-hidden border-b border-slate-200/80 bg-hero-mesh">

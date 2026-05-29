@@ -1,41 +1,49 @@
 import { PremiumHomePage } from "@/components/marketing/premium-homepage";
+import { HomepageEnhancements } from "@/components/marketing/homepage-enhancements";
 import { JsonLd } from "@/components/shared/json-ld";
 import { env } from "@/lib/env";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
-import { createWebPageSchema } from "@/lib/schema";
+import { createFaqSchema, createHomePageSchemaGraph } from "@/lib/schema";
+import {
+  getTrustStats,
+  getFeaturedHospitalPartners,
+  getFeaturedSuccessStories,
+  getTeamMembers,
+  getAccreditations,
+} from "@/lib/data/site-content";
 
-const homeMetadata = createMetadata({
-  title: "Medical Tourism & Healthcare Partnerships",
-  description:
-    "MedPobeda Group connects international patients, hospitals, and healthcare institutions through medical tourism coordination, hospital partnerships, student mobility, and India–Uzbekistan healthcare collaboration.",
-  path: "/",
-  keywords: [
-    "medical tourism and healthcare partnerships",
-    "international patient support Uzbekistan",
-    "hospital collaboration India Uzbekistan",
-    "student mobility healthcare",
-    "international healthcare facilitation",
-  ],
-});
+export function generateMetadata() {
+  const locale = getRequestLocale();
+  const messages = getMessages(locale);
+  const metadata = createMetadata({
+    title: messages.routes.home.title,
+    description: messages.routes.home.description,
+    path: "/",
+    locale,
+    keywords: messages.routes.home.keywords,
+    ogTitle: messages.routes.home.openGraphTitle,
+    ogDescription: messages.routes.home.openGraphDescription,
+  });
 
-export const metadata = {
-  ...homeMetadata,
-  title: {
-    absolute: "MedPobeda Group | Medical Tourism & Healthcare Partnerships",
-  },
-  openGraph: {
-    ...homeMetadata.openGraph,
-    title: "MedPobeda Group | Medical Tourism & Healthcare Partnerships",
-    description:
-      "MedPobeda Group connects international patients, hospitals, and healthcare institutions through medical tourism coordination, hospital partnerships, student mobility, and India–Uzbekistan healthcare collaboration.",
-  },
-  twitter: {
-    ...homeMetadata.twitter,
-    title: "MedPobeda Group | Medical Tourism & Healthcare Partnerships",
-    description:
-      "MedPobeda Group connects international patients, hospitals, and healthcare institutions through medical tourism coordination, hospital partnerships, student mobility, and India–Uzbekistan healthcare collaboration.",
-  },
-};
+  return {
+    ...metadata,
+    title: {
+      absolute: messages.site.defaultTitle,
+    },
+    openGraph: {
+      ...metadata.openGraph,
+      title: messages.site.defaultTitle,
+      description: messages.routes.home.description,
+    },
+    twitter: {
+      ...metadata.twitter,
+      title: messages.site.defaultTitle,
+      description: messages.routes.home.description,
+    },
+  };
+}
 
 type HomePageProps = {
   searchParams?: {
@@ -44,21 +52,50 @@ type HomePageProps = {
   };
 };
 
-export default function HomePage({ searchParams }: HomePageProps) {
-  const homeSchema = createWebPageSchema({
-    name: "MedPobeda Group Home",
-    description:
-      "MedPobeda Group facilitates medical tourism, international patient support, hospital partnerships, student mobility, and healthcare collaboration between Uzbekistan, India, and global institutions.",
-    path: "/",
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const locale = getRequestLocale();
+  const messages = getMessages(locale);
+  const navigationItems = [
+    { name: messages.chrome.navigation.medicalTourism, path: "/international-patient-care" },
+    { name: messages.pages.home.brandHub.items[1].title, path: "/treatment-in-india" },
+    { name: messages.pages.home.brandHub.items[2].title, path: "/kims-hospitals-india" },
+    { name: messages.pages.home.brandHub.items[3].title, path: "/hospital-partnerships" },
+    { name: messages.pages.home.brandHub.items[4].title, path: "/international-patients" },
+    { name: messages.pages.home.brandHub.items[5].title, path: "/contact" },
+  ];
+  const homeSchema = createHomePageSchemaGraph({
+    locale,
+    name: messages.pages.home.schemaName,
+    description: messages.pages.home.schemaDescription,
+    tagline: messages.site.tagline,
+    location: messages.site.location,
+    navigationItems,
   });
+
+  // Fetch data for enhanced sections
+  const [trustStats, hospitalPartners, successStories, teamMembers, accreditations] =
+    await Promise.all([
+      getTrustStats().catch(() => []),
+      getFeaturedHospitalPartners().catch(() => []),
+      getFeaturedSuccessStories().catch(() => []),
+      getTeamMembers().catch(() => []),
+      getAccreditations().catch(() => []),
+    ]);
 
   return (
     <>
-      <JsonLd data={homeSchema} />
+      <JsonLd data={[homeSchema, createFaqSchema(messages.pages.home.brandFaq.items)]} />
       <PremiumHomePage
         honeypotField={env.SPAM_HONEYPOT_FIELD}
         submittedType={searchParams?.submitted}
         hasError={searchParams?.error === "validation"}
+      />
+      <HomepageEnhancements
+        trustStats={trustStats}
+        hospitalPartners={hospitalPartners}
+        successStories={successStories}
+        teamMembers={teamMembers}
+        accreditations={accreditations}
       />
     </>
   );

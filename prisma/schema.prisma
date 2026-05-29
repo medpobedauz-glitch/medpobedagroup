@@ -44,6 +44,38 @@ enum LeadPriority {
   URGENT
 }
 
+enum InquiryPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum PartnershipInterest {
+  MEDICAL_TOURISM_COOPERATION
+  PATIENT_REFERRAL_PATHWAY
+  PARTNERSHIP_DISCUSSION
+  TRAINING_AND_CONFERENCE_COLLABORATION
+  INSTITUTIONAL_MOU_DISCUSSION
+  OTHER
+}
+
+enum StudentService {
+  STUDENT_MOBILITY_GUIDANCE
+  CLINICAL_EXPOSURE_PLANNING
+  ACADEMIC_COOPERATION
+  INSTITUTIONAL_COMMUNICATION
+  OBSERVERSHIP_DISCUSSION
+  OTHER
+}
+
 enum LeadSource {
   WEBSITE
   ADMIN_IMPORT
@@ -201,64 +233,66 @@ enum FileVisibility {
 }
 
 model User {
-  id                              String                   @id @default(cuid())
-  name                            String
-  email                           String                   @unique
-  passwordHash                    String
-  role                            UserRole                 @default(ADMIN)
-  isActive                        Boolean                  @default(true)
-  lastLoginAt                     DateTime?
-  lastSeenAt                      DateTime?
-  createdAt                       DateTime                 @default(now())
-  updatedAt                       DateTime                 @updatedAt
-  leadNotes                       LeadNote[]
-  partnershipNotes                PartnershipNote[]
-  meetingsCreated                 Meeting[]                @relation("CreatedMeetings")
-  blogPosts                       BlogPost[]               @relation("AuthorBlogPosts")
-  uploadedFiles                   UploadedFile[]           @relation("UploadedByUser")
-  assignedContactSubmissions      ContactSubmission[]      @relation("AssignedContactSubmissions")
-  assignedPartnershipLeads        PartnershipLead[]        @relation("AssignedPartnershipLeads")
+  id                               String                   @id @default(cuid())
+  name                             String
+  email                            String                   @unique
+  passwordHash                     String
+  role                             UserRole                 @default(ADMIN)
+  isActive                         Boolean                  @default(true)
+  lastLoginAt                      DateTime?
+  lastSeenAt                       DateTime?
+  createdAt                        DateTime                 @default(now())
+  updatedAt                        DateTime                 @updatedAt
+  leadNotes                        LeadNote[]
+  partnershipNotes                 PartnershipNote[]
+  meetingsCreated                  Meeting[]                @relation("CreatedMeetings")
+  blogPosts                        BlogPost[]               @relation("AuthorBlogPosts")
+  uploadedFiles                    UploadedFile[]           @relation("UploadedByUser")
+  assignedContactSubmissions       ContactSubmission[]      @relation("AssignedContactSubmissions")
+  assignedPartnershipLeads         PartnershipLead[]        @relation("AssignedPartnershipLeads")
   assignedStudentMobilityInquiries StudentMobilityInquiry[] @relation("AssignedStudentMobilityInquiries")
-  assignedMedicalTourismInquiries MedicalTourismInquiry[]  @relation("AssignedMedicalTourismInquiries")
-  auditLogs                       AuditLog[]
-  sentEmails                      EmailLog[]               @relation("SentEmailLogs")
-  createdLeadReminders            LeadReminder[]           @relation("CreatedLeadReminders")
-  assignedLeadReminders           LeadReminder[]           @relation("AssignedLeadReminders")
-  assignedTasks                   StaffTask[]              @relation("AssignedTasks")
-  createdTasks                    StaffTask[]              @relation("CreatedTasks")
-  notifications                   InternalNotification[]   @relation("NotificationRecipient")
-  regionalCoordinatorProfile      RegionalCoordinator?
-  managedPatientCases             PatientCase[]            @relation("AssignedCaseManager")
-  caseTimelineEntries             CaseTimelineEntry[]      @relation("CaseTimelineAuthor")
-  caseCommunicationLogs           CaseCommunicationLog[]   @relation("CaseCommunicationAuthor")
+  assignedMedicalTourismInquiries  MedicalTourismInquiry[]  @relation("AssignedMedicalTourismInquiries")
+  auditLogs                        AuditLog[]
+  sentEmails                       EmailLog[]               @relation("SentEmailLogs")
+  createdLeadReminders             LeadReminder[]           @relation("CreatedLeadReminders")
+  assignedLeadReminders            LeadReminder[]           @relation("AssignedLeadReminders")
+  assignedTasks                    StaffTask[]              @relation("AssignedTasks")
+  createdTasks                     StaffTask[]              @relation("CreatedTasks")
+  notifications                    InternalNotification[]   @relation("NotificationRecipient")
+  regionalCoordinatorProfile       RegionalCoordinator?
+  managedPatientCases              PatientCase[]            @relation("AssignedCaseManager")
+  caseTimelineEntries              CaseTimelineEntry[]      @relation("CaseTimelineAuthor")
+  caseCommunicationLogs            CaseCommunicationLog[]   @relation("CaseCommunicationAuthor")
 
   @@index([role, isActive])
 }
 
 model Hospital {
-  id                               String                  @id @default(cuid())
-  name                             String
-  slug                             String                  @unique
-  country                          String
-  countryId                        String?
-  city                             String?
-  region                           String?
-  website                          String?
-  description                      String?
-  hospitalType                     String?
-  internationalDeskEmail           String?
-  internationalDeskPhone           String?
-  status                           PartnershipStatus       @default(PROSPECT)
-  createdAt                        DateTime                @default(now())
-  updatedAt                        DateTime                @updatedAt
-  contacts                         ContactPerson[]
-  partnerships                     Partnership[]
-  partnerLeads                     PartnershipLead[]
-  meetings                         Meeting[]
-  assignedMedicalTourismInquiries  MedicalTourismInquiry[] @relation("AssignedHospitalMedicalTourism")
-  uploadedFiles                    UploadedFile[]
-  patientCases                     PatientCase[]
-  countryRecord                    Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
+  id                              String                  @id @default(cuid())
+  name                            String
+  slug                            String                  @unique
+  country                         String
+  countryId                       String?
+  city                            String?
+  region                          String?
+  website                         String?
+  description                     String?
+  hospitalType                    String?
+  internationalDeskEmail          String?
+  internationalDeskPhone          String?
+  status                          PartnershipStatus       @default(PROSPECT)
+  createdAt                       DateTime                @default(now())
+  updatedAt                       DateTime                @updatedAt
+  contacts                        ContactPerson[]
+  partnerships                    Partnership[]
+  partnerLeads                    PartnershipLead[]
+  meetings                        Meeting[]
+  assignedMedicalTourismInquiries MedicalTourismInquiry[] @relation("AssignedHospitalMedicalTourism")
+  uploadedFiles                   UploadedFile[]
+  patientCases                    PatientCase[]
+  successStories                  SuccessStory[]
+  hospitalPartners                HospitalPartner[]
+  countryRecord                   Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
 
   @@index([country, status])
   @@index([name])
@@ -266,59 +300,59 @@ model Hospital {
 }
 
 model Patient {
-  id                     String                  @id @default(cuid())
-  fullName               String
-  nationality            String
-  country                String?
-  countryId              String?
-  phone                  String?
-  telegram               String?
-  email                  String?
-  passportNumber         String?
-  preferredLanguage      LanguageCode?
-  notes                  String?                 @db.Text
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
+  id                      String                  @id @default(cuid())
+  fullName                String
+  nationality             String
+  country                 String?
+  countryId               String?
+  phone                   String?
+  telegram                String?
+  email                   String?
+  passportNumber          String?
+  preferredLanguage       LanguageCode?
+  notes                   String?                 @db.Text
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
   medicalTourismInquiries MedicalTourismInquiry[]
-  uploadedFiles          UploadedFile[]
-  patientCases           PatientCase[]
-  countryRecord          Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
+  uploadedFiles           UploadedFile[]
+  patientCases            PatientCase[]
+  countryRecord           Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull)
 
   @@index([nationality, createdAt])
   @@index([countryId])
 }
 
 model ContactSubmission {
-  id           String        @id @default(cuid())
-  name         String
-  organization String?
-  country      String?
-  phone        String?
-  telegram     String?
-  email        String
-  inquiryType  InquiryType   @default(CONTACT)
-  message      String        @db.Text
-  preferredCountry String?
-  preferredContactTime String?
+  id                    String         @id @default(cuid())
+  name                  String
+  organization          String?
+  country               String?
+  phone                 String?
+  telegram              String?
+  email                 String
+  inquiryType           InquiryType    @default(CONTACT)
+  message               String         @db.Text
+  preferredCountry      String?
+  preferredContactTime  String?
   collaborationInterest String?
-  status       InquiryStatus @default(NEW)
-  pipelineStage PipelineStage @default(NEW)
-  priority     LeadPriority  @default(MEDIUM)
-  assignedToId String?
-  source       LeadSource    @default(WEBSITE)
-  sourcePath   String?
-  tags         String[]      @default([])
-  adminNotes   String?       @db.Text
-  closedReason String?
-  firstContactedAt DateTime?
-  qualifiedAt  DateTime?
-  convertedAt  DateTime?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  notes        LeadNote[]
-  uploadedFiles UploadedFile[]
-  emailLogs    EmailLog[]
-  assignedTo   User?         @relation("AssignedContactSubmissions", fields: [assignedToId], references: [id], onDelete: SetNull)
+  status                InquiryStatus  @default(NEW)
+  pipelineStage         PipelineStage  @default(NEW)
+  priority              LeadPriority   @default(MEDIUM)
+  assignedToId          String?
+  source                LeadSource     @default(WEBSITE)
+  sourcePath            String?
+  tags                  String[]       @default([])
+  adminNotes            String?        @db.Text
+  closedReason          String?
+  firstContactedAt      DateTime?
+  qualifiedAt           DateTime?
+  convertedAt           DateTime?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  notes                 LeadNote[]
+  uploadedFiles         UploadedFile[]
+  emailLogs             EmailLog[]
+  assignedTo            User?          @relation("AssignedContactSubmissions", fields: [assignedToId], references: [id], onDelete: SetNull)
 
   @@index([status, createdAt])
   @@index([assignedToId, priority])
@@ -329,38 +363,38 @@ model ContactSubmission {
 }
 
 model PartnershipLead {
-  id                    String        @id @default(cuid())
+  id                    String         @id @default(cuid())
   name                  String
   organization          String?
   country               String?
   phone                 String?
   telegram              String?
   email                 String
-  inquiryType           InquiryType   @default(PARTNERSHIP)
-  message               String        @db.Text
-  status                InquiryStatus @default(NEW)
-  pipelineStage         PipelineStage @default(NEW)
-  priority              LeadPriority  @default(MEDIUM)
+  inquiryType           InquiryType    @default(PARTNERSHIP)
+  message               String         @db.Text
+  status                InquiryStatus  @default(NEW)
+  pipelineStage         PipelineStage  @default(NEW)
+  priority              LeadPriority   @default(MEDIUM)
   assignedToId          String?
   collaborationInterest String?
   preferredContactTime  String?
   hospitalId            String?
   partnershipId         String?
-  source                LeadSource    @default(WEBSITE)
+  source                LeadSource     @default(WEBSITE)
   sourcePath            String?
-  tags                  String[]      @default([])
+  tags                  String[]       @default([])
   closedReason          String?
   firstContactedAt      DateTime?
   qualifiedAt           DateTime?
   convertedAt           DateTime?
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
-  hospital              Hospital?     @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
-  partnership           Partnership?  @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  hospital              Hospital?      @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  partnership           Partnership?   @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
   notes                 LeadNote[]
   uploadedFiles         UploadedFile[]
   emailLogs             EmailLog[]
-  assignedTo            User?         @relation("AssignedPartnershipLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedTo            User?          @relation("AssignedPartnershipLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
 
   @@index([status, createdAt])
   @@index([assignedToId, priority])
@@ -371,37 +405,47 @@ model PartnershipLead {
 }
 
 model StudentMobilityInquiry {
-  id                 String        @id @default(cuid())
+  id                 String          @id @default(cuid())
   name               String
   organization       String?
   country            String?
+  city               String?
   phone              String?
   telegram           String?
   email              String
-  inquiryType        InquiryType   @default(STUDENT_MOBILITY)
-  message            String        @db.Text
-  status             InquiryStatus @default(NEW)
-  pipelineStage      PipelineStage @default(NEW)
-  priority           LeadPriority  @default(MEDIUM)
+  inquiryType        InquiryType     @default(STUDENT_MOBILITY)
+  message            String          @db.Text
+  status             InquiryStatus   @default(NEW)
+  pipelineStage      PipelineStage   @default(NEW)
+  priority           LeadPriority    @default(MEDIUM)
   assignedToId       String?
   nationality        String?
   programInterest    String?
   preferredCountry   String?
+  preferredCourse    String?
+  interestedService  StudentService?
   intakePeriod       String?
   academicBackground String?
-  source             LeadSource    @default(WEBSITE)
+  consent            Boolean         @default(false)
+  locale             String?
+  userCountry        String?
+  userIp             String?
+  userAgent          String?
+  internalNote       String?         @db.Text
+  sourcePage         String?
+  source             LeadSource      @default(WEBSITE)
   sourcePath         String?
-  tags               String[]      @default([])
+  tags               String[]        @default([])
   closedReason       String?
   firstContactedAt   DateTime?
   qualifiedAt        DateTime?
   convertedAt        DateTime?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
   notes              LeadNote[]
   uploadedFiles      UploadedFile[]
   emailLogs          EmailLog[]
-  assignedTo         User?         @relation("AssignedStudentMobilityInquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedTo         User?           @relation("AssignedStudentMobilityInquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
 
   @@index([status, createdAt])
   @@index([assignedToId, priority])
@@ -461,46 +505,158 @@ model MedicalTourismInquiry {
   @@index([sourcePath])
 }
 
+model ContactInquiry {
+  id            String          @id @default(cuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  status        InquiryStatus   @default(NEW)
+  priority      InquiryPriority @default(NORMAL)
+  sourcePage    String?
+  locale        String?
+  userCountry   String?
+  userIp        String?
+  userAgent     String?
+  internalNote  String?         @db.Text
+  fullName      String
+  organization  String?
+  email         String
+  phone         String?
+  country       String?
+  inquiryType   InquiryType     @default(CONTACT)
+  message       String          @db.Text
+  consent       Boolean         @default(false)
+  uploadedFiles UploadedFile[]
+
+  @@index([createdAt, status])
+  @@index([priority, createdAt])
+  @@index([email])
+  @@index([country])
+  @@index([sourcePage])
+}
+
+model PatientInquiry {
+  id                           String          @id @default(cuid())
+  createdAt                    DateTime        @default(now())
+  updatedAt                    DateTime        @updatedAt
+  status                       InquiryStatus   @default(NEW)
+  priority                     InquiryPriority @default(NORMAL)
+  sourcePage                   String?
+  locale                       String?
+  userCountry                  String?
+  userIp                       String?
+  userAgent                    String?
+  internalNote                 String?         @db.Text
+  patientName                  String
+  age                          Int?
+  gender                       Gender?
+  country                      String?
+  phone                        String?
+  telegram                     String?
+  email                        String?
+  contactPersonName            String?
+  patientNationality           String?
+  preferredTreatmentDepartment String
+  diagnosisOrConcern           String?         @db.Text
+  preferredTreatmentCountry    String?
+  preferredHospital            String?
+  budgetRange                  String?
+  needsVisaSupport             Boolean         @default(false)
+  needsAccommodationSupport    Boolean         @default(false)
+  uploadedDocumentUrl          String?
+  message                      String          @db.Text
+  consent                      Boolean         @default(false)
+  uploadedFiles                UploadedFile[]
+
+  @@index([createdAt, status])
+  @@index([priority, createdAt])
+  @@index([email])
+  @@index([country])
+  @@index([sourcePage])
+}
+
+model HospitalPartnershipInquiry {
+  id                  String               @id @default(cuid())
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  status              InquiryStatus        @default(NEW)
+  priority            InquiryPriority      @default(NORMAL)
+  sourcePage          String?
+  locale              String?
+  userCountry         String?
+  userIp              String?
+  userAgent           String?
+  internalNote        String?              @db.Text
+  hospitalName        String
+  contactPersonName   String
+  designation         String?
+  country             String?
+  city                String?
+  email               String
+  phone               String?
+  telegram            String?
+  website             String?
+  partnershipInterest PartnershipInterest?
+  message             String               @db.Text
+  consent             Boolean              @default(false)
+  uploadedDocumentUrl String?
+  uploadedFiles       UploadedFile[]
+
+  @@index([createdAt, status])
+  @@index([priority, createdAt])
+  @@index([email])
+  @@index([country])
+  @@index([sourcePage])
+}
+
 model UploadedFile {
-  id                       String                  @id @default(cuid())
-  originalName             String
-  fileName                 String
-  mimeType                 String
-  sizeBytes                Int
-  storagePath              String
-  category                 FileCategory
-  visibility               FileVisibility          @default(PRIVATE)
-  version                  Int                     @default(1)
-  versionGroup             String?
-  documentLabel            String?
-  uploadedByUserId         String?
-  patientId                String?
-  medicalTourismInquiryId  String?
-  contactSubmissionId      String?
-  partnershipLeadId        String?
-  studentMobilityInquiryId String?
-  hospitalId               String?
-  partnershipId            String?
-  blogPostId               String?
-  patientCaseId            String?
-  uploadedAt               DateTime                @default(now())
-  uploadedBy               User?                   @relation("UploadedByUser", fields: [uploadedByUserId], references: [id], onDelete: SetNull)
-  patient                  Patient?                @relation(fields: [patientId], references: [id], onDelete: SetNull)
-  medicalTourismInquiry    MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
-  contactSubmission        ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: SetNull)
-  partnershipLead          PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: SetNull)
-  studentMobilityInquiry   StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: SetNull)
-  hospital                 Hospital?               @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
-  partnership              Partnership?            @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
-  blogPost                 BlogPost?               @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
-  patientCase              PatientCase?            @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
+  id                           String                      @id @default(cuid())
+  originalName                 String
+  fileName                     String
+  mimeType                     String
+  sizeBytes                    Int
+  storagePath                  String
+  category                     FileCategory
+  visibility                   FileVisibility              @default(PRIVATE)
+  version                      Int                         @default(1)
+  versionGroup                 String?
+  documentLabel                String?
+  uploadedByUserId             String?
+  patientId                    String?
+  medicalTourismInquiryId      String?
+  contactSubmissionId          String?
+  contactInquiryId             String?
+  patientInquiryId             String?
+  partnershipLeadId            String?
+  hospitalPartnershipInquiryId String?
+  studentMobilityInquiryId     String?
+  hospitalId                   String?
+  partnershipId                String?
+  blogPostId                   String?
+  patientCaseId                String?
+  uploadedAt                   DateTime                    @default(now())
+  uploadedBy                   User?                       @relation("UploadedByUser", fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  patient                      Patient?                    @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  medicalTourismInquiry        MedicalTourismInquiry?      @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
+  contactSubmission            ContactSubmission?          @relation(fields: [contactSubmissionId], references: [id], onDelete: SetNull)
+  contactInquiry               ContactInquiry?             @relation(fields: [contactInquiryId], references: [id], onDelete: SetNull)
+  patientInquiry               PatientInquiry?             @relation(fields: [patientInquiryId], references: [id], onDelete: SetNull)
+  partnershipLead              PartnershipLead?            @relation(fields: [partnershipLeadId], references: [id], onDelete: SetNull)
+  hospitalPartnershipInquiry   HospitalPartnershipInquiry? @relation(fields: [hospitalPartnershipInquiryId], references: [id], onDelete: SetNull)
+  studentMobilityInquiry       StudentMobilityInquiry?     @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: SetNull)
+  hospital                     Hospital?                   @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  partnership                  Partnership?                @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+  blogPost                     BlogPost?                   @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+  patientCase                  PatientCase?                @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
 
   @@index([category, uploadedAt])
   @@index([visibility, uploadedAt])
   @@index([versionGroup, version])
   @@index([medicalTourismInquiryId])
   @@index([contactSubmissionId])
+  @@index([contactInquiryId])
+  @@index([patientInquiryId])
   @@index([partnershipLeadId])
+  @@index([hospitalPartnershipInquiryId])
   @@index([studentMobilityInquiryId])
   @@index([hospitalId])
   @@index([partnershipId])
@@ -551,52 +707,52 @@ model ContactPerson {
 }
 
 model Meeting {
-  id          String      @id @default(cuid())
+  id            String      @id @default(cuid())
   partnershipId String
-  hospitalId  String?
-  createdById String?
-  title       String
-  meetingType MeetingType @default(CALL)
-  meetingAt   DateTime
-  location    String?
-  notes       String?     @db.Text
-  outcome     String?     @db.Text
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  partnership Partnership @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
-  hospital    Hospital?   @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
-  createdBy   User?       @relation("CreatedMeetings", fields: [createdById], references: [id], onDelete: SetNull)
+  hospitalId    String?
+  createdById   String?
+  title         String
+  meetingType   MeetingType @default(CALL)
+  meetingAt     DateTime
+  location      String?
+  notes         String?     @db.Text
+  outcome       String?     @db.Text
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  partnership   Partnership @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
+  hospital      Hospital?   @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  createdBy     User?       @relation("CreatedMeetings", fields: [createdById], references: [id], onDelete: SetNull)
 
   @@index([meetingAt])
   @@index([partnershipId])
 }
 
 model PartnershipNote {
-  id            String       @id @default(cuid())
+  id            String      @id @default(cuid())
   partnershipId String
   authorId      String
-  content       String       @db.Text
-  createdAt     DateTime     @default(now())
-  partnership   Partnership  @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
-  author        User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content       String      @db.Text
+  createdAt     DateTime    @default(now())
+  partnership   Partnership @relation(fields: [partnershipId], references: [id], onDelete: Cascade)
+  author        User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([partnershipId, createdAt])
 }
 
 model LeadNote {
-  id                      String                  @id @default(cuid())
-  authorId                String
-  content                 String                  @db.Text
-  contactSubmissionId     String?
-  partnershipLeadId       String?
+  id                       String                  @id @default(cuid())
+  authorId                 String
+  content                  String                  @db.Text
+  contactSubmissionId      String?
+  partnershipLeadId        String?
   studentMobilityInquiryId String?
-  medicalTourismInquiryId String?
-  createdAt               DateTime                @default(now())
-  author                  User                    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  contactSubmission       ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
-  partnershipLead         PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
-  studentMobilityInquiry  StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
-  medicalTourismInquiry   MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
+  medicalTourismInquiryId  String?
+  createdAt                DateTime                @default(now())
+  author                   User                    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  contactSubmission        ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
+  partnershipLead          PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
+  studentMobilityInquiry   StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry    MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
 
   @@index([createdAt])
   @@index([contactSubmissionId])
@@ -606,27 +762,27 @@ model LeadNote {
 }
 
 model BlogPost {
-  id             String      @id @default(cuid())
+  id             String         @id @default(cuid())
   title          String
-  slug           String      @unique
-  excerpt        String?     @db.Text
-  content        String      @db.Text
+  slug           String         @unique
+  excerpt        String?        @db.Text
+  content        String         @db.Text
   coverImage     String?
   category       String?
-  tags           String[]    @default([])
-  featured       Boolean     @default(false)
+  tags           String[]       @default([])
+  featured       Boolean        @default(false)
   focusKeyword   String?
   seoTitle       String?
-  seoDescription String?     @db.Text
+  seoDescription String?        @db.Text
   authorName     String?
   authorRole     String?
-  authorBio      String?     @db.Text
-  status         BlogStatus  @default(DRAFT)
+  authorBio      String?        @db.Text
+  status         BlogStatus     @default(DRAFT)
   publishedAt    DateTime?
   authorId       String?
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  author         User?       @relation("AuthorBlogPosts", fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  author         User?          @relation("AuthorBlogPosts", fields: [authorId], references: [id], onDelete: SetNull)
   uploadedFiles  UploadedFile[]
 
   @@index([status, publishedAt])
@@ -654,20 +810,20 @@ model AuditLog {
 }
 
 model LeadReminder {
-  id          String       @id @default(cuid())
-  leadModel   String
-  leadId      String
-  title       String
-  note        String?      @db.Text
-  dueAt       DateTime
-  priority    LeadPriority @default(MEDIUM)
-  isCompleted Boolean      @default(false)
+  id           String       @id @default(cuid())
+  leadModel    String
+  leadId       String
+  title        String
+  note         String?      @db.Text
+  dueAt        DateTime
+  priority     LeadPriority @default(MEDIUM)
+  isCompleted  Boolean      @default(false)
   assignedToId String?
-  createdById String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  assignedTo  User?        @relation("AssignedLeadReminders", fields: [assignedToId], references: [id], onDelete: SetNull)
-  createdBy   User?        @relation("CreatedLeadReminders", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById  String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  assignedTo   User?        @relation("AssignedLeadReminders", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdBy    User?        @relation("CreatedLeadReminders", fields: [createdById], references: [id], onDelete: SetNull)
 
   @@index([leadModel, leadId, dueAt])
   @@index([assignedToId, dueAt])
@@ -693,11 +849,11 @@ model EmailLog {
   medicalTourismInquiryId  String?
   metadata                 Json?
   createdAt                DateTime                @default(now())
-  sentByUser                User?                  @relation("SentEmailLogs", fields: [sentByUserId], references: [id], onDelete: SetNull)
-  contactSubmission         ContactSubmission?     @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
-  partnershipLead           PartnershipLead?       @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
-  studentMobilityInquiry    StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
-  medicalTourismInquiry     MedicalTourismInquiry? @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
+  sentByUser               User?                   @relation("SentEmailLogs", fields: [sentByUserId], references: [id], onDelete: SetNull)
+  contactSubmission        ContactSubmission?      @relation(fields: [contactSubmissionId], references: [id], onDelete: Cascade)
+  partnershipLead          PartnershipLead?        @relation(fields: [partnershipLeadId], references: [id], onDelete: Cascade)
+  studentMobilityInquiry   StudentMobilityInquiry? @relation(fields: [studentMobilityInquiryId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry    MedicalTourismInquiry?  @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: Cascade)
 
   @@index([createdAt])
   @@index([toEmail, createdAt])
@@ -725,125 +881,125 @@ model AnalyticsEvent {
 }
 
 model PlatformSetting {
-  id                       String   @id @default("main")
-  brandName                String   @default("MedPobeda Group")
-  shortName                String   @default("MedPobeda")
-  siteUrl                  String?
-  seoDefaultTitle          String?
-  seoDefaultDescription    String?  @db.Text
-  seoKeywords              String[] @default([])
-  ogImage                  String?
-  twitterHandle            String?
-  linkedinUrl              String?
-  xUrl                     String?
-  youtubeUrl               String?
-  whatsappNumber           String?
-  telegramHandle           String?
-  contactEmail             String?
-  contactPhone             String?
-  medicalTourismEmail      String?
-  partnershipEmail         String?
-  studentMobilityEmail     String?
-  generalInquiryEmail      String?
-  highUrgencyEmail         String?
-  inquiryRouting           Json?
-  brandingPrimary          String?  @default("#0B1F4D")
-  brandingSecondary        String?  @default("#1D4ED8")
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  id                    String   @id @default("main")
+  brandName             String   @default("MedPobeda Group")
+  shortName             String   @default("MedPobeda")
+  siteUrl               String?
+  seoDefaultTitle       String?
+  seoDefaultDescription String?  @db.Text
+  seoKeywords           String[] @default([])
+  ogImage               String?
+  twitterHandle         String?
+  linkedinUrl           String?
+  xUrl                  String?
+  youtubeUrl            String?
+  whatsappNumber        String?
+  telegramHandle        String?
+  contactEmail          String?
+  contactPhone          String?
+  medicalTourismEmail   String?
+  partnershipEmail      String?
+  studentMobilityEmail  String?
+  generalInquiryEmail   String?
+  highUrgencyEmail      String?
+  inquiryRouting        Json?
+  brandingPrimary       String?  @default("#0B1F4D")
+  brandingSecondary     String?  @default("#1D4ED8")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
 
 model Country {
-  id                String                @id @default(cuid())
-  code              String                @unique
-  name              String
-  localName         String?
-  region            String
-  timezone          String
-  languages         LanguageCode[]        @default([EN])
-  isPriorityMarket  Boolean               @default(false)
-  isActive          Boolean               @default(true)
-  createdAt         DateTime              @default(now())
-  updatedAt         DateTime              @updatedAt
-  hospitals         Hospital[]
-  patients          Patient[]
-  offices           CountryOffice[]
-  coordinators      RegionalCoordinator[]
-  patientCases      PatientCase[]
+  id               String                @id @default(cuid())
+  code             String                @unique
+  name             String
+  localName        String?
+  region           String
+  timezone         String
+  languages        LanguageCode[]        @default([EN])
+  isPriorityMarket Boolean               @default(false)
+  isActive         Boolean               @default(true)
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  hospitals        Hospital[]
+  patients         Patient[]
+  offices          CountryOffice[]
+  coordinators     RegionalCoordinator[]
+  patientCases     PatientCase[]
 
   @@index([region, isActive])
 }
 
 model CountryOffice {
-  id            String                @id @default(cuid())
-  countryId     String
-  officeName    String
-  city          String
-  address       String?               @db.Text
-  contactEmail  String?
-  contactPhone  String?
-  telegram      String?
-  timezone      String
-  isPrimary     Boolean               @default(false)
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
-  country       Country               @relation(fields: [countryId], references: [id], onDelete: Cascade)
-  coordinators  RegionalCoordinator[]
+  id           String                @id @default(cuid())
+  countryId    String
+  officeName   String
+  city         String
+  address      String?               @db.Text
+  contactEmail String?
+  contactPhone String?
+  telegram     String?
+  timezone     String
+  isPrimary    Boolean               @default(false)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  country      Country               @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  coordinators RegionalCoordinator[]
 
   @@index([countryId, city])
 }
 
 model RegionalCoordinator {
-  id              String                @id @default(cuid())
-  userId          String?               @unique
-  countryId       String
-  officeId        String?
-  name            String
-  email           String
-  phone           String?
-  telegram        String?
-  specialization  String?
-  languages       LanguageCode[]        @default([EN])
-  timezone        String
-  isActive        Boolean               @default(true)
-  createdAt       DateTime              @default(now())
-  updatedAt       DateTime              @updatedAt
-  user            User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  country         Country               @relation(fields: [countryId], references: [id], onDelete: Cascade)
-  office          CountryOffice?        @relation(fields: [officeId], references: [id], onDelete: SetNull)
-  patientCases    PatientCase[]
-  aiAssessments   AILeadAssessment[]
+  id             String             @id @default(cuid())
+  userId         String?            @unique
+  countryId      String
+  officeId       String?
+  name           String
+  email          String
+  phone          String?
+  telegram       String?
+  specialization String?
+  languages      LanguageCode[]     @default([EN])
+  timezone       String
+  isActive       Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  user           User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  country        Country            @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  office         CountryOffice?     @relation(fields: [officeId], references: [id], onDelete: SetNull)
+  patientCases   PatientCase[]
+  aiAssessments  AILeadAssessment[]
 
   @@index([countryId, isActive])
 }
 
 model PatientCase {
-  id                    String                 @id @default(cuid())
-  caseNumber            String                 @unique
-  patientId             String
-  medicalTourismInquiryId String?              @unique
-  countryId             String?
-  coordinatorId         String?
-  assignedHospitalId    String?
-  assignedManagerId     String?
-  status                PatientCaseStatus      @default(NEW)
-  journeyStage          TreatmentJourneyStage  @default(INQUIRY_RECEIVED)
-  summary               String?                @db.Text
-  treatmentPlan         String?                @db.Text
-  nextAction            String?
-  targetTravelDate      DateTime?
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @updatedAt
-  patient               Patient                @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  medicalTourismInquiry MedicalTourismInquiry? @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
-  country               Country?               @relation(fields: [countryId], references: [id], onDelete: SetNull)
-  coordinator           RegionalCoordinator?   @relation(fields: [coordinatorId], references: [id], onDelete: SetNull)
-  assignedHospital      Hospital?              @relation(fields: [assignedHospitalId], references: [id], onDelete: SetNull)
-  assignedManager       User?                  @relation("AssignedCaseManager", fields: [assignedManagerId], references: [id], onDelete: SetNull)
-  timelineEntries       CaseTimelineEntry[]
-  communications        CaseCommunicationLog[]
-  uploadedFiles         UploadedFile[]
-  tasks                 StaffTask[]
+  id                      String                 @id @default(cuid())
+  caseNumber              String                 @unique
+  patientId               String
+  medicalTourismInquiryId String?                @unique
+  countryId               String?
+  coordinatorId           String?
+  assignedHospitalId      String?
+  assignedManagerId       String?
+  status                  PatientCaseStatus      @default(NEW)
+  journeyStage            TreatmentJourneyStage  @default(INQUIRY_RECEIVED)
+  summary                 String?                @db.Text
+  treatmentPlan           String?                @db.Text
+  nextAction              String?
+  targetTravelDate        DateTime?
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  patient                 Patient                @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  medicalTourismInquiry   MedicalTourismInquiry? @relation(fields: [medicalTourismInquiryId], references: [id], onDelete: SetNull)
+  country                 Country?               @relation(fields: [countryId], references: [id], onDelete: SetNull)
+  coordinator             RegionalCoordinator?   @relation(fields: [coordinatorId], references: [id], onDelete: SetNull)
+  assignedHospital        Hospital?              @relation(fields: [assignedHospitalId], references: [id], onDelete: SetNull)
+  assignedManager         User?                  @relation("AssignedCaseManager", fields: [assignedManagerId], references: [id], onDelete: SetNull)
+  timelineEntries         CaseTimelineEntry[]
+  communications          CaseCommunicationLog[]
+  uploadedFiles           UploadedFile[]
+  tasks                   StaffTask[]
 
   @@index([status, journeyStage])
   @@index([coordinatorId, status])
@@ -880,11 +1036,11 @@ model CaseCommunicationLog {
 }
 
 model StaffTask {
-  id            String        @id @default(cuid())
+  id            String       @id @default(cuid())
   title         String
-  description   String?       @db.Text
-  status        TaskStatus    @default(TODO)
-  priority      LeadPriority  @default(MEDIUM)
+  description   String?      @db.Text
+  status        TaskStatus   @default(TODO)
+  priority      LeadPriority @default(MEDIUM)
   assignedToId  String?
   createdById   String?
   leadModel     String?
@@ -893,12 +1049,12 @@ model StaffTask {
   partnershipId String?
   dueAt         DateTime?
   completedAt   DateTime?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  assignedTo    User?         @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
-  createdBy     User?         @relation("CreatedTasks", fields: [createdById], references: [id], onDelete: SetNull)
-  patientCase   PatientCase?  @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
-  partnership   Partnership?  @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  assignedTo    User?        @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdBy     User?        @relation("CreatedTasks", fields: [createdById], references: [id], onDelete: SetNull)
+  patientCase   PatientCase? @relation(fields: [patientCaseId], references: [id], onDelete: SetNull)
+  partnership   Partnership? @relation(fields: [partnershipId], references: [id], onDelete: SetNull)
 
   @@index([assignedToId, status, dueAt])
   @@index([leadModel, leadId])
@@ -922,20 +1078,257 @@ model InternalNotification {
 }
 
 model AILeadAssessment {
-  id                     String             @id @default(cuid())
+  id                     String               @id @default(cuid())
   leadModel              String
   leadId                 String
   language               LanguageCode?
   suggestedCoordinatorId String?
   leadScore              Int?
   routingRecommendation  String?
-  summary                String?            @db.Text
-  status                 AIAssessmentStatus @default(PENDING)
+  summary                String?              @db.Text
+  status                 AIAssessmentStatus   @default(PENDING)
   metadata               Json?
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
   suggestedCoordinator   RegionalCoordinator? @relation(fields: [suggestedCoordinatorId], references: [id], onDelete: SetNull)
 
   @@index([leadModel, leadId])
   @@index([status, createdAt])
+}
+
+// ─── NEW MODELS FOR WEBSITE REDESIGN ──────────────────────────────
+
+enum SuccessStoryStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum TeamMemberRole {
+  FOUNDER
+  COORDINATOR
+  MEDICAL_ADVISOR
+  INTERNATIONAL_RELATIONS
+  OPERATIONS
+  MARKETING
+  PATIENT_SUPPORT
+}
+
+enum AccreditationType {
+  CERTIFICATION
+  REGISTRATION
+  MEMBERSHIP
+  COMPLIANCE
+  AWARD
+}
+
+model SuccessStory {
+  id               String              @id @default(cuid())
+  patientName      String
+  patientCountry   String
+  patientAge       Int?
+  treatmentType    String
+  hospitalName     String
+  hospitalId       String?
+  testimonial      String              @db.Text
+  outcome          String              @db.Text
+  journeySummary   String?             @db.Text
+  coverImage       String?
+  videoUrl         String?
+  rating           Int                 @default(5)
+  isFeatured       Boolean             @default(false)
+  isPublished      Boolean             @default(false)
+  status           SuccessStoryStatus  @default(DRAFT)
+  seoTitle         String?
+  seoDescription   String?             @db.Text
+  slug             String              @unique
+  tags             String[]            @default([])
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  hospital         Hospital?           @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+
+  @@index([status, isFeatured])
+  @@index([patientCountry])
+  @@index([treatmentType])
+  @@index([createdAt])
+}
+
+model TeamMember {
+  id             String             @id @default(cuid())
+  name           String
+  role           TeamMemberRole     @default(COORDINATOR)
+  title          String?
+  bio            String?            @db.Text
+  shortBio       String?
+  photo          String?
+  email          String?
+  phone          String?
+  linkedinUrl    String?
+  languages      LanguageCode[]     @default([EN, RU])
+  specializations String[]          @default([])
+  yearsExperience Int?
+  sortOrder      Int                @default(0)
+  isPublished    Boolean            @default(false)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([role, isPublished])
+  @@index([sortOrder])
+}
+
+model HospitalPartner {
+  id               String             @id @default(cuid())
+  name             String
+  slug             String             @unique
+  shortName        String?
+  logo             String?
+  coverImage       String?
+  country          String
+  city             String?
+  website          String?
+  description      String?            @db.Text
+  specialties      String[]           @default([])
+  bedCount         Int?
+  establishedYear  Int?
+  accreditations   String[]           @default([])
+  internationalDesk Boolean          @default(true)
+  partnerSince     DateTime?
+  patientRating    Float?
+  isFeatured       Boolean            @default(false)
+  isPublished      Boolean            @default(false)
+  sortOrder        Int                @default(0)
+  seoTitle         String?
+  seoDescription   String?            @db.Text
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  hospital         Hospital?          @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  hospitalId       String?
+
+  @@index([country, isPublished])
+  @@index([isFeatured])
+  @@index([slug])
+  @@index([sortOrder])
+}
+
+model Accreditation {
+  id             String             @id @default(cuid())
+  name           String
+  type           AccreditationType  @default(CERTIFICATION)
+  issuer         String
+  description    String?            @db.Text
+  logo           String?
+  validFrom      DateTime?
+  validUntil     DateTime?
+  isActive       Boolean            @default(true)
+  sortOrder      Int                @default(0)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([type, isActive])
+  @@index([sortOrder])
+}
+
+model CostGuide {
+  id               String   @id @default(cuid())
+  treatmentName    String
+  slug             String   @unique
+  category         String
+  description      String?  @db.Text
+  costMinINR       Int
+  costMaxINR       Int
+  costMinUSD       Int?
+  costMaxUSD       Int?
+  costMinUZS       Int?
+  costMaxUZS       Int?
+  durationDays     String?
+  includes         String[]
+  hospitalIds      String[]
+  country          String   @default("India")
+  isPublished      Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  seoTitle         String?
+  seoDescription   String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([category, isPublished])
+  @@index([slug])
+  @@index([country])
+  @@index([sortOrder])
+}
+
+model FAQ {
+  id             String   @id @default(cuid())
+  question       String
+  answer         String   @db.Text
+  category       String
+  sortOrder      Int      @default(0)
+  isPublished    Boolean  @default(true)
+  locale         String   @default("en")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([category, isPublished])
+  @@index([locale])
+  @@index([sortOrder])
+}
+
+model Doctor {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  specialization   String
+  subSpecializations String[] @default([])
+  qualifications   String[]
+  experience       Int?
+  hospitalName     String?
+  hospitalId       String?
+  photo            String?
+  bio              String?  @db.Text
+  languages        String[] @default(["English", "Russian"])
+  consultationFee  Int?
+  isFeatured       Boolean  @default(false)
+  isPublished      Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  seoTitle         String?
+  seoDescription   String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([specialization, isPublished])
+  @@index([isFeatured])
+  @@index([slug])
+  @@index([sortOrder])
+}
+
+model CountryPage {
+  id               String   @id @default(cuid())
+  countryCode      String
+  countryName      String
+  slug             String   @unique
+  heroTitle        String
+  heroDescription  String?  @db.Text
+  heroImage        String?
+  content          String?  @db.Text
+  medicalSystems   String?  @db.Text
+  popularTreatments String[]
+  partnerHospitals String[]
+  visaInfo         String?  @db.Text
+  travelInfo       String?  @db.Text
+  localOfficeInfo  String?  @db.Text
+  localPhone       String?
+  localEmail       String?
+  localAddress     String?
+  timezone         String?
+  languages        String[]
+  currency         String?
+  isPublished      Boolean  @default(false)
+  seoTitle         String?
+  seoDescription   String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([countryCode])
+  @@index([slug])
+  @@index([isPublished])
 }

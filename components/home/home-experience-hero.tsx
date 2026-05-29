@@ -138,7 +138,7 @@ export function HomeExperienceHero() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="2xl">
-                  <Link href="/medical-tourism">Submit Patient Case</Link>
+                  <Link href="/international-patient-care">Submit Patient Case</Link>
                 </Button>
               </motion.div>
 

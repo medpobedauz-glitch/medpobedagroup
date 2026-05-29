@@ -1,9 +1,9 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import type { Metadata } from "next";
-import { BlogStatus } from "@prisma/client";
 import { notFound } from "next/navigation";
 
 import BlogPostPage from "@/app/blog/[slug]/page";
-import { getBlogPostBySlug } from "@/lib/data/blog";
+import { getBlogPostBySlug, getPublishedBlogSlugs } from "@/lib/data/blog";
 import { getMessages } from "@/lib/i18n";
 import {
   isSupportedLocale,
@@ -12,6 +12,7 @@ import {
   locales,
   localizePath,
 } from "@/lib/i18n/config";
+import { media } from "@/lib/media";
 import { absoluteUrl, createMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 
@@ -22,26 +23,25 @@ type LocalizedBlogPostPageProps = {
   };
 };
 
-async function getPublishedPost(slug: string) {
-  const post = await getBlogPostBySlug(slug);
-
-  if (!post || post.status !== BlogStatus.PUBLISHED) {
-    return null;
-  }
-
-  return post;
+export function generateStaticParams() {
+  return locales.flatMap((locale) =>
+    getPublishedBlogSlugs().map((slug) => ({
+      locale,
+      slug,
+    })),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: LocalizedBlogPostPageProps): Promise<Metadata> {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
-  const locale = params.locale;
+  const locale = getRouteLocale(params?.locale);
   const messages = getMessages(locale);
-  const post = await getPublishedPost(params.slug);
+  const post = await getBlogPostBySlug(params.slug, locale);
   const path = localizePath(`/blog/${params.slug}`, locale);
 
   const baseMetadata = createMetadata({
@@ -49,7 +49,7 @@ export async function generateMetadata({
     description:
       post?.seoDescription || post?.excerpt || messages.routes.blog.description,
     path,
-    image: post?.coverImage || "/opengraph-image",
+    image: post?.coverImage || media.defaults.blog.src,
     type: "article",
     publishedTime: (post?.publishedAt ?? post?.createdAt)?.toISOString(),
     modifiedTime: post?.updatedAt?.toISOString(),
@@ -82,9 +82,9 @@ export async function generateMetadata({
 export default function LocalizedBlogPostPage({
   params,
 }: LocalizedBlogPostPageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 
-  return <BlogPostPage params={{ slug: params.slug }} />;
+  return <BlogPostPage params={{ slug: params.slug }} locale={getRouteLocale(params?.locale)} />;
 }

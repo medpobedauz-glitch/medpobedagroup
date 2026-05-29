@@ -120,6 +120,7 @@ export async function submitContactInquiryAction(formData: FormData) {
     programInterest: toOptionalString(formData.get("programInterest")),
     preferredContactTime: toOptionalString(formData.get("preferredContactTime")),
     collaborationInterest: toOptionalString(formData.get("collaborationInterest")),
+    consentAccepted: formData.get("consentAccepted") === "true",
   });
 
   if (!parsed.success) {
@@ -225,7 +226,6 @@ export async function submitContactInquiryAction(formData: FormData) {
 
     const attachments = formData.getAll("attachments").filter(Boolean) as File[];
     const medicalReports = formData.getAll("medicalReports").filter(Boolean) as File[];
-    const passportCopies = formData.getAll("passportCopies").filter(Boolean) as File[];
 
     for (const attachment of attachments) {
       await storeUploadedFile({
@@ -240,14 +240,6 @@ export async function submitContactInquiryAction(formData: FormData) {
         await storeUploadedFile({
           file: report,
           category: FileCategory.MEDICAL_REPORT,
-          contactSubmissionId: lead.id,
-        });
-      }
-
-      for (const passport of passportCopies) {
-        await storeUploadedFile({
-          file: passport,
-          category: FileCategory.PASSPORT,
           contactSubmissionId: lead.id,
         });
       }
@@ -399,7 +391,7 @@ export async function submitMedicalTourismInquiryAction(formData: FormData) {
     urgencyLevel: toRequiredString(formData.get("urgencyLevel")),
     reportsSummary: toOptionalString(formData.get("reportsSummary")),
     patientName: toOptionalString(formData.get("patientName")),
-    passportNumber: toOptionalString(formData.get("passportNumber")),
+    consentAccepted: formData.get("consentAccepted") === "true",
   });
 
   if (!parsed.success) {
@@ -425,7 +417,6 @@ export async function submitMedicalTourismInquiryAction(formData: FormData) {
       phone: parsed.data.phone,
       telegram: parsed.data.telegram,
       email: parsed.data.email,
-      passportNumber: parsed.data.passportNumber,
       preferredLanguage: routingDecision.language,
       notes: parsed.data.reportsSummary,
     },
@@ -454,22 +445,12 @@ export async function submitMedicalTourismInquiryAction(formData: FormData) {
   });
 
   const medicalReports = formData.getAll("medicalReports").filter(Boolean) as File[];
-  const passportCopies = formData.getAll("passportCopies").filter(Boolean) as File[];
   const treatmentDocuments = formData.getAll("treatmentDocuments").filter(Boolean) as File[];
 
   for (const report of medicalReports) {
     await storeUploadedFile({
       file: report,
       category: FileCategory.MEDICAL_REPORT,
-      patientId: patient.id,
-      medicalTourismInquiryId: inquiry.id,
-    });
-  }
-
-  for (const passport of passportCopies) {
-    await storeUploadedFile({
-      file: passport,
-      category: FileCategory.PASSPORT,
       patientId: patient.id,
       medicalTourismInquiryId: inquiry.id,
     });

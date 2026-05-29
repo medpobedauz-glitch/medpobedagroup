@@ -136,7 +136,9 @@ export function SpecialtyFocusCard({
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild variant="hero" size="lg" className="sm:flex-1">
-                    <Link href={`/medical-tourism?specialty=${encodeURIComponent(specialty.id)}`}>
+                    <Link
+                      href={`/international-patient-care?specialty=${encodeURIComponent(specialty.id)}`}
+                    >
                       {specialty.ctaLabel}
                     </Link>
                   </Button>

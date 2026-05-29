@@ -89,7 +89,9 @@ export function HeroSection() {
               </PublicLink>
             </Button>
             <Button asChild variant="outline" size="xl">
-              <PublicLink href="/medical-tourism">Explore Medical Tourism</PublicLink>
+              <PublicLink href="/international-patient-care">
+                Explore International Patient Care
+              </PublicLink>
             </Button>
             <Button asChild variant="ghost" size="xl" className="justify-start sm:justify-center">
               <PublicLink href="/contact">Contact Us</PublicLink>

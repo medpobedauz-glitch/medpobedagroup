@@ -15,7 +15,7 @@ function revalidateSettingsSurface() {
     "/",
     "/about",
     "/services",
-    "/medical-tourism",
+    "/international-patient-care",
     "/hospital-partnerships",
     "/international-patients",
     "/student-mobility",

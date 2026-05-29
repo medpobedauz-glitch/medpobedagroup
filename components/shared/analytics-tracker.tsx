@@ -1,8 +1,9 @@
 "use client";
 
-import { InquiryType } from "@prisma/client";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+
+import { InquiryType, type InquiryType as InquiryTypeValue } from "@/lib/client-enums";
 
 const SESSION_STORAGE_KEY = "medpobeda-analytics-session";
 const SUCCESS_STORAGE_PREFIX = "medpobeda-success";
@@ -21,7 +22,7 @@ function getSessionId() {
 function sendAnalyticsEvent(payload: {
   eventType: "PAGE_VIEW" | "FORM_SUCCESS";
   path: string;
-  inquiryType?: InquiryType;
+  inquiryType?: InquiryTypeValue;
   metadata?: Record<string, unknown>;
 }) {
   const body = JSON.stringify({
@@ -50,7 +51,9 @@ function resolveInquiryType(pathname: string, submitted: string | null) {
     return undefined;
   }
 
-  if (pathname === "/medical-tourism") return InquiryType.MEDICAL_TOURISM;
+  if (pathname === "/medical-tourism" || pathname === "/international-patient-care") {
+    return InquiryType.MEDICAL_TOURISM;
+  }
   if (pathname === "/hospital-partnerships") return InquiryType.PARTNERSHIP;
   if (pathname === "/student-mobility") return InquiryType.STUDENT_MOBILITY;
   if (pathname === "/international-patients") return InquiryType.INTERNATIONAL_PATIENT;

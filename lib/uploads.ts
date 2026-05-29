@@ -6,8 +6,11 @@ import { randomUUID } from "node:crypto";
 
 import { FileCategory, FileVisibility } from "@prisma/client";
 
-import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
+import {
+  getEffectiveUploadSizeLimitMb,
+  resolveUploadStoragePath,
+} from "@/lib/upload-storage";
 
 const officeMimeTypes = [
   "application/msword",
@@ -69,7 +72,10 @@ function resolveEntityDirectory({
   patientId,
   medicalTourismInquiryId,
   contactSubmissionId,
+  contactInquiryId,
+  patientInquiryId,
   partnershipLeadId,
+  hospitalPartnershipInquiryId,
   studentMobilityInquiryId,
   hospitalId,
   partnershipId,
@@ -79,7 +85,10 @@ function resolveEntityDirectory({
   patientId?: string;
   medicalTourismInquiryId?: string;
   contactSubmissionId?: string;
+  contactInquiryId?: string;
+  patientInquiryId?: string;
   partnershipLeadId?: string;
+  hospitalPartnershipInquiryId?: string;
   studentMobilityInquiryId?: string;
   hospitalId?: string;
   partnershipId?: string;
@@ -97,8 +106,20 @@ function resolveEntityDirectory({
     return path.join("inquiries", "contact", contactSubmissionId);
   }
 
+  if (contactInquiryId) {
+    return path.join("inquiries", "contact-crm", contactInquiryId);
+  }
+
+  if (patientInquiryId) {
+    return path.join("inquiries", "patient", patientInquiryId);
+  }
+
   if (partnershipLeadId) {
     return path.join("inquiries", "partnership", partnershipLeadId);
+  }
+
+  if (hospitalPartnershipInquiryId) {
+    return path.join("inquiries", "hospital-partnership", hospitalPartnershipInquiryId);
   }
 
   if (studentMobilityInquiryId) {
@@ -141,7 +162,10 @@ export async function storeUploadedFile({
   patientId,
   medicalTourismInquiryId,
   contactSubmissionId,
+  contactInquiryId,
+  patientInquiryId,
   partnershipLeadId,
+  hospitalPartnershipInquiryId,
   studentMobilityInquiryId,
   hospitalId,
   partnershipId,
@@ -157,7 +181,10 @@ export async function storeUploadedFile({
   patientId?: string;
   medicalTourismInquiryId?: string;
   contactSubmissionId?: string;
+  contactInquiryId?: string;
+  patientInquiryId?: string;
   partnershipLeadId?: string;
+  hospitalPartnershipInquiryId?: string;
   studentMobilityInquiryId?: string;
   hospitalId?: string;
   partnershipId?: string;
@@ -176,9 +203,9 @@ export async function storeUploadedFile({
     throw new Error(`Unsupported file type for ${category}.`);
   }
 
-  const maxSizeBytes = env.MAX_UPLOAD_SIZE_MB * 1024 * 1024;
+  const maxSizeBytes = getEffectiveUploadSizeLimitMb() * 1024 * 1024;
   if (file.size > maxSizeBytes) {
-    throw new Error(`File exceeds ${env.MAX_UPLOAD_SIZE_MB}MB limit.`);
+    throw new Error(`File exceeds ${getEffectiveUploadSizeLimitMb()}MB limit.`);
   }
 
   const date = new Date();
@@ -187,7 +214,10 @@ export async function storeUploadedFile({
     patientId,
     medicalTourismInquiryId,
     contactSubmissionId,
+    contactInquiryId,
+    patientInquiryId,
     partnershipLeadId,
+    hospitalPartnershipInquiryId,
     studentMobilityInquiryId,
     hospitalId,
     partnershipId,
@@ -199,7 +229,7 @@ export async function storeUploadedFile({
     String(date.getUTCFullYear()),
     String(date.getUTCMonth() + 1).padStart(2, "0"),
   );
-  const absoluteDir = path.resolve(process.cwd(), env.UPLOAD_ROOT, relativeDir);
+  const absoluteDir = resolveUploadStoragePath(relativeDir);
 
   await mkdir(absoluteDir, { recursive: true });
 
@@ -243,7 +273,10 @@ export async function storeUploadedFile({
       patientId,
       medicalTourismInquiryId,
       contactSubmissionId,
+      contactInquiryId,
+      patientInquiryId,
       partnershipLeadId,
+      hospitalPartnershipInquiryId,
       studentMobilityInquiryId,
       hospitalId,
       partnershipId,

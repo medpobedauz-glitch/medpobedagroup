@@ -1,75 +1,54 @@
 import { createMetadata } from "@/lib/metadata";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 import { createBreadcrumbSchema, createWebPageSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/shared/json-ld";
 import { PageHero } from "@/components/shared/page-hero";
 import { Card } from "@/components/ui/card";
 
-export const metadata = createMetadata({
-  title: "Terms of Use",
-  description:
-    "Read the MedPobeda Group website terms covering use of the public site, inquiry submissions, and informational healthcare content.",
-  path: "/terms",
-});
-
-const sections = [
-  {
-    title: "Website Purpose",
-    body:
-      "The MedPobeda Group website is intended to provide information about healthcare collaboration, medical tourism coordination, hospital partnerships, international patient assistance, and student mobility support.",
-  },
-  {
-    title: "Informational Nature",
-    body:
-      "Public website content is informational and should not be interpreted as direct medical advice, treatment guarantees, or binding institutional commitments.",
-  },
-  {
-    title: "Inquiry Submissions",
-    body:
-      "By submitting a form, users confirm that the information provided is accurate to the best of their knowledge and suitable for coordination review.",
-  },
-  {
-    title: "Clinical Responsibility",
-    body:
-      "Medical decisions, diagnosis, treatment planning, and patient outcomes remain the responsibility of the relevant licensed healthcare providers and treating institutions.",
-  },
-  {
-    title: "Changes",
-    body:
-      "MedPobeda Group may update website content, public positioning, or operating information as needed without prior notice.",
-  },
-];
+export function generateMetadata() {
+  const locale = getRequestLocale();
+  const messages = getMessages(locale);
+  return createMetadata({
+    title: messages.routes.terms.title,
+    description: messages.routes.terms.description,
+    path: "/terms",
+    locale,
+    keywords: messages.routes.terms.keywords,
+    ogTitle: messages.routes.terms.openGraphTitle,
+    ogDescription: messages.routes.terms.openGraphDescription,
+  });
+}
 
 export default function TermsPage() {
+  const locale = getRequestLocale();
+  const messages = getMessages(locale);
+  const page = messages.pages.terms;
   return (
     <>
       <JsonLd
         data={[
           createWebPageSchema({
-            name: "Terms of Use",
-            description:
-              "Read the MedPobeda Group website terms covering use of the public site, inquiry submissions, and informational healthcare content.",
+            name: page.schemaName,
+            description: page.schemaDescription,
             path: "/terms",
+            locale,
           }),
           createBreadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Terms", path: "/terms" },
-          ]),
+            { name: messages.chrome.navigation.home, path: "/" },
+            { name: messages.routes.terms.title, path: "/terms" },
+          ], locale),
         ]}
       />
       <PageHero
-        eyebrow="Terms"
-        title="Public website terms for information, inquiries, and coordination requests"
-        description="These terms describe the intended use of the MedPobeda Group website and the basic conditions around public information and submitted inquiries."
-        points={[
-          "Informational website use",
-          "Public inquiry expectations",
-          "Clinical responsibility boundaries",
-          "Content and operational updates",
-        ]}
+        eyebrow={page.hero.eyebrow}
+        title={page.hero.title}
+        description={page.hero.description}
+        points={page.hero.points}
       />
       <section className="px-6 py-20 lg:px-8">
         <div className="mx-auto grid max-w-5xl gap-5">
-          {sections.map((section) => (
+          {page.sections.map((section) => (
             <Card key={section.title} className="border-white/12 p-7">
               <h2 className="font-display text-2xl font-semibold text-white">
                 {section.title}

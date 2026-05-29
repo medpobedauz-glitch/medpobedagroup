@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 import { getTelegramUrl, getWhatsAppUrl } from "@/lib/site";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,7 +21,7 @@ type InquiryCTASectionProps = {
 };
 
 export function InquiryCTASection({
-  eyebrow = "Direct Communication",
+  eyebrow,
   title,
   description,
   primaryHref,
@@ -27,6 +29,8 @@ export function InquiryCTASection({
   inquiryMessage,
   imageKey,
 }: InquiryCTASectionProps) {
+  const messages = getMessages(getRequestLocale());
+  const resolvedEyebrow = eyebrow ?? messages.components.premiumCtaBanner.defaultEyebrow;
   const whatsappHref = getWhatsAppUrl(inquiryMessage);
   const telegramHref = getTelegramUrl(inquiryMessage);
   const image = imageKey ? getSiteImage(imageKey) : null;
@@ -44,7 +48,7 @@ export function InquiryCTASection({
           >
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-sky-700">
-                {eyebrow}
+                {resolvedEyebrow}
               </p>
               <h2 className="mt-5 font-display text-3xl font-semibold text-slate-950 sm:text-4xl">
                 {title}
@@ -60,14 +64,14 @@ export function InquiryCTASection({
                 {whatsappHref ? (
                   <Button asChild variant="outline" size="xl">
                     <a href={whatsappHref} target="_blank" rel="noreferrer">
-                      WhatsApp
+                      {messages.chrome.actions.messageUsOnWhatsApp}
                     </a>
                   </Button>
                 ) : null}
                 {telegramHref ? (
                   <Button asChild variant="outline" size="xl">
                     <a href={telegramHref} target="_blank" rel="noreferrer">
-                      Telegram
+                      {messages.chrome.actions.messageUsOnTelegram}
                     </a>
                   </Button>
                 ) : null}

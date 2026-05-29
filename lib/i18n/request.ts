@@ -5,6 +5,7 @@ import {
   isSupportedLocale,
   LOCALE_COOKIE_NAME,
   LOCALE_HEADER_NAME,
+  type AppLocale,
 } from "@/lib/i18n/config";
 
 export function getRequestLocale() {
@@ -21,4 +22,10 @@ export function getRequestLocale() {
   }
 
   return defaultLocale;
+}
+
+export function getRouteLocale(routeLocale?: string): AppLocale {
+  return routeLocale && isSupportedLocale(routeLocale)
+    ? routeLocale
+    : getRequestLocale();
 }

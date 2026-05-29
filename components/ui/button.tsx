@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full font-display text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+  "relative inline-flex max-w-full items-center justify-center gap-2 overflow-hidden rounded-full text-center font-display text-sm font-semibold leading-tight transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 sm:whitespace-nowrap",
   {
     variants: {
       variant: {
@@ -31,11 +31,11 @@ const buttonVariants = cva(
           "bg-rose-600 text-white shadow-soft hover:-translate-y-0.5 hover:bg-rose-500",
       },
       size: {
-        default: "h-11 px-5",
-        sm: "h-9 px-4 text-xs",
-        lg: "h-12 px-6 text-sm",
-        xl: "h-14 px-7 text-[0.95rem]",
-        "2xl": "h-16 px-8 text-base",
+        default: "min-h-[2.75rem] px-5 py-3",
+        sm: "min-h-9 px-4 py-2 text-xs",
+        lg: "min-h-12 px-6 py-3 text-sm",
+        xl: "min-h-14 px-6 py-3.5 text-[0.95rem] sm:px-7",
+        "2xl": "min-h-14 px-6 py-4 text-base sm:min-h-16 sm:px-8",
         icon: "h-11 w-11",
       },
     },
@@ -62,7 +62,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <span className="relative z-[1] inline-flex items-center gap-2">{children}</span>
+        <span className="relative z-[1] inline-flex max-w-full flex-wrap items-center justify-center gap-2 text-center">
+          {children}
+        </span>
       </Comp>
     );
   },

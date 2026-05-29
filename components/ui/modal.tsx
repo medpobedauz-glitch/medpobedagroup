@@ -28,22 +28,27 @@ ModalOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const ModalContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    closeLabel?: string;
+  }
+>(({ className, children, closeLabel = "Close dialog", ...props }, ref) => (
   <ModalPortal>
     <ModalOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-1/2 top-1/2 z-50 w-[calc(100%-1.5rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-[2rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.99),rgba(243,248,255,0.96))] p-6 shadow-panel backdrop-blur-3xl duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out sm:p-8",
+        "fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-50 max-h-[calc(100svh-8rem)] overflow-y-auto rounded-[1.5rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.99),rgba(243,248,255,0.96))] p-4 shadow-panel backdrop-blur-3xl duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out sm:left-1/2 sm:right-auto sm:top-1/2 sm:bottom-auto sm:w-[calc(100%-2rem)] sm:max-w-[26.25rem] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-[2rem] sm:p-6",
         className,
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-5 top-5 rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-950">
+      <DialogPrimitive.Close
+        aria-label={closeLabel}
+        className="absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-[0_12px_28px_rgba(7,27,58,0.08)] transition hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:right-4 sm:top-4"
+      >
         <X className="h-5 w-5" />
-        <span className="sr-only">Close</span>
+        <span className="sr-only">{closeLabel}</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </ModalPortal>
@@ -54,7 +59,7 @@ const ModalHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col gap-2 pr-10 text-left", className)} {...props} />
+  <div className={cn("flex flex-col gap-2 pr-12 text-left", className)} {...props} />
 );
 
 const ModalTitle = React.forwardRef<

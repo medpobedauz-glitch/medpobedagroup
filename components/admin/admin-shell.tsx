@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { UserRole } from "@prisma/client";
 import {
   BriefcaseMedical,
+  ClipboardList,
   Globe2,
   Home,
   Hospital,
@@ -40,6 +41,12 @@ const adminNav = [
     href: "/admin",
     label: "Dashboard",
     icon: LayoutDashboard,
+    roles: ["SUPER_ADMIN", "ADMIN", "STAFF"] as UserRole[],
+  },
+  {
+    href: "/admin/inquiries",
+    label: "Inquiry CRM",
+    icon: ClipboardList,
     roles: ["SUPER_ADMIN", "ADMIN", "STAFF"] as UserRole[],
   },
   {
@@ -120,8 +127,8 @@ export function AdminShell({
 }: AdminShellProps) {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.1),transparent_26%),linear-gradient(180deg,#06101f,#091b3f_38%,#071a38)]">
-      <div className="mx-auto grid min-h-screen max-w-[1440px] gap-8 px-6 py-8 xl:grid-cols-[320px_1fr] xl:px-8">
-        <aside className="surface-admin sticky top-8 h-fit rounded-[2rem] border border-white/10 p-6">
+      <div className="mx-auto grid min-h-screen max-w-[1440px] gap-6 px-4 py-6 sm:px-6 sm:py-8 xl:grid-cols-[320px_1fr] xl:px-8">
+        <aside className="surface-admin h-fit rounded-[2rem] border border-white/10 p-5 sm:p-6 xl:sticky xl:top-8">
           <Link href="/" className="block">
             <BrandMark />
           </Link>
@@ -189,7 +196,7 @@ export function AdminShell({
             </p>
             <p className="mt-3 text-sm text-white">{siteConfig.location}</p>
             <p className="mt-2 text-sm text-slate-300">
-              {siteConfig.contactEmail || "Set NEXT_PUBLIC_CONTACT_EMAIL"}
+              {siteConfig.contactEmail}
             </p>
           </div>
           <form action={logoutAdminAction} className="mt-8">
@@ -205,7 +212,7 @@ export function AdminShell({
           </form>
         </aside>
         <main className="space-y-8">
-          <div className="surface-admin rounded-[2rem] border border-white/10 p-7">
+          <div className="surface-admin rounded-[2rem] border border-white/10 p-5 sm:p-7">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-100/70">

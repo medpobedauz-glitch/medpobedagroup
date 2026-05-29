@@ -37,7 +37,7 @@ export function PremiumSplitTrustSection({
   return (
     <section className="section-shell">
       <div className="container-wide">
-        <div className="section-frame px-6 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <div className="section-frame px-4 py-8 sm:px-8 lg:px-10 lg:py-12">
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <PremiumCard hover={false} className="h-full p-6 sm:p-8">
               <SectionHeader

@@ -24,7 +24,7 @@ export function FAQAccordion({
   return (
     <section className="section-shell-compact">
       <div className="container-wide">
-        <div className="section-frame-soft px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
+        <div className="section-frame-soft px-4 py-8 sm:px-8 lg:px-10 lg:py-10">
           <div className="relative mx-auto max-w-5xl">
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-sky-700">
@@ -48,7 +48,7 @@ export function FAQAccordion({
                   >
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                      className="flex w-full items-start justify-between gap-4 px-4 py-4 text-left sm:px-6 sm:py-5"
                       aria-expanded={isOpen}
                       onClick={() => setOpenIndex(isOpen ? -1 : index)}
                     >
@@ -56,7 +56,7 @@ export function FAQAccordion({
                         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#D6E8FF] bg-[linear-gradient(135deg,rgba(29,78,216,0.1),rgba(56,189,248,0.14))] text-sm font-semibold text-blue-700">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <span className="font-display text-xl font-semibold text-slate-950">
+                        <span className="font-display text-lg font-semibold text-slate-950 sm:text-xl">
                           {item.question}
                         </span>
                       </div>

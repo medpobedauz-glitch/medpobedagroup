@@ -3,6 +3,7 @@ import "server-only";
 import { unstable_noStore as noStore } from "next/cache";
 
 import { env } from "@/lib/env";
+import { media } from "@/lib/media";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/lib/site";
 
@@ -11,16 +12,18 @@ export const defaultPlatformSettings = {
   brandName: siteConfig.name,
   shortName: siteConfig.shortName,
   siteUrl: siteConfig.siteUrl,
-  seoDefaultTitle: `${siteConfig.name} | ${siteConfig.tagline}`,
+  seoDefaultTitle:
+    "MedPobeda Group | Medical Tourism & Healthcare Partnerships in Uzbekistan",
   seoDefaultDescription: siteConfig.description,
   seoKeywords: [
     "MedPobeda Group",
-    "medical tourism Uzbekistan",
-    "hospital partnership India",
-    "international patient coordination",
+    "medical tourism in Uzbekistan",
+    "healthcare partnerships in Uzbekistan",
+    "international patient assistance",
+    "hospital partnership development",
     "student mobility Uzbekistan",
   ],
-  ogImage: "/opengraph-image",
+  ogImage: media.brand.openGraph.src,
   twitterHandle: "",
   linkedinUrl: "",
   xUrl: "",

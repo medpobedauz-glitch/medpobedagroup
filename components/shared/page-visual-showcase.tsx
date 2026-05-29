@@ -8,6 +8,9 @@ type PageVisualShowcaseProps = {
   title: string;
   description: string;
   imageKeys: readonly SiteImageKey[];
+  imageTitles?: string[];
+  imageDescriptions?: string[];
+  imageAlts?: string[];
 };
 
 export function PageVisualShowcase({
@@ -15,10 +18,16 @@ export function PageVisualShowcase({
   title,
   description,
   imageKeys,
+  imageTitles,
+  imageDescriptions,
+  imageAlts,
 }: PageVisualShowcaseProps) {
-  const primary = getSiteImage(imageKeys[0]!);
-  const secondary = getSiteImage(imageKeys[1]!);
-  const tertiary = getSiteImage(imageKeys[2]!);
+  const primaryBase = getSiteImage(imageKeys[0]!);
+  const secondaryBase = getSiteImage(imageKeys[1]!);
+  const tertiaryBase = getSiteImage(imageKeys[2]!);
+  const primary = { ...primaryBase, alt: imageAlts?.[0] ?? primaryBase.alt };
+  const secondary = { ...secondaryBase, alt: imageAlts?.[1] ?? secondaryBase.alt };
+  const tertiary = { ...tertiaryBase, alt: imageAlts?.[2] ?? tertiaryBase.alt };
 
   return (
     <section className="section-shell-compact">
@@ -31,16 +40,24 @@ export function PageVisualShowcase({
             <FadeIn className="sm:col-span-2">
               <ImageCard
                 asset={primary}
-                title={primary.title}
-                description={primary.alt}
+                title={imageTitles?.[0] ?? primary.title}
+                description={imageDescriptions?.[0] || primary.alt}
                 aspectClassName="aspect-[16/9]"
               />
             </FadeIn>
             <FadeIn delay={0.06}>
-              <ImageCard asset={secondary} title={secondary.title} />
+              <ImageCard
+                asset={secondary}
+                title={imageTitles?.[1] ?? secondary.title}
+                description={imageDescriptions?.[1] || undefined}
+              />
             </FadeIn>
             <FadeIn delay={0.1}>
-              <ImageCard asset={tertiary} title={tertiary.title} />
+              <ImageCard
+                asset={tertiary}
+                title={imageTitles?.[2] ?? tertiary.title}
+                description={imageDescriptions?.[2] || undefined}
+              />
             </FadeIn>
           </div>
         </div>

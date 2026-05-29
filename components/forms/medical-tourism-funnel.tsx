@@ -1,12 +1,21 @@
 "use client";
 
-import { UrgencyLevel } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, FileText, Globe2, HeartHandshake, ShieldCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileText,
+  Globe2,
+  HeartHandshake,
+  type LucideIcon,
+  PhoneCall,
+  ShieldCheck,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { submitMedicalTourismInquiryAction } from "@/app/actions/inquiries";
+import { UrgencyLevel, type UrgencyLevel as UrgencyLevelValue } from "@/lib/client-enums";
 import { useMessages } from "@/lib/i18n";
-import { submitMedicalTourismInquiryAction } from "@/lib/actions/inquiries";
 import { InquiryProgress } from "@/components/forms/inquiry-progress";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { useDraftPersistence } from "@/components/forms/use-draft-persistence";
@@ -36,8 +45,7 @@ type TourismState = {
   preferredHospital: string;
   preferredCountry: string;
   budgetRange: string;
-  urgencyLevel: UrgencyLevel;
-  passportNumber: string;
+  urgencyLevel: UrgencyLevelValue;
   reportsSummary: string;
   message: string;
 };
@@ -56,7 +64,6 @@ const initialState: TourismState = {
   preferredCountry: "India",
   budgetRange: "",
   urgencyLevel: UrgencyLevel.MEDIUM,
-  passportNumber: "",
   reportsSummary: "",
   message: "",
 };
@@ -67,6 +74,23 @@ function isValidEmail(value: string) {
   return /\S+@\S+\.\S+/.test(value);
 }
 
+function FormNoticeCard({
+  icon: Icon,
+  text,
+}: {
+  icon: LucideIcon;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[1.5rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.92)] p-4">
+      <div className="flex items-start gap-3">
+        <Icon className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+        <p className="text-sm leading-7 text-slate-600">{text}</p>
+      </div>
+    </div>
+  );
+}
+
 export function MedicalTourismInquiryFunnel({
   redirectPath,
   honeypotField,
@@ -75,6 +99,7 @@ export function MedicalTourismInquiryFunnel({
 }: MedicalTourismFunnelProps) {
   const messages = useMessages();
   const formMessages = messages.forms.medicalTourismFunnel;
+  const isInternationalPatientCareRoute = redirectPath.includes("/international-patient-care");
   const steps = formMessages.steps;
   const [step, setStep] = useState(0);
   const [values, setValues] = useState<TourismState>(initialState);
@@ -181,7 +206,9 @@ export function MedicalTourismInquiryFunnel({
 
   const sharedInputClass = "field-shell";
   const urgencyNote =
-    values.urgencyLevel === UrgencyLevel.HIGH
+    values.urgencyLevel === UrgencyLevel.CRITICAL
+      ? formMessages.urgencyNotes.critical
+      : values.urgencyLevel === UrgencyLevel.HIGH
       ? formMessages.urgencyNotes.high
       : values.urgencyLevel === UrgencyLevel.MEDIUM
         ? formMessages.urgencyNotes.medium
@@ -192,13 +219,19 @@ export function MedicalTourismInquiryFunnel({
       : draftStatus === "saved"
         ? formMessages.draftSaved
         : formMessages.draftIdle;
+  const formEyebrow = isInternationalPatientCareRoute
+    ? "International Patient Care Inquiry"
+    : formMessages.eyebrow;
+  const successMessage = isInternationalPatientCareRoute
+    ? "Thank you. MedPobeda Group has received your international patient care inquiry and will review the next steps."
+    : formMessages.successMessage;
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
       <Card variant="light" className="border-slate-200/80 p-6 text-slate-950 shadow-premium sm:p-8">
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-700">
-            {formMessages.eyebrow}
+            {formEyebrow}
           </p>
           <h2 className="mt-4 font-display text-3xl font-semibold text-slate-950 sm:text-4xl">
             {formMessages.title}
@@ -223,7 +256,7 @@ export function MedicalTourismInquiryFunnel({
           </div>
           {submitted ? (
             <Alert variant="light" className="mt-4 rounded-[1.4rem] border-emerald-200 bg-emerald-50 text-emerald-900">
-              {formMessages.successMessage}
+              {successMessage}
             </Alert>
           ) : null}
           {hasError ? (
@@ -268,12 +301,6 @@ export function MedicalTourismInquiryFunnel({
           />
           <input type="hidden" name="budgetRange" value={values.budgetRange} readOnly />
           <input type="hidden" name="urgencyLevel" value={values.urgencyLevel} readOnly />
-          <input
-            type="hidden"
-            name="passportNumber"
-            value={values.passportNumber}
-            readOnly
-          />
           <input
             type="hidden"
             name="reportsSummary"
@@ -439,7 +466,7 @@ export function MedicalTourismInquiryFunnel({
                       <select
                         value={values.urgencyLevel}
                         onChange={(event) =>
-                          updateValue("urgencyLevel", event.target.value as UrgencyLevel)
+                          updateValue("urgencyLevel", event.target.value as UrgencyLevelValue)
                         }
                         className="select-enterprise"
                       >
@@ -449,16 +476,6 @@ export function MedicalTourismInquiryFunnel({
                           </option>
                         ))}
                       </select>
-                    </label>
-                    <label className={sharedInputClass}>
-                      {formMessages.fields.passportNumber}
-                      <Input
-                        value={values.passportNumber}
-                        onChange={(event) =>
-                          updateValue("passportNumber", event.target.value)
-                        }
-                        placeholder={formMessages.fields.passportNumberPlaceholder}
-                      />
                     </label>
                   </div>
                   <label className={sharedInputClass}>
@@ -515,15 +532,6 @@ export function MedicalTourismInquiryFunnel({
                         />
                     </label>
                     <label className={sharedInputClass}>
-                      {formMessages.review.passportCopy}
-                        <Input
-                          type="file"
-                          name="passportCopies"
-                          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                          multiple
-                        />
-                    </label>
-                    <label className={sharedInputClass}>
                       {formMessages.review.treatmentDocuments}
                         <Input
                           type="file"
@@ -536,6 +544,30 @@ export function MedicalTourismInquiryFunnel({
                   <p className="text-sm leading-7 text-slate-500">
                     {formMessages.review.acceptedFormats}
                   </p>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <FormNoticeCard
+                      icon={ShieldCheck}
+                      text={formMessages.notices.privacy}
+                    />
+                    <FormNoticeCard
+                      icon={PhoneCall}
+                      text={formMessages.notices.emergency}
+                    />
+                  </div>
+                  <FormNoticeCard
+                    icon={FileText}
+                    text={formMessages.notices.patientUpload}
+                  />
+                  <label className="flex items-start gap-3 rounded-[1.5rem] border border-[#D6E8FF] bg-white p-4 text-sm leading-7 text-slate-600 shadow-[0_14px_36px_rgba(7,27,58,0.04)]">
+                    <input
+                      type="checkbox"
+                      name="consentAccepted"
+                      value="true"
+                      required
+                      className="mt-1 h-4 w-4 rounded border-[#9CC8FF] text-blue-700 focus:ring-blue-500"
+                    />
+                    <span>{formMessages.notices.consent}</span>
+                  </label>
                 </>
               ) : null}
             </motion.div>
@@ -544,13 +576,25 @@ export function MedicalTourismInquiryFunnel({
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-3">
               {step > 0 ? (
-                <Button type="button" variant="secondary" size="lg" onClick={goPrevious}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="lg"
+                  onClick={goPrevious}
+                  className="w-full sm:w-auto"
+                >
                   <ArrowLeft className="h-4 w-4" />
                   {messages.chrome.common.back}
                 </Button>
               ) : null}
               {step < steps.length - 1 ? (
-                <Button type="button" variant="primary" size="lg" onClick={goNext}>
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="lg"
+                  onClick={goNext}
+                  className="w-full sm:w-auto"
+                >
                   {messages.chrome.common.nextStep}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -559,6 +603,7 @@ export function MedicalTourismInquiryFunnel({
                   type="submit"
                   variant="primary"
                   size="lg"
+                  className="w-full sm:w-auto"
                   pendingLabel={formMessages.actions.submitting}
                 >
                   {formMessages.actions.submit}

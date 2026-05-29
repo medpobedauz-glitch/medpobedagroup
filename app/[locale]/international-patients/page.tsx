@@ -1,3 +1,4 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import { notFound } from "next/navigation";
 
 import InternationalPatientsPage from "@/app/international-patients/page";
@@ -15,14 +16,14 @@ type LocalePageProps = {
 };
 
 export async function generateMetadata({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
   return createLocalizedPageMetadata(
-    params.locale,
+    getRouteLocale(params?.locale),
     "international-patients",
-    localizePath("/international-patients", params.locale),
+    localizePath("/international-patients", getRouteLocale(params?.locale)),
   );
 }
 
@@ -30,7 +31,7 @@ export default function LocalizedInternationalPatientsPage({
   params,
   searchParams,
 }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 

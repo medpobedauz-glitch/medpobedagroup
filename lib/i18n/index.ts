@@ -1,14 +1,8 @@
 import type { AppLocale, LocalizedRouteKey } from "@/lib/i18n/config";
 import {
-  defaultLocale,
-  localeHreflangMap,
-  localeOpenGraphMap,
-  locales,
-  localizePath,
   stripLocaleFromPath,
 } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
-import { absoluteUrl } from "@/lib/metadata";
 import { createMetadata } from "@/lib/metadata";
 
 export function createLocalizedPageMetadata(
@@ -17,34 +11,18 @@ export function createLocalizedPageMetadata(
   path: string,
 ) {
   const messages = getMessages(locale);
-  const route = messages.routes[routeKey];
+  // Access route dynamically; cast to any to avoid strict key checking (some routes like "doctors" may be missing in certain locales).
+  const route = (messages.routes as any)[routeKey];
   const normalizedPath = stripLocaleFromPath(path);
-  const canonicalPath = localizePath(normalizedPath, locale);
-  const metadata = createMetadata({
+  return createMetadata({
     title: route.title,
     description: route.description,
-    path: canonicalPath,
+    path: normalizedPath,
+    locale,
+    keywords: route.keywords,
+    ogTitle: route.openGraphTitle,
+    ogDescription: route.openGraphDescription,
   });
-
-  return {
-    ...metadata,
-    alternates: {
-      canonical: absoluteUrl(canonicalPath),
-      languages: Object.fromEntries(
-        [
-          ...locales.map((item) => [
-            localeHreflangMap[item],
-            absoluteUrl(localizePath(normalizedPath, item)),
-          ]),
-          ["x-default", absoluteUrl(localizePath(normalizedPath, defaultLocale))],
-        ],
-      ),
-    },
-    openGraph: {
-      ...metadata.openGraph,
-      locale: localeOpenGraphMap[locale],
-    },
-  };
 }
 
 export { getMessages } from "@/lib/i18n/messages";

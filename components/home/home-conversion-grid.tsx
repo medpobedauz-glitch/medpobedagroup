@@ -16,7 +16,7 @@ const routes = [
     title: "Medical Case Intake",
     description:
       "Use this when the request includes diagnosis detail, specialist matching, or travel-readiness discussion.",
-    href: "/medical-tourism",
+    href: "/international-patient-care",
     icon: HeartPulse,
   },
   {

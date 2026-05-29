@@ -1,11 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 import { PremiumCard } from "@/components/marketing/premium-card";
 import { type PremiumVisualAsset } from "@/components/marketing/premium-image-frame";
+import { PublicLink } from "@/components/shared/public-link";
 import { SectionHeader } from "@/components/marketing/section-header";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 
 export type PremiumFeatureCardItem = {
   icon: LucideIcon;
@@ -24,8 +27,8 @@ type PremiumFeatureCardsSectionProps = {
 };
 
 const columnClasses = {
-  2: "lg:grid-cols-2",
-  3: "lg:grid-cols-2 xl:grid-cols-3",
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 xl:grid-cols-3",
   4: "sm:grid-cols-2 xl:grid-cols-4",
 } as const;
 
@@ -36,6 +39,8 @@ export function PremiumFeatureCardsSection({
   items,
   columns = 3,
 }: PremiumFeatureCardsSectionProps) {
+  const messages = getMessages(getRequestLocale());
+
   return (
     <section className="section-shell pt-0">
       <div className="container-wide">
@@ -48,6 +53,7 @@ export function PremiumFeatureCardsSection({
         <div className={`mt-12 grid gap-6 ${columnClasses[columns]}`}>
           {items.map((item, index) => {
             const Icon = item.icon;
+            const isInternalPath = Boolean(item.href?.startsWith("/"));
 
             return (
               <PremiumCard
@@ -57,17 +63,18 @@ export function PremiumFeatureCardsSection({
               >
                 {item.image ? (
                   <div className="rounded-[1.7rem] border border-[#D6E8FF] bg-white p-3 shadow-[0_18px_40px_rgba(7,27,58,0.06)]">
-                    <div className="relative overflow-hidden rounded-[1.35rem]">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.35rem]">
                       <div className="absolute left-4 top-4 z-[1] inline-flex items-center gap-2 rounded-full bg-white/88 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700 shadow-[0_10px_24px_rgba(7,27,58,0.08)]">
                         <Icon className="h-3.5 w-3.5" />
-                        Focus
+                        {messages.components.premiumFeatureCards.focusLabel}
                       </div>
-                      <Image
+                      <ImageWithFallback
                         src={item.image.src}
                         alt={item.image.alt}
-                        width={900}
-                        height={600}
-                        className="aspect-[16/10] w-full object-cover"
+                        fill
+                        sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        fallbackLabel={item.title}
+                        className="object-cover"
                       />
                     </div>
                   </div>
@@ -81,13 +88,23 @@ export function PremiumFeatureCardsSection({
                 </h3>
                 <p className="mt-4 flex-1 text-sm leading-7 text-slate-600">{item.description}</p>
                 {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition hover:gap-3 hover:text-[#071B3A]"
-                  >
-                    Learn More
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  isInternalPath ? (
+                    <PublicLink
+                      href={item.href}
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition hover:gap-3 hover:text-[#071B3A]"
+                    >
+                      {messages.components.premiumFeatureCards.learnMoreLabel}
+                      <ArrowRight className="h-4 w-4" />
+                    </PublicLink>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition hover:gap-3 hover:text-[#071B3A]"
+                    >
+                      {messages.components.premiumFeatureCards.learnMoreLabel}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  )
                 ) : null}
               </PremiumCard>
             );

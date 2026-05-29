@@ -1,3 +1,6 @@
+import { siteConfig } from "@/lib/site";
+import { legacyImageOverrides, premiumImageOverrides } from "@/lib/media";
+
 type ManagedImage = {
   src: string;
   alt: string;
@@ -203,10 +206,10 @@ const premiumImageEntries = [
   ["student-mobility-story/international-welcome", photoLibrary.travelSuitcase, "International welcome support for arriving students."],
   ["student-mobility-story/student-hospital-visit", photoLibrary.studentHallwayGroup, "Medical students on a structured hospital visit."],
   ["student-mobility-trust/institutional-healthcare-briefing", photoLibrary.healthcareDelegation, "Institutional healthcare briefing for student mobility collaboration."],
-  ["testimonials/healthcare-coordinator", photoLibrary.portraitDoctorFemale, "Healthcare coordinator testimonial."],
-  ["testimonials/hospital-partner", photoLibrary.portraitDoctorMale, "Healthcare partner testimonial."],
-  ["testimonials/international-patient", photoLibrary.portraitCoordinator, "International patient testimonial."],
-  ["testimonials/medical-student", photoLibrary.portraitMedicalStudent, "Medical student testimonial."],
+  ["testimonials/healthcare-coordinator", photoLibrary.portraitDoctorFemale, "Healthcare coordinator representative scenario portrait."],
+  ["testimonials/hospital-partner", photoLibrary.portraitDoctorMale, "Hospital partner representative scenario portrait."],
+  ["testimonials/international-patient", photoLibrary.portraitCoordinator, "International patient family representative scenario portrait."],
+  ["testimonials/medical-student", photoLibrary.portraitMedicalStudent, "Medical student representative scenario portrait."],
   ["trust/healthcare-bridge-leadership", photoLibrary.executiveMeeting, "Trusted healthcare coordination and international patient support."],
   ["gallery/hospital-lobby", photoLibrary.hospitalCorridorBright, "Modern hospital lobby and patient reception environment."],
   ["gallery/doctor-rounds", photoLibrary.doctorTablet, "Doctor consultation and specialist rounds inside a hospital."],
@@ -284,7 +287,7 @@ export const legacyImageRegistry = buildRegistry(legacyImageEntries);
 
 const fallbackPremiumImage: ManagedImage = {
   src: photoLibrary.consultationLead,
-  alt: "Premium healthcare consultation support.",
+  alt: siteConfig.defaultImageAlt,
 };
 
 export function getPremiumImage(
@@ -293,7 +296,7 @@ export function getPremiumImage(
   fallbackAlt?: string,
 ): ManagedImage {
   const key = `${category}/${slug}`;
-  const image = premiumImageRegistry[key] ?? fallbackPremiumImage;
+  const image = premiumImageOverrides[key] ?? premiumImageRegistry[key] ?? fallbackPremiumImage;
 
   return {
     src: image.src,
@@ -306,12 +309,12 @@ export function getPremiumImageSrc(category: string, slug: string) {
 }
 
 export function getLegacyImage(path: string, fallbackAlt?: string): ManagedImage {
-  const image = legacyImageRegistry[path];
+  const image = legacyImageOverrides[path] ?? legacyImageRegistry[path];
 
   if (!image) {
     return {
       src: path,
-      alt: fallbackAlt ?? "Premium healthcare image.",
+      alt: fallbackAlt ?? siteConfig.defaultImageAlt,
     };
   }
 

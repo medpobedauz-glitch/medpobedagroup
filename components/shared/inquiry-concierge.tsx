@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Building2, Headphones, HeartPulse, MessageCircleMore, Send } from "lucide-react";
+import { MessageCircleMore, Send } from "lucide-react";
 
 import { getLocaleFromPathname, localizePath, stripLocaleFromPath } from "@/lib/i18n/config";
 import { useMessages } from "@/lib/i18n";
@@ -90,12 +90,25 @@ export function InquiryConcierge() {
     return null;
   }
 
+  const persistDismiss = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.localStorage.setItem(messages.chrome.inquiryConcierge.storageKey, String(Date.now()));
+  };
+
   const dismiss = () => {
-    window.localStorage.setItem(
-      messages.chrome.inquiryConcierge.storageKey,
-      String(Date.now()),
-    );
+    persistDismiss();
     setOpen(false);
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen && open) {
+      persistDismiss();
+    }
+
+    setOpen(nextOpen);
   };
 
   return (
@@ -121,43 +134,25 @@ export function InquiryConcierge() {
         </div>
       </div>
 
-      <Modal open={open} onOpenChange={setOpen}>
-        <ModalContent>
+      <Modal open={open} onOpenChange={handleOpenChange}>
+        <ModalContent closeLabel={messages.chrome.inquiryConcierge.closeAriaLabel}>
           <ModalHeader>
             <Badge variant="solid" className="w-fit">
               {messages.chrome.inquiryConcierge.modalBadge}
             </Badge>
-            <ModalTitle>{messages.chrome.inquiryConcierge.modalTitle}</ModalTitle>
+            <ModalTitle className="text-2xl sm:text-[1.9rem]">
+              {messages.chrome.inquiryConcierge.modalTitle}
+            </ModalTitle>
             <ModalDescription>
               {messages.chrome.inquiryConcierge.modalDescription}
             </ModalDescription>
           </ModalHeader>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {messages.chrome.inquiryConcierge.routes.map((item, index) => {
-              const Icon =
-                index === 0 ? Headphones : index === 1 ? HeartPulse : Building2;
-
-              return (
-                <Link
-                  key={item.title}
-                  href={localizePath(item.href, locale)}
-                  onClick={dismiss}
-                  className="group rounded-[1.6rem] border border-slate-200/80 bg-white p-5 transition hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-slate-50"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-700">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-5 font-display text-xl font-semibold text-slate-950">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
-                </Link>
-              );
-            })}
+          <div className="mt-6 rounded-[1.5rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] p-4 text-sm leading-7 text-slate-600">
+            <p>{messages.chrome.inquiryConcierge.inlineDescription}</p>
           </div>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6 flex flex-col gap-3">
             {whatsappHref ? (
-              <Button asChild variant="outline" className="flex-1">
+              <Button asChild variant="hero" className="w-full justify-center">
                 <a href={whatsappHref} target="_blank" rel="noreferrer" onClick={dismiss}>
                   <MessageCircleMore className="h-4 w-4" />
                   {messages.chrome.inquiryConcierge.whatsAppLabel}
@@ -165,14 +160,23 @@ export function InquiryConcierge() {
               </Button>
             ) : null}
             {telegramHref ? (
-              <Button asChild variant="outline" className="flex-1">
+              <Button asChild variant="outline" className="w-full justify-center">
                 <a href={telegramHref} target="_blank" rel="noreferrer" onClick={dismiss}>
                   <Send className="h-4 w-4" />
                   {messages.chrome.inquiryConcierge.telegramLabel}
                 </a>
               </Button>
             ) : null}
-            <Button variant="subtle" className="sm:w-auto" onClick={dismiss}>
+            <Button
+              asChild
+              variant="surface"
+              className="w-full justify-center border-[#C7DCF9] bg-white/92 text-[#071B3A]"
+            >
+              <Link href={localizePath("/contact", locale)} onClick={dismiss}>
+                {messages.chrome.actions.openContactDesk}
+              </Link>
+            </Button>
+            <Button variant="ghost" className="w-full justify-center" onClick={dismiss}>
               {messages.chrome.actions.continueBrowsing}
             </Button>
           </div>

@@ -1,6 +1,9 @@
 import {
+  Gender,
   InquiryStatus,
   InquiryType,
+  PartnershipInterest,
+  StudentService,
   LeadPriority,
   PipelineStage,
   UrgencyLevel,
@@ -21,6 +24,9 @@ export const contactInquirySchema = z.object({
   programInterest: z.string().optional(),
   preferredContactTime: z.string().optional(),
   collaborationInterest: z.string().optional(),
+  consentAccepted: z.boolean().refine((value) => value, {
+    message: "Consent is required.",
+  }),
 });
 
 export const medicalTourismInquirySchema = z.object({
@@ -39,7 +45,9 @@ export const medicalTourismInquirySchema = z.object({
   urgencyLevel: z.nativeEnum(UrgencyLevel),
   reportsSummary: z.string().optional(),
   patientName: z.string().optional(),
-  passportNumber: z.string().optional(),
+  consentAccepted: z.boolean().refine((value) => value, {
+    message: "Consent is required.",
+  }),
 });
 
 export const leadStatusSchema = z.object({
@@ -131,3 +139,163 @@ export const leadReminderSchema = z.object({
   priority: z.nativeEnum(LeadPriority),
   assignedToId: z.string().cuid().optional().or(z.literal("")),
 });
+
+export type InquiryValidationMessages = {
+  nameRequired: string;
+  emailRequired: string;
+  emailInvalid: string;
+  phoneInvalid: string;
+  countryRequired: string;
+  messageTooShort: string;
+  messageTooLong: string;
+  consentRequired: string;
+  inquiryTypeRequired: string;
+  patientNameRequired: string;
+  treatmentDepartmentRequired: string;
+  diagnosisRequired: string;
+  ageInvalid: string;
+  websiteInvalid: string;
+  partnershipInterestRequired: string;
+  interestedServiceRequired: string;
+  preferredCourseRequired: string;
+};
+
+const phonePattern = /^[+]?[0-9()[\]\-.\s]{7,20}$/;
+const optionalPhoneSchema = (message: string) =>
+  z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => value || undefined)
+    .refine((value) => !value || phonePattern.test(value), message);
+
+const optionalUrlSchema = (message: string) =>
+  z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => value || undefined)
+    .refine((value) => !value || /^https?:\/\//i.test(value), message);
+
+const requiredMessageSchema = (messages: InquiryValidationMessages) =>
+  z
+    .string()
+    .trim()
+    .min(20, messages.messageTooShort)
+    .max(3000, messages.messageTooLong);
+
+const consentSchema = (message: string) =>
+  z.boolean().refine((value) => value, { message });
+
+export function createContactInquirySubmissionSchema(
+  messages: InquiryValidationMessages,
+) {
+  return z.object({
+    fullName: z.string().trim().min(2, messages.nameRequired),
+    email: z
+      .string()
+      .trim()
+      .min(1, messages.emailRequired)
+      .email(messages.emailInvalid),
+    phone: optionalPhoneSchema(messages.phoneInvalid),
+    country: z.string().trim().optional().transform((value) => value || undefined),
+    inquiryType: z.nativeEnum(InquiryType, {
+      errorMap: () => ({ message: messages.inquiryTypeRequired }),
+    }),
+    message: requiredMessageSchema(messages),
+    consent: consentSchema(messages.consentRequired),
+  });
+}
+
+export function createPatientInquirySubmissionSchema(
+  messages: InquiryValidationMessages,
+) {
+  return z.object({
+    patientName: z.string().trim().min(2, messages.patientNameRequired),
+    age: z
+      .union([z.number().int(), z.nan()])
+      .optional()
+      .transform((value) => (Number.isNaN(value) ? undefined : value))
+      .refine(
+        (value) => value === undefined || (value >= 0 && value <= 120),
+        messages.ageInvalid,
+      ),
+    gender: z.nativeEnum(Gender).optional(),
+    country: z.string().trim().optional().transform((value) => value || undefined),
+    phone: optionalPhoneSchema(messages.phoneInvalid),
+    email: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => value || undefined)
+      .refine((value) => !value || /\S+@\S+\.\S+/.test(value), messages.emailInvalid),
+    preferredTreatmentDepartment: z
+      .string()
+      .trim()
+      .min(2, messages.treatmentDepartmentRequired),
+    diagnosisOrConcern: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => value || undefined),
+    preferredTreatmentCountry: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => value || undefined),
+    needsVisaSupport: z.boolean().optional().default(false),
+    needsAccommodationSupport: z.boolean().optional().default(false),
+    message: requiredMessageSchema(messages),
+    consent: consentSchema(messages.consentRequired),
+  });
+}
+
+export function createHospitalPartnershipInquirySubmissionSchema(
+  messages: InquiryValidationMessages,
+) {
+  return z.object({
+    hospitalName: z.string().trim().min(2, messages.nameRequired),
+    contactPersonName: z.string().trim().min(2, messages.nameRequired),
+    designation: z.string().trim().optional().transform((value) => value || undefined),
+    country: z.string().trim().min(2, messages.countryRequired),
+    city: z.string().trim().optional().transform((value) => value || undefined),
+    email: z
+      .string()
+      .trim()
+      .min(1, messages.emailRequired)
+      .email(messages.emailInvalid),
+    phone: optionalPhoneSchema(messages.phoneInvalid),
+    website: optionalUrlSchema(messages.websiteInvalid),
+    partnershipInterest: z.nativeEnum(PartnershipInterest).optional(),
+    message: requiredMessageSchema(messages),
+    consent: consentSchema(messages.consentRequired),
+  });
+}
+
+export function createStudentMobilityInquirySubmissionSchema(
+  messages: InquiryValidationMessages,
+) {
+  return z.object({
+    studentName: z.string().trim().min(2, messages.nameRequired),
+    country: z.string().trim().min(2, messages.countryRequired),
+    phone: optionalPhoneSchema(messages.phoneInvalid),
+    email: z
+      .string()
+      .trim()
+      .min(1, messages.emailRequired)
+      .email(messages.emailInvalid),
+    interestedService: z.nativeEnum(StudentService).optional(),
+    preferredCountry: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => value || undefined),
+    preferredCourse: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => value || undefined),
+    message: requiredMessageSchema(messages),
+    consent: consentSchema(messages.consentRequired),
+  });
+}

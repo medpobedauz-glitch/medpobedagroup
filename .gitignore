@@ -7,3 +7,4 @@ coverage
 *.log
 storage/uploads/private/*
 !storage/uploads/private/.gitkeep
+.vercel

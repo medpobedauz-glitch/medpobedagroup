@@ -170,7 +170,7 @@ export function SettingsConsole({
           </h2>
           <form action={createAdminUserAction} className="mt-5 grid gap-4">
             <Input name="name" placeholder="Full name" />
-            <Input name="email" type="email" placeholder="admin@medpobeda.com" />
+            <Input name="email" type="email" placeholder="info@medpobedagroup.uz" />
             <Input name="password" type="password" placeholder="Temporary password" />
             <select
               name="role"

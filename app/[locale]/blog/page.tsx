@@ -1,3 +1,4 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import { notFound } from "next/navigation";
 
 import BlogIndexPage from "@/app/blog/page";
@@ -16,14 +17,14 @@ type LocaleBlogPageProps = {
 };
 
 export async function generateMetadata({ params }: LocaleBlogPageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
   return createLocalizedPageMetadata(
-    params.locale,
+    getRouteLocale(params?.locale),
     "blog",
-    localizePath("/blog", params.locale),
+    localizePath("/blog", getRouteLocale(params?.locale)),
   );
 }
 
@@ -31,9 +32,9 @@ export default function LocalizedBlogIndexPage({
   params,
   searchParams,
 }: LocaleBlogPageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 
-  return <BlogIndexPage searchParams={searchParams} />;
+  return <BlogIndexPage searchParams={searchParams} locale={getRouteLocale(params?.locale)} />;
 }

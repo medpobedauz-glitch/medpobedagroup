@@ -1,3 +1,4 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 
@@ -19,11 +20,11 @@ export default function LocaleLayout({
   children,
   params,
 }: LocaleLayoutProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 
-  const locale = params.locale as AppLocale;
+  const locale = getRouteLocale(params?.locale) as AppLocale;
 
   return (
     <div lang={locale} dir={getLocaleDirection(locale)}>

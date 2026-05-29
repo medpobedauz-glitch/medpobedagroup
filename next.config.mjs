@@ -2,6 +2,20 @@
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  async redirects() {
+    return [
+      {
+        source: "/medical-tourism",
+        destination: "/international-patient-care",
+        permanent: true,
+      },
+      {
+        source: "/:locale(uz|ky|en|kk|tg|tk|ru)/medical-tourism",
+        destination: "/:locale/international-patient-care",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
@@ -32,6 +46,9 @@ const nextConfig = {
       bodySizeLimit: "12mb",
     },
     optimizePackageImports: ["lucide-react"],
+    outputFileTracingExcludes: {
+      "/*": [".git/**/*", ".next/cache/**/*"],
+    },
   },
 };
 

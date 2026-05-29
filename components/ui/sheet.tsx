@@ -41,7 +41,7 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-5 top-5 rounded-full p-2 text-slate-300 transition hover:bg-white/10 hover:text-white">
+      <DialogPrimitive.Close className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white/92 text-slate-600 shadow-[0_12px_30px_rgba(8,22,52,0.08)] transition hover:bg-slate-50 hover:text-slate-950">
         <X className="h-5 w-5" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -92,4 +92,3 @@ export {
   SheetTitle,
   SheetTrigger,
 };
-

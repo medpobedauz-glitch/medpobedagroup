@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BlogStatus } from "@prisma/client";
 
 import { saveBlogPostAction } from "@/lib/actions/blog";
+import { BlogStatus, type BlogStatus as BlogStatusValue } from "@/lib/client-enums";
 import { slugify } from "@/lib/utils";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Card } from "@/components/ui/card";
@@ -26,7 +26,7 @@ type BlogEditorProps = {
     authorName: string | null;
     authorRole: string | null;
     authorBio: string | null;
-    status: BlogStatus;
+    status: BlogStatusValue;
     coverImage: string | null;
   } | null;
 };

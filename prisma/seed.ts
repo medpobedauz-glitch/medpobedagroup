@@ -4,7 +4,7 @@ import { PrismaClient, UserRole } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = process.env.ADMIN_BOOTSTRAP_EMAIL ?? "admin@example.com";
+  const email = process.env.ADMIN_BOOTSTRAP_EMAIL ?? "info@medpobedagroup.uz";
   const password =
     process.env.ADMIN_BOOTSTRAP_PASSWORD ?? "ChangeThisPassword123!";
   const name = process.env.ADMIN_BOOTSTRAP_NAME ?? "MedPobeda Admin";
@@ -38,4 +38,3 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
-

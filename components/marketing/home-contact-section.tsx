@@ -6,20 +6,22 @@ import {
   Building2,
   CheckCircle2,
   FileText,
-  Globe2,
   GraduationCap,
   Handshake,
   Hospital,
   Mail,
+  MapPin,
   MessageCircle,
   PhoneCall,
+  Send,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { submitContactInquiryAction } from "@/lib/actions/inquiries";
+import { submitContactInquiryAction } from "@/app/actions/inquiries";
+import { useMessages } from "@/lib/i18n";
 import { getTelegramUrl, getWhatsAppUrl, siteConfig } from "@/lib/site";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { SectionHeader } from "@/components/marketing/section-header";
@@ -37,49 +39,11 @@ type HomeContactSectionProps = {
   hasError?: boolean;
 };
 
-const tabMeta = {
-  patient: {
-    label: "For Patients",
-    eyebrow: "International Patient Support",
-    title: "Share your treatment requirement and receive a guided next-step response.",
-    description:
-      "Use this route for medical tourism coordination, doctor matching, hospital appointment planning, and medical report review support.",
-    inquiryType: "INTERNATIONAL_PATIENT",
-    successKey: "international_patient",
-    icon: UserRound,
-    message:
-      "Please describe the diagnosis, treatment need, preferred travel timing, and any hospital preferences.",
-  },
-  hospital: {
-    label: "For Hospitals",
-    eyebrow: "Hospital Collaboration",
-    title: "Open a formal partnership discussion for referrals, training, or growth programs.",
-    description:
-      "This route is for hospital leadership, international desks, and healthcare organizations exploring collaboration with MedPobeda Group.",
-    inquiryType: "PARTNERSHIP",
-    successKey: "partnership",
-    icon: Hospital,
-    message:
-      "Outline the collaboration model, target specialties, geography, and the operational support you want to discuss.",
-  },
-  institution: {
-    label: "For Institutions",
-    eyebrow: "Institutional Collaboration",
-    title: "Discuss student mobility, observerships, faculty exchange, or healthcare-linked institutional cooperation.",
-    description:
-      "Use this route for universities, training institutions, and healthcare education stakeholders seeking structured cross-border collaboration.",
-    inquiryType: "CONTACT",
-    successKey: "contact",
-    icon: GraduationCap,
-    message:
-      "Explain the collaboration type, institutional objectives, target country, and expected partnership scope.",
-  },
-} as const;
-
 const submittedTypeToTab: Record<string, ContactTab> = {
   international_patient: "patient",
   partnership: "hospital",
   contact: "institution",
+  student_mobility: "institution",
 };
 
 function FileDrop({
@@ -107,14 +71,85 @@ function FileDrop({
   );
 }
 
+function FormCompliancePanel({
+  consentLabel,
+  privacyNote,
+  emergencyDisclaimer,
+  patientUploadNote,
+}: {
+  consentLabel: string;
+  privacyNote: string;
+  emergencyDisclaimer: string;
+  patientUploadNote?: string;
+}) {
+  return (
+    <div className="grid gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.92)] p-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+            <p className="text-sm leading-7 text-slate-600">{privacyNote}</p>
+          </div>
+        </div>
+        <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.92)] p-4">
+          <div className="flex items-start gap-3">
+            <PhoneCall className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+            <p className="text-sm leading-7 text-slate-600">{emergencyDisclaimer}</p>
+          </div>
+        </div>
+      </div>
+      {patientUploadNote ? (
+        <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-white p-4">
+          <div className="flex items-start gap-3">
+            <FileText className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+            <p className="text-sm leading-7 text-slate-600">{patientUploadNote}</p>
+          </div>
+        </div>
+      ) : null}
+      <label className="flex items-start gap-3 rounded-[1.6rem] border border-[#D6E8FF] bg-white p-4 text-sm leading-7 text-slate-600 shadow-[0_14px_36px_rgba(7,27,58,0.04)]">
+        <input
+          type="checkbox"
+          name="consentAccepted"
+          value="true"
+          required
+          className="mt-1 h-4 w-4 rounded border-[#9CC8FF] text-blue-700 focus:ring-blue-500"
+        />
+        <span>{consentLabel}</span>
+      </label>
+    </div>
+  );
+}
+
 export function HomeContactSection({
   honeypotField,
   submittedType,
   hasError = false,
 }: HomeContactSectionProps) {
   const pathname = usePathname();
+  const messages = useMessages();
+  const formMessages = messages.forms.contactDesk;
   const initialTab = submittedType ? submittedTypeToTab[submittedType] : "patient";
   const [activeTab, setActiveTab] = useState<ContactTab>(initialTab || "patient");
+  const tabMeta = {
+    patient: {
+      ...formMessages.tabs.patient,
+      inquiryType: "INTERNATIONAL_PATIENT",
+      successKey: "international_patient",
+      icon: UserRound,
+    },
+    hospital: {
+      ...formMessages.tabs.hospital,
+      inquiryType: "PARTNERSHIP",
+      successKey: "partnership",
+      icon: Hospital,
+    },
+    institution: {
+      ...formMessages.tabs.institution,
+      inquiryType: "STUDENT_MOBILITY",
+      successKey: "student_mobility",
+      icon: GraduationCap,
+    },
+  } as const;
 
   useEffect(() => {
     if (submittedType && submittedTypeToTab[submittedType]) {
@@ -141,35 +176,30 @@ export function HomeContactSection({
 
   const activeMeta = tabMeta[activeTab];
   const whatsappHref = useMemo(
-    () =>
-      getWhatsAppUrl(
-        "Hello MedPobeda Group, I would like to discuss international healthcare collaboration.",
-      ),
-    [],
+    () => getWhatsAppUrl(formMessages.directMessage),
+    [formMessages.directMessage],
   );
   const telegramHref = useMemo(
-    () =>
-      getTelegramUrl(
-        "Hello MedPobeda Group, I would like to discuss international healthcare collaboration.",
-      ),
-    [],
+    () => getTelegramUrl(formMessages.directMessage),
+    [formMessages.directMessage],
   );
 
   return (
     <section id="contact-section" className="section-shell">
       <div className="container-wide">
-        <div className="section-frame overflow-visible px-6 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <div className="section-frame overflow-visible px-4 py-8 sm:px-8 lg:px-10 lg:py-12">
           <SectionHeader
-            eyebrow="Contact & Coordination"
-            title="Contact MedPobeda Group through the right healthcare coordination desk"
-            description="Choose the route that matches your objective. Each inquiry lane is designed for premium patient support, hospital partnerships, and institutional collaboration."
+            eyebrow={formMessages.section.eyebrow}
+            title={formMessages.section.title}
+            description={formMessages.section.description}
             align="center"
           />
-          <div className="mt-12 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="mt-12 grid gap-6 xl:grid-cols-[1.12fr_0.88fr]">
             <PremiumCard hover={false} className="p-6 sm:p-8">
-              <div className="flex flex-wrap gap-3">
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {(Object.entries(tabMeta) as [ContactTab, (typeof tabMeta)[ContactTab]][]).map(
                   ([tab, meta]) => {
+                    const card = formMessages.cards[tab];
                     const Icon = meta.icon;
 
                     return (
@@ -178,14 +208,35 @@ export function HomeContactSection({
                         type="button"
                         onClick={() => setActiveTab(tab)}
                         className={cn(
-                          "inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition",
+                          "rounded-[1.8rem] border p-5 text-left transition",
                           activeTab === tab
-                            ? "border-[#1D4ED8] bg-[linear-gradient(135deg,rgba(29,78,216,0.12),rgba(56,189,248,0.16))] text-[#071B3A] shadow-[0_16px_48px_rgba(29,78,216,0.14)]"
-                            : "border-[#D6E8FF] bg-white text-slate-600 hover:border-[#9CC8FF] hover:text-[#071B3A]",
+                            ? "border-[#1D4ED8] bg-[linear-gradient(135deg,rgba(29,78,216,0.12),rgba(56,189,248,0.14))] shadow-[0_22px_60px_rgba(29,78,216,0.14)]"
+                            : "border-[#D6E8FF] bg-white hover:-translate-y-1 hover:border-[#9CC8FF] hover:shadow-[0_22px_60px_rgba(7,27,58,0.08)]",
                         )}
                       >
-                        <Icon className="h-4 w-4" />
-                        {meta.label}
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#0B1F4D,#1D4ED8)] text-white shadow-[0_18px_48px_rgba(29,78,216,0.16)]">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <h3 className="mt-5 text-lg font-semibold text-[#071B3A]">{card.title}</h3>
+                        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">
+                          {card.audienceLabel}
+                        </p>
+                        <p className="mt-2 text-sm leading-7 text-slate-600">{card.audience}</p>
+                        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">
+                          {card.requestLabel}
+                        </p>
+                        <div className="mt-3 grid gap-2">
+                          {card.requests.map((item) => (
+                            <div key={item} className="flex items-start gap-2 text-sm leading-7 text-slate-600">
+                              <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#1D4ED8]">
+                          {card.cta}
+                          <ArrowRight className="h-4 w-4" />
+                        </span>
                       </button>
                     );
                   },
@@ -194,13 +245,13 @@ export function HomeContactSection({
 
               {submittedType === activeMeta.successKey ? (
                 <Alert className="mt-6 border-emerald-200 bg-emerald-50 text-emerald-900" variant="light">
-                  Thank you. Our coordination team will contact you shortly.
+                  {formMessages.alerts.success}
                 </Alert>
               ) : null}
 
               {hasError ? (
                 <Alert className="mt-6 border-amber-200 bg-amber-50 text-amber-900" variant="light">
-                  Some required details were missing or invalid. Please review the form and submit again.
+                  {formMessages.alerts.error}
                 </Alert>
               ) : null}
 
@@ -232,53 +283,79 @@ export function HomeContactSection({
                       <input type="hidden" name={honeypotField} tabIndex={-1} autoComplete="off" />
                       <input type="hidden" name="redirectPath" value={pathname} />
                       <input type="hidden" name="inquiryType" value={activeMeta.inquiryType} />
-                      <input type="hidden" name="preferredCountry" value="India and partner hospitals abroad" />
+                      <input
+                        type="hidden"
+                        name="preferredCountry"
+                        value={formMessages.patientForm.preferredCountryValue}
+                      />
                       <div className="grid gap-5 md:grid-cols-2">
                         <label className="field-shell">
-                          <span>Full Name</span>
-                          <Input name="name" placeholder="Patient or family representative" required />
+                          <span>{formMessages.patientForm.fields.fullName}</span>
+                          <Input
+                            name="name"
+                            placeholder={formMessages.patientForm.fields.fullNamePlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Country</span>
-                          <Input name="country" placeholder="Current country of residence" required />
+                          <span>{formMessages.patientForm.fields.country}</span>
+                          <Input
+                            name="country"
+                            placeholder={formMessages.patientForm.fields.countryPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Phone / WhatsApp</span>
-                          <Input name="phone" placeholder="+998 or international number" />
+                          <span>{formMessages.patientForm.fields.phone}</span>
+                          <Input
+                            name="phone"
+                            placeholder={formMessages.patientForm.fields.phonePlaceholder}
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Email</span>
-                          <Input name="email" type="email" placeholder="your@email.com" required />
+                          <span>{formMessages.patientForm.fields.email}</span>
+                          <Input
+                            name="email"
+                            type="email"
+                            placeholder={formMessages.patientForm.fields.emailPlaceholder}
+                            required
+                          />
                         </label>
                       </div>
                       <label className="field-shell">
-                        <span>Treatment Required</span>
+                        <span>{formMessages.patientForm.fields.treatmentRequired}</span>
                         <Input
                           name="collaborationInterest"
-                          placeholder="Cardiology, oncology, surgery, rehabilitation, diagnostics..."
+                          placeholder={formMessages.patientForm.fields.treatmentRequiredPlaceholder}
                           required
                         />
                       </label>
                       <FileDrop
-                        label="Upload Medical Report"
+                        label={formMessages.patientForm.fields.uploadLabel}
                         name="medicalReports"
-                        helper="PDF or image files can be added for initial review support."
+                        helper={formMessages.patientForm.fields.uploadHelper}
                       />
                       <label className="field-shell">
-                        <span>Message</span>
+                        <span>{formMessages.patientForm.fields.message}</span>
                         <Textarea
                           name="message"
                           placeholder={activeMeta.message}
                           required
                         />
                       </label>
+                      <FormCompliancePanel
+                        consentLabel={formMessages.sharedNotes.consent}
+                        privacyNote={formMessages.sharedNotes.privacy}
+                        emergencyDisclaimer={formMessages.sharedNotes.emergency}
+                        patientUploadNote={formMessages.sharedNotes.patientUpload}
+                      />
                       <SubmitButton
                         variant="hero"
                         size="xl"
-                        pendingLabel="Submitting inquiry..."
+                        pendingLabel={formMessages.patientForm.pendingLabel}
                         className="w-full justify-center sm:w-auto"
                       >
-                        Request Patient Assistance
+                        {formMessages.patientForm.submitLabel}
                         <ArrowRight className="h-4 w-4" />
                       </SubmitButton>
                     </form>
@@ -295,54 +372,79 @@ export function HomeContactSection({
                       <input type="hidden" name="inquiryType" value={activeMeta.inquiryType} />
                       <div className="grid gap-5 md:grid-cols-2">
                         <label className="field-shell">
-                          <span>Hospital Name</span>
-                          <Input name="organization" placeholder="Hospital or healthcare group" required />
+                          <span>{formMessages.hospitalForm.fields.hospitalName}</span>
+                          <Input
+                            name="organization"
+                            placeholder={formMessages.hospitalForm.fields.hospitalNamePlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Country / City</span>
-                          <Input name="country" placeholder="Tashkent, Delhi, Dubai..." required />
+                          <span>{formMessages.hospitalForm.fields.countryCity}</span>
+                          <Input
+                            name="country"
+                            placeholder={formMessages.hospitalForm.fields.countryCityPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Contact Person</span>
-                          <Input name="name" placeholder="Director, coordinator, or desk lead" required />
+                          <span>{formMessages.hospitalForm.fields.contactPerson}</span>
+                          <Input
+                            name="name"
+                            placeholder={formMessages.hospitalForm.fields.contactPersonPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Email</span>
-                          <Input name="email" type="email" placeholder="contact@hospital.com" required />
+                          <span>{formMessages.hospitalForm.fields.email}</span>
+                          <Input
+                            name="email"
+                            type="email"
+                            placeholder={formMessages.hospitalForm.fields.emailPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Phone</span>
-                          <Input name="phone" placeholder="Direct phone or WhatsApp" />
+                          <span>{formMessages.hospitalForm.fields.phone}</span>
+                          <Input
+                            name="phone"
+                            placeholder={formMessages.hospitalForm.fields.phonePlaceholder}
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Partnership Interest</span>
+                          <span>{formMessages.hospitalForm.fields.partnershipInterest}</span>
                           <Input
                             name="collaborationInterest"
-                            placeholder="Referrals, faculty exchange, tourism desk, branding abroad..."
+                            placeholder={formMessages.hospitalForm.fields.partnershipInterestPlaceholder}
                             required
                           />
                         </label>
                       </div>
                       <FileDrop
-                        label="Hospital Profile or Supporting Documents"
+                        label={formMessages.hospitalForm.fields.uploadLabel}
                         name="partnershipDocuments"
-                        helper="Optional profile decks, service lists, or collaboration notes."
+                        helper={formMessages.hospitalForm.fields.uploadHelper}
                       />
                       <label className="field-shell">
-                        <span>Message</span>
+                        <span>{formMessages.hospitalForm.fields.message}</span>
                         <Textarea
                           name="message"
                           placeholder={activeMeta.message}
                           required
                         />
                       </label>
+                      <FormCompliancePanel
+                        consentLabel={formMessages.sharedNotes.consent}
+                        privacyNote={formMessages.sharedNotes.privacy}
+                        emergencyDisclaimer={formMessages.sharedNotes.emergency}
+                      />
                       <SubmitButton
                         variant="hero"
                         size="xl"
-                        pendingLabel="Submitting partnership request..."
+                        pendingLabel={formMessages.hospitalForm.pendingLabel}
                         className="w-full justify-center sm:w-auto"
                       >
-                        Become a Partner Hospital
+                        {formMessages.hospitalForm.submitLabel}
                         <ArrowRight className="h-4 w-4" />
                       </SubmitButton>
                     </form>
@@ -359,45 +461,67 @@ export function HomeContactSection({
                       <input type="hidden" name="inquiryType" value={activeMeta.inquiryType} />
                       <div className="grid gap-5 md:grid-cols-2">
                         <label className="field-shell">
-                          <span>Institution Name</span>
-                          <Input name="organization" placeholder="University or institution name" required />
+                          <span>{formMessages.institutionForm.fields.institutionName}</span>
+                          <Input
+                            name="organization"
+                            placeholder={formMessages.institutionForm.fields.institutionNamePlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Country</span>
-                          <Input name="country" placeholder="Country or city" required />
+                          <span>{formMessages.institutionForm.fields.country}</span>
+                          <Input
+                            name="country"
+                            placeholder={formMessages.institutionForm.fields.countryPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Contact Person</span>
-                          <Input name="name" placeholder="Department head or coordinator" required />
+                          <span>{formMessages.institutionForm.fields.contactPerson}</span>
+                          <Input
+                            name="name"
+                            placeholder={formMessages.institutionForm.fields.contactPersonPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell">
-                          <span>Email</span>
-                          <Input name="email" type="email" placeholder="institution@email.com" required />
+                          <span>{formMessages.institutionForm.fields.email}</span>
+                          <Input
+                            name="email"
+                            type="email"
+                            placeholder={formMessages.institutionForm.fields.emailPlaceholder}
+                            required
+                          />
                         </label>
                         <label className="field-shell md:col-span-2">
-                          <span>Collaboration Type</span>
+                          <span>{formMessages.institutionForm.fields.collaborationType}</span>
                           <Input
                             name="collaborationInterest"
-                            placeholder="Clinical exposure, student mobility, observerships, faculty exchange..."
+                            placeholder={formMessages.institutionForm.fields.collaborationTypePlaceholder}
                             required
                           />
                         </label>
                       </div>
                       <label className="field-shell">
-                        <span>Message</span>
+                        <span>{formMessages.institutionForm.fields.message}</span>
                         <Textarea
                           name="message"
                           placeholder={activeMeta.message}
                           required
                         />
                       </label>
+                      <FormCompliancePanel
+                        consentLabel={formMessages.sharedNotes.consent}
+                        privacyNote={formMessages.sharedNotes.privacy}
+                        emergencyDisclaimer={formMessages.sharedNotes.emergency}
+                      />
                       <SubmitButton
                         variant="hero"
                         size="xl"
-                        pendingLabel="Submitting institutional inquiry..."
+                        pendingLabel={formMessages.institutionForm.pendingLabel}
                         className="w-full justify-center sm:w-auto"
                       >
-                        Contact MedPobeda Group
+                        {formMessages.institutionForm.submitLabel}
                         <ArrowRight className="h-4 w-4" />
                       </SubmitButton>
                     </form>
@@ -414,19 +538,15 @@ export function HomeContactSection({
                   </div>
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-700">
-                      Coordination Notes
+                      {formMessages.notes.eyebrow}
                     </p>
                     <h3 className="mt-1 font-display text-2xl font-semibold text-[#071B3A]">
-                      Trust-led healthcare communication
+                      {formMessages.notes.title}
                     </h3>
                   </div>
                 </div>
                 <div className="mt-6 grid gap-4 text-sm leading-7 text-slate-600">
-                  {[
-                    "Patient support requests are handled with sensitive document awareness.",
-                    "Hospital and institutional discussions are positioned around structured collaboration.",
-                    "Follow-up routing can support Uzbekistan, India, and broader cross-border inquiries.",
-                  ].map((item) => (
+                  {formMessages.notes.items.map((item) => (
                     <div
                       key={item}
                       className="rounded-[1.5rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.92)] px-4 py-4"
@@ -442,19 +562,22 @@ export function HomeContactSection({
 
               <PremiumCard className="p-6 sm:p-7" delay={0.1}>
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-700">
-                  Direct Channels
+                  {formMessages.channels.eyebrow}
                 </p>
+                <h3 className="mt-2 font-display text-2xl font-semibold text-[#071B3A]">
+                  {formMessages.channels.title}
+                </h3>
                 <div className="mt-5 grid gap-4">
                   {whatsappHref ? (
                     <a
                       href={whatsappHref}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-[1.6rem] border border-[#D6E8FF] bg-white px-5 py-4 text-sm font-semibold text-[#071B3A] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(16,185,129,0.14)]"
+                      className="flex flex-col items-start gap-3 rounded-[1.6rem] border border-[#D6E8FF] bg-white px-5 py-4 text-sm font-semibold text-[#071B3A] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(16,185,129,0.14)] min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between"
                     >
                       <span className="inline-flex items-center gap-3">
                         <MessageCircle className="h-4 w-4 text-emerald-500" />
-                        WhatsApp Coordination
+                        {formMessages.channels.whatsapp}
                       </span>
                       <ArrowRight className="h-4 w-4" />
                     </a>
@@ -464,34 +587,51 @@ export function HomeContactSection({
                       href={telegramHref}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-[1.6rem] border border-[#D6E8FF] bg-white px-5 py-4 text-sm font-semibold text-[#071B3A] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(29,78,216,0.14)]"
+                      className="flex flex-col items-start gap-3 rounded-[1.6rem] border border-[#D6E8FF] bg-white px-5 py-4 text-sm font-semibold text-[#071B3A] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(29,78,216,0.14)] min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between"
                     >
                       <span className="inline-flex items-center gap-3">
-                        <Globe2 className="h-4 w-4 text-blue-600" />
-                        Telegram Support
+                        <Send className="h-4 w-4 text-blue-600" />
+                        {formMessages.channels.telegram}
                       </span>
                       <ArrowRight className="h-4 w-4" />
                     </a>
                   ) : null}
-                  <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] px-5 py-4 text-sm leading-7 text-slate-600">
+                  <a
+                    href={`mailto:${siteConfig.contactEmail}`}
+                    className="rounded-[1.6rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] px-5 py-4 text-sm leading-7 text-slate-600 transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(29,78,216,0.1)]"
+                  >
                     <div className="flex items-start gap-3">
                       <Mail className="mt-1 h-4 w-4 text-blue-600" />
                       <div>
                         <p className="font-semibold text-[#071B3A]">
-                          {siteConfig.contactEmail || "Email to be configured"}
+                          {formMessages.channels.email}
                         </p>
-                        <p>For treatment coordination, hospital partnerships, and institutional discussions.</p>
+                        <p className="mt-1 break-all">{siteConfig.contactEmail}</p>
                       </div>
                     </div>
-                  </div>
-                  <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] px-5 py-4 text-sm leading-7 text-slate-600">
+                  </a>
+                  <a
+                    href={`tel:${siteConfig.contactPhone.replace(/\s+/g, "")}`}
+                    className="rounded-[1.6rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] px-5 py-4 text-sm leading-7 text-slate-600 transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(29,78,216,0.1)]"
+                  >
                     <div className="flex items-start gap-3">
                       <PhoneCall className="mt-1 h-4 w-4 text-blue-600" />
                       <div>
                         <p className="font-semibold text-[#071B3A]">
-                          {siteConfig.contactPhone || "Phone to be configured"}
+                          {formMessages.channels.phone}
                         </p>
-                        <p>Tashkent-based coordination for cross-border healthcare facilitation.</p>
+                        <p className="mt-1">{siteConfig.contactPhone}</p>
+                      </div>
+                    </div>
+                  </a>
+                  <div className="rounded-[1.6rem] border border-[#D6E8FF] bg-[linear-gradient(180deg,rgba(248,251,255,0.98),rgba(255,255,255,0.96))] px-5 py-4 text-sm leading-7 text-slate-600">
+                    <div className="flex items-start gap-3">
+                      <MapPin className="mt-1 h-4 w-4 text-blue-600" />
+                      <div>
+                        <p className="font-semibold text-[#071B3A]">
+                          {formMessages.channels.location}
+                        </p>
+                        <p className="mt-1">{siteConfig.location}</p>
                       </div>
                     </div>
                   </div>
@@ -500,31 +640,37 @@ export function HomeContactSection({
 
               <PremiumCard className="p-6 sm:p-7" delay={0.15}>
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-700">
-                  Best-Fit Use Cases
+                  {formMessages.contactCard.eyebrow}
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-semibold text-[#071B3A]">
+                  {formMessages.contactCard.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">
+                  {formMessages.contactCard.description}
                 </p>
                 <div className="mt-5 grid gap-4">
                   {[
                     {
                       icon: Building2,
-                      title: "International patient referrals",
-                      description: "For hospitals or families seeking specialist access and treatment guidance.",
+                      label: siteConfig.companyName,
+                      text: siteConfig.location,
+                    },
+                    {
+                      icon: Mail,
+                      label: siteConfig.contactEmail,
+                      text: formMessages.channels.emailDescription,
                     },
                     {
                       icon: Handshake,
-                      title: "Cross-border healthcare partnerships",
-                      description: "For institutions developing referral, training, or medical tourism collaboration.",
-                    },
-                    {
-                      icon: FileText,
-                      title: "Clinical training and student mobility",
-                      description: "For observerships, faculty exchange, and healthcare-linked institutional cooperation.",
+                      label: siteConfig.contactPhone,
+                      text: formMessages.channels.phoneDescription,
                     },
                   ].map((item) => {
                     const Icon = item.icon;
 
                     return (
                       <div
-                        key={item.title}
+                        key={item.label}
                         className="rounded-[1.6rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.88)] p-4"
                       >
                         <div className="flex items-start gap-3">
@@ -532,8 +678,8 @@ export function HomeContactSection({
                             <Icon className="h-5 w-5" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-[#071B3A]">{item.title}</h4>
-                            <p className="mt-1 text-sm leading-7 text-slate-600">{item.description}</p>
+                            <h4 className="font-semibold text-[#071B3A]">{item.label}</h4>
+                            <p className="mt-1 text-sm leading-7 text-slate-600">{item.text}</p>
                           </div>
                         </div>
                       </div>

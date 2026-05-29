@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { CalendarDays, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 
 import type { HomepageEvent } from "@/lib/home-updates";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PublicLink } from "@/components/shared/public-link";
@@ -65,12 +65,13 @@ export function EventSlider({ events }: EventSliderProps) {
             transition={{ duration: prefersReducedMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0"
           >
-            <Image
+            <ImageWithFallback
               src={activeEvent.image}
               alt={activeEvent.title}
               fill
               priority={activeIndex === 0}
               sizes="(min-width: 1280px) 42vw, (min-width: 768px) 80vw, 100vw"
+              fallbackLabel={activeEvent.title}
               className="object-cover"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(11,31,77,0.12)_36%,rgba(11,31,77,0.46)_100%)]" />

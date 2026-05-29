@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import { Resend } from "resend";
 
 import { emailProviderConfigured, env } from "@/lib/env";
+import { siteConfig } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import {
   buildAdminInquiryNotificationEmail,
@@ -108,7 +109,7 @@ async function createEmailLog({
       direction: "OUTBOUND",
       templateKey: payload.templateKey,
       subject: payload.subject,
-      toEmail: firstRecipient ?? "unknown@example.com",
+      toEmail: firstRecipient ?? siteConfig.contactEmail,
       ccEmail: ccRecipients.join(", ") || null,
       bccEmail: bccRecipients.join(", ") || null,
       status,

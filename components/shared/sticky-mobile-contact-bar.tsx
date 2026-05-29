@@ -16,11 +16,11 @@ export function StickyMobileContactBar() {
   );
 
   return (
-    <div className="sticky-safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/96 px-4 py-3 backdrop-blur-3xl md:hidden">
-      <div className="mx-auto grid max-w-3xl grid-cols-3 gap-3">
+    <div className="sticky-safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/96 px-3 py-3 backdrop-blur-3xl md:hidden">
+      <div className="mx-auto grid max-w-3xl grid-cols-3 gap-2">
         <PublicLink
           href="/contact"
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-sky-100 bg-sky-50 text-sm font-semibold text-slate-950"
+          className="inline-flex min-h-[44px] min-w-0 flex-col items-center justify-center gap-1 rounded-full border border-sky-100 bg-sky-50 px-1.5 py-2 text-[10px] font-semibold text-slate-950 min-[360px]:px-2 min-[380px]:flex-row min-[380px]:gap-2 min-[380px]:text-xs"
         >
           <PhoneCall className="h-4 w-4 text-sky-700" />
           {messages.chrome.stickyMobileBar.contact}
@@ -30,13 +30,13 @@ export function StickyMobileContactBar() {
             href={whatsappHref}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-700"
+            className="inline-flex min-h-[44px] min-w-0 flex-col items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-1.5 py-2 text-[10px] font-semibold text-slate-700 min-[360px]:px-2 min-[380px]:flex-row min-[380px]:gap-2 min-[380px]:text-xs"
           >
             <MessageCircle className="h-4 w-4 text-sky-700" />
             {messages.chrome.stickyMobileBar.whatsApp}
           </a>
         ) : (
-          <div className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-400">
+          <div className="inline-flex min-h-[44px] min-w-0 flex-col items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-1.5 py-2 text-[10px] font-semibold text-slate-400 min-[360px]:px-2 min-[380px]:flex-row min-[380px]:gap-2 min-[380px]:text-xs">
             <MessageCircle className="h-4 w-4 text-sky-700" />
             {messages.chrome.stickyMobileBar.whatsApp}
           </div>
@@ -46,13 +46,13 @@ export function StickyMobileContactBar() {
             href={telegramHref}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-700"
+            className="inline-flex min-h-[44px] min-w-0 flex-col items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-1.5 py-2 text-[10px] font-semibold text-slate-700 min-[360px]:px-2 min-[380px]:flex-row min-[380px]:gap-2 min-[380px]:text-xs"
           >
             <Send className="h-4 w-4 text-sky-700" />
             {messages.chrome.stickyMobileBar.telegram}
           </a>
         ) : (
-          <div className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-400">
+          <div className="inline-flex min-h-[44px] min-w-0 flex-col items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-1.5 py-2 text-[10px] font-semibold text-slate-400 min-[360px]:px-2 min-[380px]:flex-row min-[380px]:gap-2 min-[380px]:text-xs">
             <Send className="h-4 w-4 text-sky-700" />
             {messages.chrome.stickyMobileBar.telegram}
           </div>

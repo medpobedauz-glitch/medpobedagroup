@@ -1,4 +1,6 @@
 import { getPublishedBlogPosts } from "@/lib/data/blog";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 import {
   fallbackHomepageBlogs,
   homepageEvents,
@@ -9,14 +11,15 @@ import { HomeUpdatesLatestBlogsView } from "@/components/home/home-updates-lates
 function toHomepageBlogs(
   posts: Awaited<ReturnType<typeof getPublishedBlogPosts>>,
 ): HomepageEditorialBlog[] {
+  const messages = getMessages(getRequestLocale());
   return posts.slice(0, 4).map((post, index) => ({
     id: post.id,
     title: post.title,
     excerpt:
       post.seoDescription ||
       post.excerpt ||
-      "Read the latest healthcare update from MedPobeda Group.",
-    publishedAt: (post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", {
+      messages.chrome.blogCard.fallbackExcerpt,
+    publishedAt: (post.publishedAt ?? post.createdAt).toLocaleDateString(messages.chrome.blogCard.dateLocale, {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -25,7 +28,7 @@ function toHomepageBlogs(
     image:
       post.coverImage ||
       fallbackHomepageBlogs[index % fallbackHomepageBlogs.length]!.image,
-    category: post.category || "Healthcare Insights",
+    category: post.category || messages.routes.blog.title,
   }));
 }
 

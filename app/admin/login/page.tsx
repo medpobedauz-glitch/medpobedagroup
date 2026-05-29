@@ -17,8 +17,10 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
-      <AdminLoginForm hasError={searchParams?.error === "invalid"} />
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.16),transparent_26%),linear-gradient(180deg,#f8fbff_0%,#eef6ff_42%,#ffffff_100%)]">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <AdminLoginForm hasError={searchParams?.error === "invalid"} />
+      </div>
     </div>
   );
 }

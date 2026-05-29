@@ -107,6 +107,9 @@ function createLayout({
             <p style="margin:8px 0 0;color:#64748b;font-size:12px;line-height:1.7;">
               ${escapeHtml(siteConfig.location)}
             </p>
+            <p style="margin:8px 0 0;color:#64748b;font-size:12px;line-height:1.7;">
+              ${escapeHtml(siteConfig.contactEmail)} • ${escapeHtml(siteConfig.contactPhone)}
+            </p>
           </div>
         </div>
       </div>
@@ -125,6 +128,7 @@ function createLayout({
     `${siteConfig.name}`,
     siteConfig.tagline,
     siteConfig.location,
+    `${siteConfig.contactEmail} • ${siteConfig.contactPhone}`,
   ]
     .flat()
     .join("\n")

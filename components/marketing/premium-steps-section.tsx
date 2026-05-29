@@ -2,6 +2,8 @@ import type { LucideIcon } from "lucide-react";
 
 import { PremiumCard } from "@/components/marketing/premium-card";
 import { SectionHeader } from "@/components/marketing/section-header";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 
 type StepItem = {
   icon: LucideIcon;
@@ -22,6 +24,8 @@ export function PremiumStepsSection({
   description,
   items,
 }: PremiumStepsSectionProps) {
+  const messages = getMessages(getRequestLocale());
+
   return (
     <section className="section-shell pt-0">
       <div className="container-wide">
@@ -44,7 +48,7 @@ export function PremiumStepsSection({
                       <Icon className="h-5 w-5" />
                     </div>
                     <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-blue-700">
-                      Step {index + 1}
+                      {messages.components.premiumSteps.stepLabel} {index + 1}
                     </p>
                     <h3 className="mt-2 text-lg font-semibold text-[#071B3A]">{item.title}</h3>
                     <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
@@ -65,7 +69,7 @@ export function PremiumStepsSection({
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-700">
-                        Step {index + 1}
+                        {messages.components.premiumSteps.stepLabel} {index + 1}
                       </p>
                       <h3 className="mt-2 text-lg font-semibold text-[#071B3A]">
                         {item.title}

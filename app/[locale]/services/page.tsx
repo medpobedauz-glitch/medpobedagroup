@@ -1,7 +1,9 @@
-import { notFound, redirect } from "next/navigation";
+import { getRouteLocale } from "@/lib/i18n/request";
+import { notFound } from "next/navigation";
 
 import { createLocalizedPageMetadata } from "@/lib/i18n";
 import { isSupportedLocale, localizePath } from "@/lib/i18n/config";
+import ServicesPage from "@/app/services/page";
 
 type LocalePageProps = {
   params: {
@@ -10,21 +12,21 @@ type LocalePageProps = {
 };
 
 export async function generateMetadata({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
   return createLocalizedPageMetadata(
-    params.locale,
+    getRouteLocale(params?.locale),
     "services",
-    localizePath("/services", params.locale),
+    localizePath("/services", getRouteLocale(params?.locale)),
   );
 }
 
 export default function LocalizedServicesPage({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 
-  redirect(localizePath("/", params.locale));
+  return <ServicesPage />;
 }

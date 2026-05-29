@@ -1,75 +1,137 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { BlogStatus } from "@prisma/client";
-import { CalendarDays, Clock3, Share2, Tag } from "lucide-react";
+import Link from "next/link";
+import { CalendarDays, Clock3, RefreshCcw, UserRound } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { createMetadata } from "@/lib/metadata";
-import { getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/data/blog";
-import { absoluteUrl } from "@/lib/metadata";
-import { siteConfig } from "@/lib/site";
-import {
-  createArticleSchema,
-  createBreadcrumbSchema,
-  createWebPageSchema,
-} from "@/lib/schema";
-import { calculateReadingTime } from "@/lib/utils";
-import { BlogCard } from "@/components/blog/blog-card";
-import { CtaSection } from "@/components/shared/cta-section";
+import { ArticleContent } from "@/components/blog/ArticleContent";
+import { ArticleDisclaimer } from "@/components/blog/ArticleDisclaimer";
+import { BlogContactCta } from "@/components/blog/BlogContactCta";
+import { BlogFaq } from "@/components/blog/BlogFaq";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { TableOfContents } from "@/components/blog/TableOfContents";
 import { FadeIn } from "@/components/shared/fade-in";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { getSiteImage } from "@/lib/site-images";
-
-export const dynamic = "force-dynamic";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
+import {
+  getBlogPostBySlug,
+  getPublishedBlogSlugs,
+  getRelatedBlogPosts,
+} from "@/lib/data/blog";
+import { defaultLocale, localizePath, type AppLocale } from "@/lib/i18n/config";
+import { getMessages } from "@/lib/i18n";
+import { media } from "@/lib/media";
+import { createMetadata } from "@/lib/metadata";
+import {
+  createArticleSchema,
+  createBreadcrumbSchema,
+  createFaqSchema,
+  createWebPageSchema,
+} from "@/lib/schema";
+import { siteConfig } from "@/lib/site";
 
 type BlogPostPageProps = {
   params: {
     slug: string;
   };
+  locale?: AppLocale;
 };
 
-async function getPublishedPost(slug: string) {
-  const post = await getBlogPostBySlug(slug);
+function getArticleServiceLinks(locale: AppLocale, slug: string, messages: ReturnType<typeof getMessages>) {
+  const partnershipSlugs = new Set([
+    "india-uzbekistan-healthcare-collaboration-opportunities",
+    "hospital-partnership-opportunities-in-uzbekistan",
+    "tashkent-healthcare-collaboration-hub-central-asia",
+    "how-hospitals-build-international-patient-referral-pathways",
+    "international-healthcare-partnerships-patient-access",
+  ]);
 
-  if (!post || post.status !== BlogStatus.PUBLISHED) {
-    return null;
+  if (partnershipSlugs.has(slug)) {
+    return [
+      {
+        href: localizePath("/hospital-partnerships", locale),
+        label: messages.routes["hospital-partnerships"].title,
+      },
+      {
+        href: localizePath("/company-profile", locale),
+        label: messages.routes["company-profile"].title,
+      },
+    ];
   }
 
-  return post;
+  if (slug === "student-mobility-support-in-uzbekistan-guide") {
+    return [
+      {
+        href: localizePath("/student-mobility", locale),
+        label: messages.routes["student-mobility"].title,
+      },
+      {
+        href: localizePath("/company-profile", locale),
+        label: messages.routes["company-profile"].title,
+      },
+    ];
+  }
+
+  return [
+    {
+      href: localizePath("/international-patient-care", locale),
+      label: messages.chrome.navigation.medicalTourism,
+    },
+    {
+      href: localizePath("/treatment-in-india", locale),
+      label: messages.routes["treatment-in-india"].title,
+    },
+    {
+      href: localizePath("/international-patients", locale),
+      label: messages.routes["international-patients"].title,
+    },
+  ];
+}
+
+export function generateStaticParams() {
+  return getPublishedBlogSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getPublishedPost(params.slug);
+  const locale = defaultLocale;
+  const messages = getMessages(locale);
+  const post = await getBlogPostBySlug(params.slug, locale);
 
   if (!post) {
     return createMetadata({
-      title: "Healthcare Insight",
-      description: siteConfig.description,
+      title: messages.pages.blogPost.fallbackTitle,
+      description: messages.routes.blog.description,
       path: `/blog/${params.slug}`,
+      locale,
     });
   }
 
   return createMetadata({
     title: post.seoTitle || post.title,
-    description: post.seoDescription || post.excerpt || siteConfig.description,
+    description: post.seoDescription || post.excerpt || messages.routes.blog.description,
     path: `/blog/${post.slug}`,
-    image: post.coverImage || "/opengraph-image",
+    locale,
+    image: post.coverImage || media.defaults.blog.src,
     type: "article",
-    publishedTime:
-      (post.publishedAt ?? post.createdAt).toISOString(),
+    publishedTime: (post.publishedAt ?? post.createdAt).toISOString(),
     modifiedTime: post.updatedAt.toISOString(),
     authors: [post.authorName || siteConfig.name],
-    section: post.category || "Healthcare Insights",
+    section: post.category || messages.routes.blog.title,
     tags: post.tags,
+    keywords: post.keywords,
   });
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPublishedPost(params.slug);
+export default async function BlogPostPage({
+  params,
+  locale = defaultLocale,
+}: BlogPostPageProps) {
+  const messages = getMessages(locale);
+  const page = messages.pages.blogPost;
+  const post = await getBlogPostBySlug(params.slug, locale);
 
   if (!post) {
     notFound();
@@ -79,14 +141,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     slug: post.slug,
     category: post.category,
     tags: post.tags,
+    locale,
     limit: 3,
   });
-  const readingTime = calculateReadingTime(post.content);
-  const isHtmlContent = /<([a-z][\w-]*)(?:[^>]*)>/i.test(post.content);
-  const encodedUrl = encodeURIComponent(absoluteUrl(`/blog/${post.slug}`));
-  const encodedTitle = encodeURIComponent(post.title);
-  const fallbackCover = getSiteImage("blogHealthcareNews01");
-  const coverSrc = post.coverImage || fallbackCover.path;
+  const articlePath = `/blog/${post.slug}`;
+  const breadcrumbItems = [
+    { name: messages.chrome.navigation.home, path: "/" },
+    { name: messages.routes.blog.title, path: "/blog" },
+    { name: post.title, path: articlePath },
+  ];
+  const articleServiceLinks = getArticleServiceLinks(locale, post.slug, messages);
 
   return (
     <>
@@ -94,205 +158,196 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         data={[
           createArticleSchema({
             title: post.seoTitle || post.title,
-            description: post.seoDescription || post.excerpt || siteConfig.description,
+            description: post.seoDescription || post.excerpt || messages.routes.blog.description,
             slug: post.slug,
             publishedAt: post.publishedAt ?? post.createdAt,
             updatedAt: post.updatedAt,
             coverImage: post.coverImage,
             authorName: post.authorName,
+            fallbackAuthorName: messages.site.editorialTeam,
             tags: post.tags,
             focusKeyword: post.focusKeyword,
+            locale,
+            path: articlePath,
           }),
           createWebPageSchema({
             name: post.title,
-            description: post.seoDescription || post.excerpt || siteConfig.description,
-            path: `/blog/${post.slug}`,
+            description: post.seoDescription || post.excerpt || messages.routes.blog.description,
+            path: articlePath,
+            locale,
           }),
-          createBreadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Blog", path: "/blog" },
-            { name: post.title, path: `/blog/${post.slug}` },
-          ]),
+          createBreadcrumbSchema(breadcrumbItems, locale),
+          ...(post.faqs.length ? [createFaqSchema(post.faqs)] : []),
         ]}
       />
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-hero-mesh">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(125,211,252,0.16),transparent_26%),radial-gradient(circle_at_82%_0%,rgba(96,165,250,0.18),transparent_24%)]" />
-        <div className="relative mx-auto max-w-5xl px-6 py-20 lg:px-8 lg:py-24">
-          <FadeIn>
-            <div className="flex flex-wrap gap-3">
-              <Badge>{post.category || "Healthcare Insights"}</Badge>
-              {post.tags?.slice(0, 2).map((tag) => (
-                <Badge key={tag} variant="default">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-            <h1 className="mt-6 max-w-4xl font-display text-4xl font-semibold leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
-              {post.title}
-            </h1>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-500">
-              <span className="inline-flex items-center gap-2">
-                <CalendarDays className="h-4 w-4 text-sky-700" />
-                {(post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <Clock3 className="h-4 w-4 text-sky-700" />
-                {readingTime} min read
-              </span>
-              <span>{siteConfig.name}</span>
-            </div>
-            {post.excerpt ? (
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+      <section className="relative overflow-hidden border-b border-slate-200/70 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.18),transparent_28%),linear-gradient(180deg,#ffffff_0%,#f7fbff_58%,#ffffff_100%)]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_4%,rgba(29,78,216,0.08),transparent_26%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+            <div>
+              <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                {breadcrumbItems.map((item, index) => (
+                  <span key={item.path} className="inline-flex items-center gap-2">
+                    {index > 0 ? <span>/</span> : null}
+                    {index < breadcrumbItems.length - 1 ? (
+                      <Link
+                        href={localizePath(item.path, locale)}
+                        className="transition hover:text-sky-700"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <span>{item.name}</span>
+                    )}
+                  </span>
+                ))}
+              </nav>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {post.category ? <Badge>{post.category}</Badge> : null}
+                {post.translationStatus === "summary-only" ? (
+                  <Badge variant="surface">{page.translationStatusBadge}</Badge>
+                ) : null}
+              </div>
+              <h1 className="mt-5 max-w-4xl font-display text-4xl font-semibold leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                {post.title}
+              </h1>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
                 {post.excerpt}
               </p>
-            ) : null}
-          </FadeIn>
+              <div className="mt-7 grid gap-3 text-sm text-slate-500 sm:grid-cols-2 xl:grid-cols-4">
+                <span className="inline-flex items-center gap-2">
+                  <UserRound className="h-4 w-4 text-sky-700" />
+                  {post.authorName || messages.site.editorialTeam}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4 text-sky-700" />
+                  {page.publishedLabel}:{" "}
+                  {(post.publishedAt ?? post.createdAt).toLocaleDateString(
+                    locale === "en" ? "en-US" : undefined,
+                    {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    },
+                  )}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <RefreshCcw className="h-4 w-4 text-sky-700" />
+                  {page.updatedLabel}:{" "}
+                  {post.updatedAt.toLocaleDateString(locale === "en" ? "en-US" : undefined, {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Clock3 className="h-4 w-4 text-sky-700" />
+                  {post.readingTime} {messages.chrome.blogCard.minRead}
+                </span>
+              </div>
+            </div>
+            <Card className="overflow-hidden border-slate-200/80 p-0 shadow-[0_28px_80px_rgba(8,22,52,0.12)]">
+              <div className="relative aspect-[16/12]">
+                <ImageWithFallback
+                  src={post.coverImage || media.defaults.blog.src}
+                  alt={post.featuredImageAlt || media.defaults.blog.alt}
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  fallbackLabel={post.title}
+                  className="object-cover"
+                />
+              </div>
+            </Card>
+          </div>
         </div>
       </section>
-      <section className="px-6 py-20 lg:px-8">
-        <FadeIn className="mx-auto max-w-4xl">
-          <Card className="overflow-hidden border-slate-200/80 p-0">
-            <div className="border-b border-slate-200/80 bg-slate-100">
-              <Image
-                src={coverSrc}
-                alt={post.coverImage ? post.title : fallbackCover.alt}
-                width={1600}
-                height={900}
-                className="h-auto w-full object-cover"
-              />
-            </div>
-            <article className="p-7 sm:p-10">
-              {isHtmlContent ? (
-                <div
-                  className="max-w-none text-base leading-8 text-slate-700 [&_h1]:font-display [&_h1]:text-slate-950 [&_h2]:font-display [&_h2]:text-slate-950 [&_h3]:font-display [&_h3]:text-slate-950 [&_strong]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-              ) : (
-                <div className="max-w-none whitespace-pre-wrap text-base leading-8 text-slate-700">
-                  {post.content}
-                </div>
-              )}
-            </article>
-          </Card>
-        </FadeIn>
-      </section>
-      <section className="px-6 py-8 lg:px-8">
-        <FadeIn className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_0.9fr]">
-          <Card className="border-slate-200/80 p-7">
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-700">
-                <Tag className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
-                  Tags & Topics
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {(post.tags?.length ? post.tags : ["Healthcare Insights"]).map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Card>
-          <Card className="border-slate-200/80 p-7">
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-700">
-                <Share2 className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
-                  Share Article
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                  >
-                    LinkedIn
-                  </a>
-                  <a
-                    href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                  >
-                    X
-                  </a>
-                  <a
-                    href={`mailto:?subject=${encodedTitle}&body=${encodedUrl}`}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                  >
-                    Email
-                  </a>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </FadeIn>
-      </section>
-      <section className="px-6 pb-8 lg:px-8">
-        <FadeIn className="mx-auto max-w-7xl">
-          <Card className="border-slate-200/80 p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
-              Author
-            </p>
-            <div className="mt-5 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <h2 className="font-display text-3xl font-semibold text-slate-950">
-                  {post.authorName || "MedPobeda Group Editorial Team"}
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+          <div className="space-y-6">
+            {post.translationNote ? (
+              <Card className="border-sky-100 bg-[linear-gradient(180deg,rgba(255,255,255,0.99),rgba(239,246,255,0.96))] p-5">
+                <h2 className="font-display text-xl font-semibold text-slate-950">
+                  {page.translationStatusTitle}
                 </h2>
-                <p className="mt-2 text-base text-sky-700">
-                  {post.authorRole || "Healthcare collaboration editorial perspective"}
+                <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
+                  {post.translationNote}
                 </p>
-              </div>
-              <p className="text-base leading-8 text-slate-600">
-                {post.authorBio ||
-                  "This article reflects the MedPobeda Group editorial focus on healthcare collaboration, medical tourism coordination, hospital partnerships, and international patient workflows."}
-              </p>
+              </Card>
+            ) : null}
+            <ArticleDisclaimer title={page.disclaimerTitle} body={page.disclaimerBody} />
+            <div className="text-sm text-slate-500">
+              <Link
+                href={localizePath("/medical-disclaimer", locale)}
+                className="font-semibold text-sky-700 transition hover:text-sky-800"
+              >
+                {page.disclaimerLinkLabel}
+              </Link>
             </div>
-          </Card>
+            <Card className="border-slate-200/80 p-5">
+              <h2 className="font-display text-xl font-semibold text-slate-950">
+                {page.serviceLinksTitle}
+              </h2>
+              <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
+                {page.serviceLinksDescription}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {articleServiceLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-sky-200 hover:text-sky-700"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </Card>
+            <ArticleContent sections={post.sections} />
+          </div>
+          <TableOfContents
+            title={page.tableOfContentsTitle}
+            items={post.sections.map((section) => ({
+              id: section.id,
+              title: section.title,
+            }))}
+          />
+        </div>
+      </section>
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <FadeIn>
+          <BlogFaq
+            title={page.faqTitle}
+            description={page.faqDescription}
+            items={post.faqs}
+          />
         </FadeIn>
       </section>
-      {relatedPosts.length ? (
-        <section className="px-6 py-12 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <FadeIn>
-              <h2 className="font-display text-3xl font-semibold text-slate-950 sm:text-4xl">
-                Related Insights
-              </h2>
-              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">
-                Continue exploring healthcare collaboration themes connected to this article.
-              </p>
-            </FadeIn>
-            <div className="mt-10 grid gap-6 lg:grid-cols-3">
-              {relatedPosts.map((relatedPost, index) => (
-                <FadeIn key={relatedPost.id} delay={index * 0.06}>
-                  <BlogCard post={relatedPost} />
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-      <CtaSection
-        title="Move from insight to execution"
-        description="Speak with MedPobeda Group for hospital collaboration, medical tourism coordination, or international patient support."
-        primary={{ label: "Contact MedPobeda Group", href: "/contact" }}
-        secondary={{ label: "Back to Blog", href: "/blog" }}
-        imageKey="blogConferenceReport"
-      />
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <FadeIn>
+          <BlogContactCta
+            locale={locale}
+            title={page.cta.title}
+            description={page.cta.description}
+            whatsappLabel={page.cta.whatsapp}
+            telegramLabel={page.cta.telegram}
+            emailLabel={page.cta.email}
+            contactPageLabel={page.cta.contactPage}
+          />
+        </FadeIn>
+      </section>
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <FadeIn>
+          <RelatedArticles
+            locale={locale}
+            title={page.related.title}
+            description={page.related.description}
+            posts={relatedPosts}
+            readLabel={messages.chrome.blogCard.readArticle}
+            featuredLabel={messages.chrome.blogCard.featured}
+            minReadLabel={messages.chrome.blogCard.minRead}
+          />
+        </FadeIn>
+      </section>
     </>
   );
 }

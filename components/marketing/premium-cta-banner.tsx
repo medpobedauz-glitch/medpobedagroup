@@ -1,10 +1,10 @@
-import { ArrowRight } from "lucide-react";
-
 import { CTAButton } from "@/components/marketing/cta-button";
 import {
   PremiumImageFrame,
   type PremiumVisualAsset,
 } from "@/components/marketing/premium-image-frame";
+import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 
 type PremiumCtaBannerProps = {
   eyebrow?: string;
@@ -22,22 +22,25 @@ type PremiumCtaBannerProps = {
 };
 
 export function PremiumCtaBanner({
-  eyebrow = "Next Step",
+  eyebrow,
   title,
   description,
   image,
   primary,
   secondary,
 }: PremiumCtaBannerProps) {
+  const messages = getMessages(getRequestLocale());
+  const resolvedEyebrow = eyebrow ?? messages.components.premiumCtaBanner.defaultEyebrow;
+
   return (
     <section className="section-shell">
       <div className="container-wide">
-        <div className="section-frame-accent px-6 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <div className="section-frame-accent px-4 py-8 sm:px-8 lg:px-10 lg:py-12">
           <div className="grid items-center gap-6 lg:grid-cols-[1.02fr_0.98fr]">
             <div>
               <p className="section-kicker">
                 <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
-                {eyebrow}
+                {resolvedEyebrow}
               </p>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-[-0.035em] text-[#071B3A] sm:text-4xl sm:leading-[1.06] lg:text-[3.35rem] lg:leading-[1.02]">
                 {title}
@@ -51,7 +54,7 @@ export function PremiumCtaBanner({
                   label={primary.label}
                   variant="hero"
                   size="2xl"
-                  icon={ArrowRight}
+                  icon="arrow-right"
                 />
                 {secondary ? (
                   <CTAButton

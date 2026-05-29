@@ -1,5 +1,4 @@
-import Image from "next/image";
-
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import type { SiteImageAsset } from "@/lib/site-images";
 import { cn } from "@/lib/utils";
 
@@ -38,12 +37,13 @@ export function ImageCard({
       )}
     >
       <div className={cn("relative overflow-hidden", aspectClassName)}>
-        <Image
+        <ImageWithFallback
           src={asset.path}
           alt={asset.alt}
           fill
           priority={priority}
           sizes={sizes}
+          fallbackLabel={title || asset.title}
           className={cn(
             "object-cover transition duration-700 group-hover:scale-[1.03]",
             imageClassName,

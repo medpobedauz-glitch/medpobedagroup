@@ -12,7 +12,7 @@ export function MedicalTourismInquiryForm({
 }: MedicalTourismInquiryFormProps) {
   return (
     <MedicalTourismInquiryFunnel
-      redirectPath="/medical-tourism"
+      redirectPath="/international-patient-care"
       honeypotField={env.SPAM_HONEYPOT_FIELD}
       submitted={submitted}
       hasError={hasError}

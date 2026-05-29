@@ -9,28 +9,28 @@ type AdminLoginFormProps = {
 
 export function AdminLoginForm({ hasError = false }: AdminLoginFormProps) {
   return (
-    <Card className="mx-auto max-w-md border-white/12 p-8">
-      <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-100/70">
+    <Card variant="light" className="mx-auto max-w-md border-slate-200/80 p-5 sm:p-8">
+      <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-700">
         Admin Login
       </p>
-      <h1 className="mt-4 font-display text-3xl font-semibold text-white">
+      <h1 className="mt-4 font-display text-3xl font-semibold text-slate-950">
         Secure MedPobeda access
       </h1>
-      <p className="mt-4 text-sm leading-7 text-slate-300">
+      <p className="mt-4 text-sm leading-7 text-slate-600">
         Sign in to manage inquiries, hospital partnerships, blog content, and
         operational analytics.
       </p>
       {hasError ? (
-        <div className="mt-5 rounded-[1.3rem] border border-amber-300/20 bg-amber-400/10 px-4 py-4 text-sm text-amber-50">
+        <div className="mt-5 rounded-[1.3rem] border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
           Invalid credentials. Please try again.
         </div>
       ) : null}
       <form action={loginAdminAction} className="mt-8 grid gap-5">
-        <label className="grid gap-2 text-sm font-medium text-white/90">
+        <label className="grid gap-2 text-sm font-medium text-slate-700">
           Email
-          <Input name="email" type="email" required placeholder="admin@example.com" />
+          <Input name="email" type="email" required placeholder="info@medpobedagroup.uz" />
         </label>
-        <label className="grid gap-2 text-sm font-medium text-white/90">
+        <label className="grid gap-2 text-sm font-medium text-slate-700">
           Password
           <Input
             name="password"
@@ -52,4 +52,3 @@ export function AdminLoginForm({ hasError = false }: AdminLoginFormProps) {
     </Card>
   );
 }
-

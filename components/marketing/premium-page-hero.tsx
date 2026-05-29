@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 import { CTAButton } from "@/components/marketing/cta-button";
 import {
   PremiumImageFrame,
   type PremiumVisualAsset,
 } from "@/components/marketing/premium-image-frame";
+import { useMessages } from "@/lib/i18n";
 import { easeOutExpo } from "@/lib/motion";
 
 type HeroStat = {
@@ -46,10 +46,12 @@ export function PremiumPageHero({
   floatingCards = [],
   accentLabel,
 }: PremiumPageHeroProps) {
+  const messages = useMessages();
+
   return (
-    <section className="relative overflow-hidden px-4 pb-8 pt-6 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden px-4 pb-6 pt-4 sm:px-6 sm:pb-8 sm:pt-6 lg:px-8">
       <div className="container-wide">
-        <div className="section-frame overflow-hidden px-6 py-10 sm:px-8 lg:px-12 lg:py-14">
+        <div className="section-frame overflow-hidden px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.16),transparent_26%),radial-gradient(circle_at_top_right,rgba(29,78,216,0.12),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(224,247,250,0.65),transparent_24%)]" />
           <div className="pointer-events-none absolute -left-12 top-12 h-48 w-48 rounded-full bg-[#E0F7FA]/60 blur-3xl" />
           <div className="pointer-events-none absolute right-10 top-12 h-56 w-56 rounded-full bg-[#DBEAFE]/80 blur-3xl" />
@@ -72,7 +74,7 @@ export function PremiumPageHero({
               <p className="mt-7 text-sm font-semibold uppercase tracking-[0.32em] text-blue-700">
                 {eyebrow}
               </p>
-              <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.1] tracking-[-0.035em] text-[#071B3A] sm:text-5xl sm:leading-[1.06] lg:text-[4.4rem] lg:leading-[1.02]">
+              <h1 className="mt-4 max-w-3xl text-balance font-display text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#071B3A] sm:text-5xl sm:leading-[1.06] lg:text-[4.4rem] lg:leading-[1.02]">
                 {title}
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-[1.08rem]">
@@ -84,7 +86,7 @@ export function PremiumPageHero({
                   label={primaryCta.label}
                   variant="hero"
                   size="2xl"
-                  icon={ArrowRight}
+                  icon="arrow-right"
                 />
                 {secondaryCta ? (
                   <CTAButton
@@ -97,7 +99,7 @@ export function PremiumPageHero({
                 ) : null}
               </div>
               {stats.length > 0 ? (
-                <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {stats.map((item) => (
                     <div
                       key={item.label}
@@ -129,13 +131,13 @@ export function PremiumPageHero({
               {accentLabel ? (
                 <div className="pointer-events-none absolute -left-4 top-8 hidden w-52 rounded-[1.6rem] border border-[#D6E8FF] bg-white/90 p-4 shadow-[0_22px_60px_rgba(7,27,58,0.12)] backdrop-blur-xl lg:block">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-700">
-                    Signature Focus
+                    {messages.components.premiumPageHero.signatureFocusLabel}
                   </p>
                   <p className="mt-2 font-display text-2xl font-semibold text-[#071B3A]">
                     {accentLabel}
                   </p>
                   <p className="mt-2 text-sm leading-7 text-slate-600">
-                    Premium healthcare coordination shaped around clarity, trust, and international collaboration.
+                    {messages.components.premiumPageHero.signatureFocusDescription}
                   </p>
                 </div>
               ) : null}

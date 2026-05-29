@@ -1,15 +1,28 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { ImageResponse } from "next/og";
 
+import enMessages from "@/messages/en.json";
+import { media } from "@/lib/media";
 import { siteConfig } from "@/lib/site";
 
-export const alt = "MedPobeda Group social preview";
+export const alt = siteConfig.socialPreviewAlt;
 export const size = {
   width: 1200,
   height: 630,
 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+const publicRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "public");
+
+export default async function OpenGraphImage() {
+  const logoBuffer = await readFile(
+    path.join(publicRoot, media.brand.logo.src.replace(/^\//, "")),
+  );
+  const logoSrc = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -29,45 +42,25 @@ export default function OpenGraphImage() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 20,
+            gap: 24,
           }}
         >
-          <div
+          <img
+            src={logoSrc}
+            alt={siteConfig.name}
+            width={276}
+            height={84}
             style={{
-              display: "flex",
-              height: 72,
-              width: 72,
-              borderRadius: 24,
+              height: 84,
+              width: 276,
+              borderRadius: 26,
               border: "1px solid rgba(29,78,216,0.12)",
-              background: "rgba(255,255,255,0.86)",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 16px 40px rgba(7,27,58,0.08)",
+              background: "rgba(255,255,255,0.96)",
+              objectFit: "cover",
+              objectPosition: "center",
+              boxShadow: "0 18px 44px rgba(7,27,58,0.12)",
             }}
-          >
-            <div
-              style={{
-                height: 18,
-                width: 18,
-                borderRadius: 999,
-                background: "#38BDF8",
-                boxShadow: "0 0 24px rgba(56,189,248,0.45)",
-              }}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span
-              style={{
-                fontSize: 20,
-                letterSpacing: "0.34em",
-                textTransform: "uppercase",
-                color: "rgba(29,78,216,0.78)",
-              }}
-            >
-              MedPobeda
-            </span>
-            <span style={{ fontSize: 34, fontWeight: 700 }}>Group</span>
-          </div>
+          />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <div
@@ -95,7 +88,7 @@ export default function OpenGraphImage() {
               fontWeight: 700,
             }}
           >
-            Connecting Patients, Hospitals & Global Healthcare Opportunities
+            {enMessages.pages.home.hero.title}
           </div>
           <div
             style={{
@@ -106,8 +99,7 @@ export default function OpenGraphImage() {
               color: "rgba(71, 85, 105, 0.94)",
             }}
           >
-            Medical tourism, international patient support, hospital partnerships,
-            student mobility, and India–Uzbekistan healthcare collaboration.
+            {enMessages.routes.home.description}
           </div>
         </div>
       </div>

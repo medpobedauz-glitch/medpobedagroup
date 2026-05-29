@@ -1,3 +1,4 @@
+import { getRouteLocale } from "@/lib/i18n/request";
 import { notFound } from "next/navigation";
 
 import HomePage from "@/app/page";
@@ -15,18 +16,18 @@ type LocalePageProps = {
 };
 
 export async function generateMetadata({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     return {};
   }
 
-  return createLocalizedPageMetadata(params.locale, "home", localizePath("/", params.locale));
+  return createLocalizedPageMetadata(getRouteLocale(params?.locale), "home", localizePath("/", getRouteLocale(params?.locale)));
 }
 
 export default function LocalizedHomePage({
   params,
   searchParams,
 }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
+  if (!isSupportedLocale(getRouteLocale(params?.locale))) {
     notFound();
   }
 

@@ -21,7 +21,7 @@ export function PremiumImageStorySection({
   return (
     <section className="section-shell">
       <div className="container-wide">
-        <div className="section-frame-soft px-6 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <div className="section-frame-soft px-4 py-8 sm:px-8 lg:px-10 lg:py-12">
           <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="grid gap-4 sm:grid-cols-2">
               {images.map((asset, index) => (
@@ -29,7 +29,7 @@ export function PremiumImageStorySection({
                   key={asset.src}
                   asset={asset}
                   aspectClassName={index % 3 === 1 ? "aspect-[4/5]" : "aspect-[4/3]"}
-                  className={index === 2 ? "sm:-mt-10" : undefined}
+                  className={index === 2 ? "md:-mt-10" : undefined}
                 />
               ))}
             </div>

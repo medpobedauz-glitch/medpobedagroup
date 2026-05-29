@@ -1,12 +1,12 @@
-import Image from "next/image";
 import { ArrowRight, CalendarDays, Clock3 } from "lucide-react";
 
 import { calculateReadingTime } from "@/lib/utils";
 import { PublicLink } from "@/components/shared/public-link";
 import { Card } from "@/components/ui/card";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { getMessages } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { getSiteImage } from "@/lib/site-images";
+import { media } from "@/lib/media";
 
 type BlogCardProps = {
   post: {
@@ -26,18 +26,18 @@ type BlogCardProps = {
 export function BlogCard({ post }: BlogCardProps) {
   const messages = getMessages(getRequestLocale());
   const readingTime = calculateReadingTime(post.content ?? post.excerpt ?? "");
-  const fallbackImage = getSiteImage("blogHealthcareNews01");
-  const imageSrc = post.coverImage || fallbackImage.path;
-  const imageAlt = post.coverImage ? post.title : fallbackImage.alt;
+  const imageSrc = post.coverImage || media.defaults.blog.src;
+  const imageAlt = post.coverImage ? post.title : messages.pages.blog.hero.imageAlt || media.defaults.blog.alt;
 
   return (
     <Card className="group overflow-hidden border-slate-200/80 p-0">
       <div className="relative h-56 overflow-hidden border-b border-slate-200/80 bg-slate-100">
-        <Image
+        <ImageWithFallback
           src={imageSrc}
           alt={imageAlt}
           fill
           sizes="(min-width: 1024px) 50vw, 100vw"
+          fallbackLabel={post.title}
           className="object-cover transition duration-700 group-hover:scale-[1.04]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(15,23,42,0.24)_100%)]" />

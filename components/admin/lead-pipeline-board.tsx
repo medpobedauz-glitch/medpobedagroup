@@ -1,6 +1,5 @@
 "use client";
 
-import { LeadPriority, PipelineStage } from "@prisma/client";
 import { useState, useTransition } from "react";
 
 import {
@@ -8,6 +7,11 @@ import {
   createLeadReminderAction,
   updateLeadPipelineStageAction,
 } from "@/lib/actions/pipeline";
+import {
+  LeadPriority,
+  type LeadPriority as LeadPriorityValue,
+  type PipelineStage as PipelineStageValue,
+} from "@/lib/client-enums";
 import { startCase } from "@/lib/utils";
 import { PipelineStagePill, PriorityPill } from "@/components/admin/status-pill";
 import { SubmitButton } from "@/components/forms/submit-button";
@@ -37,7 +41,7 @@ const reminderPriorityOptions = [
   LeadPriority.MEDIUM,
   LeadPriority.HIGH,
   LeadPriority.URGENT,
-] as const;
+] as const satisfies readonly LeadPriorityValue[];
 
 export function LeadPipelineBoard({
   columns,
@@ -45,10 +49,10 @@ export function LeadPipelineBoard({
   staff,
 }: PipelineBoardProps) {
   const [dragState, setDragState] = useState<DragState | null>(null);
-  const [activeStage, setActiveStage] = useState<PipelineStage | null>(null);
+  const [activeStage, setActiveStage] = useState<PipelineStageValue | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  function handleDrop(stage: PipelineStage) {
+  function handleDrop(stage: PipelineStageValue) {
     if (!dragState) {
       return;
     }

@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { m, useReducedMotion } from "framer-motion";
 import { CalendarDays, ChevronRight } from "lucide-react";
 
 import type { HomepageEditorialBlog } from "@/lib/home-updates";
 import { PublicLink } from "@/components/shared/public-link";
 import { Card } from "@/components/ui/card";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 type LatestBlogListCardProps = {
   post: HomepageEditorialBlog;
@@ -38,11 +38,12 @@ export function LatestBlogListCard({
         >
           <div className="grid gap-4 sm:grid-cols-[8.6rem_1fr] sm:items-start">
             <div className="relative h-28 overflow-hidden rounded-[1.2rem] border border-slate-200/70 bg-slate-100 sm:h-32">
-              <Image
+              <ImageWithFallback
                 src={post.image}
                 alt={post.title}
                 fill
                 sizes="(min-width: 1024px) 176px, 100vw"
+                fallbackLabel={post.category}
                 className="object-cover transition duration-700 group-hover:scale-[1.04]"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(11,31,77,0.18)_100%)]" />

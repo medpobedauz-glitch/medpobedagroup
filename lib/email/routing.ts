@@ -4,11 +4,14 @@ import { InquiryType } from "@prisma/client";
 
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
+import { siteConfig } from "@/lib/site";
 
 function getDefaultAdminEmail() {
   return (
+    env.ADMIN_NOTIFICATION_EMAIL ||
     env.CONTACT_ADMIN_EMAIL ||
-    env.NEXT_PUBLIC_CONTACT_EMAIL ||
+    siteConfig.contactEmail ||
+    env.ADMIN_EMAIL ||
     env.ADMIN_BOOTSTRAP_EMAIL
   );
 }

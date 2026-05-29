@@ -158,4 +158,68 @@ npm run start
 - Store uploads on persistent disk or replace `lib/uploads.ts` with cloud object storage for multi-instance deployments.
 - The current in-memory rate limiter is suitable for a single-instance deployment baseline. Replace it with Redis or another shared store for horizontally scaled environments.
 - `/api/files/[id]` keeps medical documents private and only exposes blog cover images publicly.
-# medpobedagroup git init git add README.md git commit -m first commit git branch -M main git remote add origin https://github.com/medpobedauz-glitch/medpobedagroup.git git push -u origin main
+
+## Vercel
+
+- Production URL: `https://medpobeda-group.vercel.app`
+- Vercel project: `guptaravishankar55-7364s-projects/medpobeda-group`
+- GitHub repository: `https://github.com/medpobedauz-glitch/medpobedagroup`
+
+### Current Status
+
+- Manual Vercel production deployment is working.
+- The project is linked locally through `.vercel/project.json`.
+- Automatic Git-based deployments are blocked until the Vercel account is granted access to the GitHub repository.
+
+### One-Time Git Auto-Deploy Setup
+
+1. Open the Vercel dashboard for `medpobeda-group`.
+2. Go to `Settings -> Git`.
+3. Connect GitHub if it is not already connected for this Vercel account/team.
+4. Install or update the Vercel GitHub app so it has access to `medpobedauz-glitch/medpobedagroup`.
+5. Select the repository `medpobedauz-glitch/medpobedagroup`.
+6. Set `main` as the production branch.
+7. Confirm the existing project settings and save.
+
+After that, every push to `main` will create a production deployment, and pull requests or non-production branches can create preview deployments.
+
+### Environment Variables
+
+Set these in `Vercel -> Settings -> Environment Variables` before enabling production traffic:
+
+- `DATABASE_URL`
+- `AUTH_SECRET`
+- `ADMIN_BOOTSTRAP_NAME`
+- `ADMIN_BOOTSTRAP_EMAIL`
+- `ADMIN_BOOTSTRAP_PASSWORD`
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_CONTACT_EMAIL`
+- `UPLOAD_ROOT`
+
+Optional:
+
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASSWORD`
+- `SMTP_FROM_EMAIL`
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+- `NEXT_PUBLIC_WHATSAPP_URL`
+- `NEXT_PUBLIC_TELEGRAM_URL`
+- `NEXT_PUBLIC_CONTACT_PHONE`
+
+### Build Behavior
+
+- `npm run build` already runs `prisma generate && next build`, which is required for Vercel production builds.
+- The Open Graph image route reads the logo from `public/brand/medpobeda-group-mchj-logo.png`, so it no longer depends on an external asset URL during build.
+
+### Manual Deploy Fallback
+
+If the Git integration is not connected yet, production can still be deployed manually with:
+
+```bash
+vercel deploy --prod
+```

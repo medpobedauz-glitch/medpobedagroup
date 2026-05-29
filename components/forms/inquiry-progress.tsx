@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { Check } from "lucide-react";
 
 import { useMessages } from "@/lib/i18n";
@@ -51,11 +49,11 @@ export function InquiryProgress({
               >
                 {state === "complete" ? <Check className="h-4 w-4" /> : `0${index + 1}`}
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs uppercase tracking-[0.24em] opacity-70">
                   {messages.chrome.progress.step}
                 </p>
-                <p className="mt-1 text-sm font-semibold">{step}</p>
+                <p className="mt-1 text-sm font-semibold leading-6">{step}</p>
               </div>
             </div>
           </div>

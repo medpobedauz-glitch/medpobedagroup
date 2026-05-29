@@ -10,7 +10,6 @@ import { useMessages } from "@/lib/i18n";
 import { BrandMark } from "@/components/layout/brand-mark";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -19,16 +18,14 @@ export function SiteHeader() {
   const messages = useMessages();
   const [scrolled, setScrolled] = useState(false);
   const navigationItems = [
-    { href: "/", label: messages.chrome.navigation.home },
-    { href: "/medical-tourism", label: messages.chrome.navigation.medicalTourism },
+    { href: "/international-patient-care", label: messages.chrome.navigation.medicalTourism },
+    { href: "/services", label: messages.chrome.navigation.services },
+    { href: "/treatments", label: messages.chrome.navigation.treatments },
     { href: "/hospitals", label: messages.chrome.navigation.hospitals },
-    {
-      href: "/international-patients",
-      label: messages.chrome.navigation.internationalPatients,
-    },
-    { href: "/hospital-partnerships", label: messages.chrome.navigation.partnerships },
-    { href: "/student-mobility", label: messages.chrome.navigation.studentMobility },
+    { href: "/doctors", label: messages.chrome.navigation.doctors },
+    { href: "/patient-support", label: messages.chrome.navigation.patientSupport },
     { href: "/about", label: messages.chrome.navigation.about },
+    { href: "/blog", label: messages.routes.blog.title },
     { href: "/contact", label: messages.chrome.navigation.contact },
   ];
 
@@ -49,19 +46,23 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 px-3 pt-2.5 sm:px-6 sm:pt-3 lg:px-8">
       <div
-        className={`mx-auto flex max-w-[92rem] items-center justify-between rounded-[1.9rem] border px-3 py-3 transition-all duration-300 sm:px-5 ${
+        className={`mx-auto flex max-w-[92rem] items-center justify-between gap-2 rounded-[1.7rem] border px-2.5 py-2.5 transition-all duration-300 sm:gap-4 sm:rounded-[1.9rem] sm:px-5 sm:py-3 xl:gap-6 ${
           scrolled
-            ? "border-[#D6E8FF] bg-white/90 shadow-[0_26px_80px_rgba(7,27,58,0.1)] backdrop-blur-2xl"
-            : "border-white/70 bg-white/78 shadow-[0_18px_54px_rgba(7,27,58,0.08)] backdrop-blur-xl"
+            ? "border-[#D6E8FF] bg-white/94 shadow-[0_26px_80px_rgba(7,27,58,0.1)] backdrop-blur-2xl"
+            : "border-white/80 bg-white/82 shadow-[0_18px_54px_rgba(7,27,58,0.07)] backdrop-blur-xl"
         }`}
       >
-        <Link href={localizePath("/", locale)} aria-label="MedPobeda Group home">
+        <Link
+          href={localizePath("/", locale)}
+          aria-label={messages.chrome.header.homeAriaLabel}
+          className="shrink-0"
+        >
           <BrandMark compact />
         </Link>
 
-        <nav className="hidden items-center gap-1 xl:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex 2xl:gap-2">
           {navigationItems.map((item) => (
             <Link
               key={item.href}
@@ -81,25 +82,14 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 xl:flex">
-          <LanguageSwitcher />
-          <Button
-            asChild
-            variant="outline"
-            className="border-[#BFD7FF] bg-white/78 text-[#071B3A] hover:border-[#1D4ED8] hover:bg-white"
-          >
-            <Link href={localizePath("/international-patients", locale)}>
-              {messages.chrome.actions.requestPatientAssistance}
-            </Link>
-          </Button>
-          <Button asChild variant="hero" className="h-11 px-6">
-            <Link href={localizePath("/hospital-partnerships", locale)}>
-              {messages.chrome.actions.partnerWithUs}
-            </Link>
-          </Button>
+        <div className="hidden shrink-0 items-center xl:flex">
+          <LanguageSwitcher className="w-[10rem] 2xl:w-[10.25rem]" />
         </div>
 
-        <MobileNav />
+        <div className="flex min-w-0 items-center gap-1.5 sm:gap-2 xl:hidden">
+          <LanguageSwitcher compact />
+          <MobileNav />
+        </div>
       </div>
     </header>
   );
@@ -107,7 +97,7 @@ export function SiteHeader() {
 
 function cnNav(active: boolean) {
   return [
-    "relative rounded-full px-4 py-2 text-sm font-medium transition",
+    "relative rounded-full px-3 py-2 text-center text-sm font-medium leading-tight transition 2xl:px-4",
     active ? "text-[#071B3A]" : "text-slate-600 hover:text-blue-700",
   ].join(" ");
 }

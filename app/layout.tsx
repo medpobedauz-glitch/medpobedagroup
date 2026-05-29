@@ -1,37 +1,50 @@
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
-import { Public_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import "@/app/globals.css";
 
 import { absoluteUrl, defaultKeywords } from "@/lib/metadata";
 import { getPlatformSettings } from "@/lib/data/settings";
+import { media } from "@/lib/media";
+import { resolveSeoImage } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { I18nProvider, getMessages } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { organizationSchema } from "@/lib/schema";
+import { locales, localizePath } from "@/lib/i18n/config";
+import { createOrganizationSchema } from "@/lib/schema";
+import { SiteNavigationSchema } from "@/components/shared/site-navigation-schema";
 import { AnalyticsTracker } from "@/components/shared/analytics-tracker";
+import FreeConsultationPopup from "@/components/common/FreeConsultationPopup";
 import { FloatingButtons } from "@/components/shared/floating-buttons";
 import { InquiryConcierge } from "@/components/shared/inquiry-concierge";
 import { StickyMobileContactBar } from "@/components/shared/sticky-mobile-contact-bar";
+import CentralAsiaPatientsSection from "@/components/sections/CentralAsiaPatientsSection";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 
-const publicSans = Public_Sans({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
+  preload: true,
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getPlatformSettings();
-  const title =
-    settings.seoDefaultTitle ||
-    "MedPobeda Group | Medical Tourism & Healthcare Partnerships";
-  const description = settings.seoDefaultDescription || siteConfig.description;
+  const messages = getMessages(getRequestLocale());
+  const title = settings.seoDefaultTitle || messages.site.defaultTitle;
+  const description = settings.seoDefaultDescription || messages.site.description;
   const siteUrl = settings.siteUrl || siteConfig.siteUrl;
+  const localizedKeywords =
+    messages.site.seoKeywords?.length ? messages.site.seoKeywords : settings.seoKeywords;
+  const openGraphTitle = messages.routes.home.openGraphTitle || title;
+  const openGraphDescription =
+    messages.routes.home.openGraphDescription || description;
+  const defaultSeoImage = resolveSeoImage("/", settings.ogImage || media.brand.openGraph.src);
 
   return {
     metadataBase: new URL(siteUrl),
@@ -40,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${settings.brandName || siteConfig.name}`,
     },
     description,
-    keywords: [...defaultKeywords, ...settings.seoKeywords],
+    keywords: [...defaultKeywords, ...localizedKeywords],
     authors: [{ name: settings.brandName || siteConfig.name }],
     creator: settings.brandName || siteConfig.name,
     publisher: settings.brandName || siteConfig.name,
@@ -48,28 +61,37 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: siteUrl,
     },
+    manifest: "/manifest.webmanifest",
+    verification: {
+      google: "cnane2mjoJ062ZlXCGD8KaB7Y6tLzdutA92GvMVR1es",
+    },
     openGraph: {
-      title: settings.brandName || siteConfig.name,
-      description,
+      title: openGraphTitle,
+      description: openGraphDescription,
       type: "website",
       url: siteUrl,
       siteName: settings.brandName || siteConfig.name,
       locale: "en_US",
       images: [
         {
-          url: absoluteUrl(settings.ogImage || "/opengraph-image", siteUrl),
+          url: absoluteUrl(defaultSeoImage.src, siteUrl),
           width: 1200,
           height: 630,
-          alt: `${settings.brandName || siteConfig.name} social preview`,
+          alt: defaultSeoImage.alt || messages.site.socialPreviewAlt,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: settings.brandName || siteConfig.name,
-      description,
-      images: [absoluteUrl(settings.ogImage || "/opengraph-image", siteUrl)],
+      title: openGraphTitle,
+      description: openGraphDescription,
+      images: [absoluteUrl(defaultSeoImage.src, siteUrl)],
       creator: settings.twitterHandle || undefined,
+    },
+    icons: {
+      icon: [{ url: "/icon", type: "image/png" }],
+      apple: [{ url: "/apple-icon", type: "image/png" }],
+      shortcut: ["/icon"],
     },
   };
 }
@@ -86,25 +108,48 @@ export default function RootLayout({
 }>) {
   const locale = getRequestLocale();
   const messages = getMessages(locale);
+  const organizationSchema = createOrganizationSchema({
+    name: messages.site.name,
+    description: messages.site.description,
+    tagline: messages.site.tagline,
+    location: messages.site.location,
+  });
 
   return (
-    <html lang={locale} className={publicSans.variable}>
+    <html lang={locale} className={inter.variable}>
+      <head>
+        {/* Canonical URL */}
+        <link rel="canonical" href={absoluteUrl(localizePath('/', locale))} />
+        {/* Hreflang links for each locale */}
+        {locales.map((l) => (
+          <link
+            key={l}
+            rel="alternate"
+            hrefLang={l}
+            href={absoluteUrl(localizePath('/', l as any))}
+          />
+        ))}
+      </head>
       <body className="overflow-x-hidden">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        {/* Site navigation schema for Google sitelinks */}
+        <SiteNavigationSchema locale={locale} />
         <I18nProvider locale={locale} messages={messages}>
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col pb-24 md:pb-0">
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(191,219,254,0.08)_100%)]" />
             <SiteHeader />
             <main className="relative flex-1">{children}</main>
+            <FreeConsultationPopup />
             <InquiryConcierge />
             <FloatingButtons />
             <StickyMobileContactBar />
+            <CentralAsiaPatientsSection />
             <SiteFooter />
           </div>
         </I18nProvider>

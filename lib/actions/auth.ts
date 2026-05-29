@@ -1,11 +1,13 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { UserRole } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { logAuditEvent } from "@/lib/audit";
 import { createAdminSession, clearAdminSession } from "@/lib/auth/session";
+import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { assertValidServerActionOrigin } from "@/lib/security/origin";
 import { assertRateLimit } from "@/lib/security/rate-limit";
@@ -34,6 +36,60 @@ export async function loginAdminAction(formData: FormData) {
       description: "Admin login failed validation.",
     });
     redirect("/admin/login?error=invalid");
+  }
+
+  const normalizedEmail = parsed.data.email.trim().toLowerCase();
+  const adminEmail = env.ADMIN_EMAIL.trim().toLowerCase();
+
+  if (normalizedEmail === adminEmail) {
+    if (parsed.data.password !== env.ADMIN_PASSWORD) {
+      await logAuditEvent({
+        action: "auth.login.failed",
+        entityType: "user",
+        description: `Admin login failed for ${parsed.data.email}.`,
+      });
+      redirect("/admin/login?error=invalid");
+    }
+
+    const passwordHash = await bcrypt.hash(env.ADMIN_PASSWORD, 10);
+    const user = await prisma.user.upsert({
+      where: { email: env.ADMIN_EMAIL },
+      update: {
+        name: env.ADMIN_BOOTSTRAP_NAME,
+        passwordHash,
+        role: UserRole.SUPER_ADMIN,
+        isActive: true,
+        lastLoginAt: new Date(),
+        lastSeenAt: new Date(),
+      },
+      create: {
+        name: env.ADMIN_BOOTSTRAP_NAME,
+        email: env.ADMIN_EMAIL,
+        passwordHash,
+        role: UserRole.SUPER_ADMIN,
+        isActive: true,
+        lastLoginAt: new Date(),
+        lastSeenAt: new Date(),
+      },
+    });
+
+    await createAdminSession({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    });
+
+    await logAuditEvent({
+      actorId: user.id,
+      action: "auth.login",
+      entityType: "user",
+      entityId: user.id,
+      description: `${user.email} signed in to the admin workspace.`,
+    });
+
+    revalidatePath("/admin");
+    redirect("/admin");
   }
 
   const user = await prisma.user.findUnique({

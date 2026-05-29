@@ -1,12 +1,11 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { FileCategory, FileVisibility } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAdminUser } from "@/lib/auth/session";
 import { logAuditEvent } from "@/lib/audit";
+import { resolveUploadStoragePath } from "@/lib/upload-storage";
 
 const publicCategories = new Set<FileCategory>([FileCategory.BLOG_COVER]);
 
@@ -51,7 +50,7 @@ export async function GET(request: NextRequest, { params }: FileRouteProps) {
     });
   }
 
-  const absolutePath = path.resolve(process.cwd(), env.UPLOAD_ROOT, record.storagePath);
+  const absolutePath = resolveUploadStoragePath(record.storagePath);
 
   try {
     const buffer = await readFile(absolutePath);

@@ -1,12 +1,21 @@
 "use client";
 
-import { InquiryType } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, MessageCircle, Send, ShieldCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileText,
+  type LucideIcon,
+  MessageCircle,
+  PhoneCall,
+  Send,
+  ShieldCheck,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { submitContactInquiryAction } from "@/app/actions/inquiries";
+import { InquiryType } from "@/lib/client-enums";
 import { useMessages } from "@/lib/i18n";
-import { submitContactInquiryAction } from "@/lib/actions/inquiries";
 import { getTelegramUrl, getWhatsAppUrl } from "@/lib/site";
 import { InquiryProgress } from "@/components/forms/inquiry-progress";
 import { SubmitButton } from "@/components/forms/submit-button";
@@ -87,6 +96,23 @@ function isValidEmail(value: string) {
   return /\S+@\S+\.\S+/.test(value);
 }
 
+function FormNoticeCard({
+  icon: Icon,
+  text,
+}: {
+  icon: LucideIcon;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[1.5rem] border border-[#D6E8FF] bg-[rgba(248,251,255,0.92)] p-4">
+      <div className="flex items-start gap-3">
+        <Icon className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+        <p className="text-sm leading-7 text-slate-600">{text}</p>
+      </div>
+    </div>
+  );
+}
+
 export function ContactInquiryFunnel({
   variant,
   redirectPath,
@@ -130,7 +156,10 @@ export function ContactInquiryFunnel({
       values.organization,
     ],
   );
-  const directMessage = `Hello MedPobeda Group, I would like to discuss ${variantMessages.eyebrow.toLowerCase()}.`;
+  const directMessage = contactMessages.directMessageTemplate.replace(
+    "{topic}",
+    variantMessages.eyebrow.toLowerCase(),
+  );
   const whatsappHref = getWhatsAppUrl(directMessage);
   const telegramHref = getTelegramUrl(directMessage);
 
@@ -487,7 +516,7 @@ export function ContactInquiryFunnel({
                   </Alert>
 
                   {variant === "international-patient" ? (
-                    <div className="grid gap-5 md:grid-cols-2">
+                    <div className="grid gap-5">
                       <label className={sharedInputClass}>
                         {contactMessages.review.medicalReports}
                         <Input
@@ -498,18 +527,6 @@ export function ContactInquiryFunnel({
                         />
                         <span className="text-xs text-slate-500">
                           {contactMessages.review.medicalReportsHelp}
-                        </span>
-                      </label>
-                      <label className={sharedInputClass}>
-                        {contactMessages.review.passportCopy}
-                        <Input
-                          type="file"
-                          name="passportCopies"
-                          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                          multiple
-                        />
-                        <span className="text-xs text-slate-500">
-                          {contactMessages.review.passportCopyHelp}
                         </span>
                       </label>
                     </div>
@@ -525,6 +542,33 @@ export function ContactInquiryFunnel({
                     />
                     <span className="text-xs text-slate-500">{variantMessages.uploadHelper}</span>
                   </label>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <FormNoticeCard
+                      icon={ShieldCheck}
+                      text={contactMessages.notices.privacy}
+                    />
+                    <FormNoticeCard
+                      icon={PhoneCall}
+                      text={contactMessages.notices.emergency}
+                    />
+                  </div>
+                  {variant === "international-patient" ? (
+                    <FormNoticeCard
+                      icon={FileText}
+                      text={contactMessages.notices.patientUpload}
+                    />
+                  ) : null}
+                  <label className="flex items-start gap-3 rounded-[1.5rem] border border-[#D6E8FF] bg-white p-4 text-sm leading-7 text-slate-600 shadow-[0_14px_36px_rgba(7,27,58,0.04)]">
+                    <input
+                      type="checkbox"
+                      name="consentAccepted"
+                      value="true"
+                      required
+                      className="mt-1 h-4 w-4 rounded border-[#9CC8FF] text-blue-700 focus:ring-blue-500"
+                    />
+                    <span>{contactMessages.notices.consent}</span>
+                  </label>
                 </>
               ) : null}
             </motion.div>
@@ -533,13 +577,25 @@ export function ContactInquiryFunnel({
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-3">
               {step > 0 ? (
-                <Button type="button" variant="secondary" size="lg" onClick={goPrevious}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="lg"
+                  onClick={goPrevious}
+                  className="w-full sm:w-auto"
+                >
                   <ArrowLeft className="h-4 w-4" />
                   {messages.chrome.common.back}
                 </Button>
               ) : null}
               {step < steps.length - 1 ? (
-                <Button type="button" variant="primary" size="lg" onClick={goNext}>
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="lg"
+                  onClick={goNext}
+                  className="w-full sm:w-auto"
+                >
                   {messages.chrome.common.nextStep}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -548,6 +604,7 @@ export function ContactInquiryFunnel({
                   type="submit"
                   variant="primary"
                   size="lg"
+                  className="w-full sm:w-auto"
                   pendingLabel={contactMessages.actions.submitting}
                 >
                   {contactMessages.actions.submit}
