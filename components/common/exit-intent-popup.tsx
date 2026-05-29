@@ -20,11 +20,11 @@ export function ExitIntentPopup() {
   }, []);
 
   useEffect(() => {
-    const handleMouseLeave = (e: MouseEvent) => {
+    const handleMouseLeave = (event: MouseEvent) => {
       if (
         !hasShown &&
-        e.clientY <= 0 &&
-        e.clientX <= 0
+        event.clientY <= 0 &&
+        event.clientX <= 0
       ) {
         timeoutRef.current = setTimeout(() => {
           setIsOpen(true);
@@ -33,7 +33,7 @@ export function ExitIntentPopup() {
       }
     };
 
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    const handleBeforeUnload = (_event: BeforeUnloadEvent) => {
       if (!hasShown) {
         setIsOpen(true);
         setHasShown(true);
@@ -177,7 +177,7 @@ export function ExitIntentPopup() {
                   onClick={handleClose}
                   className="mt-2 text-center text-xs text-slate-400 transition hover:text-slate-600"
                 >
-                  No thanks, I'll come back later
+                  No thanks, I will come back later
                 </button>
               </div>
             </div>

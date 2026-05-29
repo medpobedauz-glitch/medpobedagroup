@@ -10,13 +10,9 @@ import {
   Globe2,
   Stethoscope,
   Heart,
-  ShieldCheck,
-  Users,
-  Plane,
 } from "lucide-react";
 
 import { easeOutExpo } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 import { WhyIndiaComparison } from "@/components/sections/why-india-comparison";
 
 const advantages = [
@@ -91,7 +87,7 @@ export function WhyIndiaPageContent() {
                 Why Choose India for Medical Treatment
               </h1>
               <p className="mt-5 body-lg mx-auto max-w-3xl">
-                India is the world's #1 medical tourism destination, with millions of international patients visiting annually. Here's why Central Asian patients choose India.
+                India is the world&apos;s number one medical tourism destination, with millions of international patients visiting annually. Here is why Central Asian patients choose India.
               </p>
             </motion.div>
 

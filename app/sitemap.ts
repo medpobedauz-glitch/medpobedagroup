@@ -131,6 +131,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...staticExtraRoutes,
     ...structuredDetailRoutes,
     ...blogPosts.flatMap((post) =>
       locales.map((locale) => ({

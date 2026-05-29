@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Mail, Linkedin, Globe2 } from "lucide-react";
+import { ArrowRight, Globe2 } from "lucide-react";
 
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -35,16 +35,6 @@ const roleLabels: Record<string, string> = {
   OPERATIONS: "Operations",
   MARKETING: "Marketing",
   PATIENT_SUPPORT: "Patient Support",
-};
-
-const roleColors: Record<string, string> = {
-  FOUNDER: "from-blue-700 to-blue-500",
-  COORDINATOR: "from-blue-600 to-cyan-500",
-  MEDICAL_ADVISOR: "from-emerald-600 to-teal-500",
-  INTERNATIONAL_RELATIONS: "from-violet-600 to-purple-500",
-  OPERATIONS: "from-amber-600 to-orange-500",
-  MARKETING: "from-rose-600 to-pink-500",
-  PATIENT_SUPPORT: "from-sky-600 to-blue-400",
 };
 
 export function TeamSection({

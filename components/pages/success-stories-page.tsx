@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -9,11 +8,10 @@ import {
   Star,
   MapPin,
   Heart,
-  Filter,
   Users,
   TrendingUp,
 } from "lucide-react";
-import { useState, use } from "react";
+import { useState } from "react";
 
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";

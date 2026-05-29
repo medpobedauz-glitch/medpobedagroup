@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, X, ArrowRight, Globe2 } from "lucide-react";
+import { ArrowRight, Globe2 } from "lucide-react";
 
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";

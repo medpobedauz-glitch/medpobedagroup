@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Globe2, Mail, Phone, Award, Users } from "lucide-react";
+import { Globe2, Award, Users } from "lucide-react";
 
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -209,7 +209,7 @@ export function TeamPageContent() {
                 { title: "Transparency", desc: "Honest pricing, clear communication, no hidden fees or surprises." },
                 { title: "Cultural Sensitivity", desc: "We understand and respect the cultural needs of Central Asian patients." },
                 { title: "24/7 Availability", desc: "Round-the-clock support because healthcare emergencies don't wait." },
-              ].map((value, i) => (
+              ].map((value) => (
                 <div key={value.title} className="rounded-2xl bg-white/80 p-5 text-left shadow-sm">
                   <p className="text-sm font-bold text-[#0B1F4D]">{value.title}</p>
                   <p className="mt-2 text-xs leading-6 text-slate-500">{value.desc}</p>
