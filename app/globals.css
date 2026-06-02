@@ -91,6 +91,7 @@
     scroll-padding-top: 7rem;
     width: 100%;
     overflow-x: clip;
+    font-size: 15px;
   }
 
   body {
@@ -314,15 +315,15 @@
   }
 
   .heading-display {
-    @apply font-display text-3xl font-semibold leading-[1.12] tracking-[-0.028em] text-slate-950 sm:text-4xl sm:leading-[1.08] lg:text-[4.4rem] lg:leading-[1.04];
+    @apply font-display text-2xl font-semibold leading-[1.14] tracking-[-0.028em] text-slate-950 sm:text-3xl sm:leading-[1.1] lg:text-[3.2rem] lg:leading-[1.06];
   }
 
   .heading-section {
-    @apply font-display text-[1.9rem] font-semibold leading-[1.15] tracking-[-0.024em] text-slate-950 sm:text-4xl sm:leading-[1.1] lg:text-[3.4rem] lg:leading-[1.06];
+    @apply font-display text-[1.6rem] font-semibold leading-[1.18] tracking-[-0.024em] text-slate-950 sm:text-3xl sm:leading-[1.12] lg:text-[2.4rem] lg:leading-[1.08];
   }
 
   .body-lg {
-    @apply max-w-3xl text-base leading-8 text-slate-600 sm:text-[1.08rem];
+    @apply max-w-3xl text-[0.95rem] leading-7 text-slate-600 sm:text-base;
   }
 
   .field-shell {
