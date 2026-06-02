@@ -158,17 +158,17 @@
   },
   "routes": {
     "home": {
-      "title": "Пули премиалии байналмилалии тандурустӣ",
-      "description": "MedPobeda Group — платформаи ҳамкории соҳаи тандурустӣ дар Тошкент буда, туризми тиббӣ, кӯмак ба беморони байналмилалӣ, шарикии беморхонаҳо ва мобилии донишҷӯёнро байни Ӯзбекистон, Ҳиндустон ва муассисаҳои байналмилалии тиббӣ дастгирӣ мекунад.",
+      "title": "MedPobeda Group | Тиббӣқ туризм және соҳаи тандурустӣ шарикӣтері Ӯзбекистонда",
+      "description": "MedPobeda Group — Тошкентте орналасқан соҳаи тандурустӣ шарикӣ платформасы. Ол Ӯзбекистон, Ҳиндустон және халықаралық тиббӣқ мектабобателер арасындағы тиббӣқ туризмді, халықаралық бтабобатортерге көмекті, бтабобаторхона шарикӣтерін және студенттік ұтқырлықты қолдайды.",
       "keywords": [
         "MedPobeda Group",
-        "Туризми тиббӣ",
-        "Шарикӣ",
-        "Беморони байналмилалӣ",
-        "Мобилияти донишҷӯён"
+        "Тиббӣқ туризм",
+        "Серіктестік",
+        "Халықаралық бтабобатортер",
+        "Студенттік ұтқырлық"
       ],
-      "openGraphTitle": "Пули премиалии байналмилалии тандурустӣ",
-      "openGraphDescription": "MedPobeda Group is a Tashkent-based healthcare collaboration platform supporting medical tourism, international patient assistance, hospital partnerships, and student mobility between Uzbekistan, India, and global healthcare institutions. TODO: Тарҷумаи касбии маҳаллӣ баъдтар такмил дода мешавад."
+      "openGraphTitle": "MedPobeda Group | Тиббӣқ туризм және соҳаи тандурустӣ шарикӣтері Ӯзбекистонда",
+      "openGraphDescription": "MedPobeda Group — Тошкентте орналасқан соҳаи тандурустӣ шарикӣ платформасы. Ол Ӯзбекистон, Ҳиндустон және халықаралық тиббӣқ мектабобателер арасындағы тиббӣқ туризмді, халықаралық бтабобатортерге көмекті, бтабобаторхона шарикӣтерін және студенттік ұтқырлықты қолдайды."
     },
     "about": {
       "title": "Дар бораи MedPobeda Group",
@@ -479,171 +479,145 @@
       "openGraphDescription": "Structured treatment-in-India support for patients and families in Tajikistan, including hospital communication, document routing, travel planning, and cross-border healthcare guidance from Tashkent."
     },
     "company-profile": {
-      "title": "Company Profile | MedPobeda Group MCHJ TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "Review the official company profile of MedPobeda Group MCHJ, a Tashkent-based healthcare company supporting medical tourism, international patient communication, hospital partnerships, and institutional healthcare links. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
+      "title": "Компания профил | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group MCHJ ширкатсының ресмағз профилн қараңыз. Тошкентте орналасқан тиббӣқ туризм, халықаралық бтабобатортермен тамос, бтабобаторхона шарикӣтері және институционалдық тиббӣқ тамостарды қолдайтын соҳаи тандурустӣ ширкатсы.",
       "keywords": [
-        "MedPobeda Group company profile TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda Group MCHJ TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "medical tourism company Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "healthcare company Tashkent TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "international patient coordination Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+        "MedPobeda Group ширкат профил",
+        "MedPobeda Group MCHJ",
+        "Тиббӣқ туризм ширкатсы Ӯзбекистон",
+        "Денсаулық сақтау ширкатсы Тошкент",
+        "Халықаралық бтабобатортерді ҳамоҳангсозӣ Ӯзбекистон"
       ],
-      "openGraphTitle": "Company Profile | MedPobeda Group MCHJ TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "Official company profile for MedPobeda Group MCHJ covering healthcare positioning, patient communication, hospital partnerships, and institutional routes from Tashkent, Uzbekistan. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+      "openGraphTitle": "Компания профил | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group MCHJ ширкатсының ресмағз профил. Тошкенттен соҳаи тандурустӣ хизматтері, бтабобатортермен тамос, бтабобаторхона шарикӣтері және институционалдық тамостар."
     },
     "press": {
-      "title": "Press & Official Updates | MedPobeda Group MCHJ TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "Read official MedPobeda Group company information, press contact details, brand facts, and public healthcare updates from Tashkent, Uzbekistan. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
+      "title": "Матбуот және ресмағз навсозиҳо | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group ширкатсының ресмағз ақпаратын, матбуот тамос маълумотін, бренд фактілерін және Тошкенттен алынған соҳаи тандурустӣ жаңартуларын оқыңыз.",
       "keywords": [
-        "MedPobeda Group press TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda Group news TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda Group official updates TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "healthcare company Uzbekistan press TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "medical tourism company press TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+        "MedPobeda Group матбуот",
+        "MedPobeda Group навсозиҳоы",
+        "MedPobeda Group ресмағз жаңартулары",
+        "Денсаулық сақтау ширкатсы Ӯзбекистон матбуоті",
+        "Тиббӣқ туризм ширкатсы матбуоті"
       ],
-      "openGraphTitle": "Press & Official Updates | MedPobeda Group MCHJ TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "Official MedPobeda Group company information, media contact routes, public-facing updates, and verified brand facts from Tashkent, Uzbekistan. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "treatments": {
-      "title": "Treatments in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "Explore MedPobeda Group treatment pages for oncology, cardiology, organ transplant, neurosurgery, orthopedics, and second medical opinions linked to India treatment planning. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "treatments in India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "medical treatment India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "treatment planning India Central Asia TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda treatments India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "India treatment pathways TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Treatments in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "Treatment-focused pages for oncology, cardiology, transplant, neurosurgery, orthopedics, and second medical opinion planning linked to India. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "oncology-treatment-india": {
-      "title": "Oncology Treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "oncology treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "cancer treatment India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "oncology hospital India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "oncology treatment planning India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda oncology treatment India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Oncology Treatment in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "cardiology-treatment-india": {
-      "title": "Cardiology Treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "cardiology treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "heart treatment India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "cardiology hospitals India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "cardiac treatment planning India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda cardiology India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Cardiology Treatment in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "organ-transplant-india": {
-      "title": "Organ Transplant in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "organ transplant India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "transplant treatment India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "liver transplant India Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "kidney transplant India coordination TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda organ transplant India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Organ Transplant in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "neurosurgery-treatment-india": {
-      "title": "Neurosurgery Treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "neurosurgery treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "brain surgery India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "neurosurgery hospital India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "neurosurgery second opinion India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda neurosurgery India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Neurosurgery Treatment in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "orthopedic-treatment-india": {
-      "title": "Orthopedic Treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "orthopedic treatment in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "bone and joint treatment India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "orthopedic hospital India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "orthopedic surgery India planning TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda orthopedic India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Orthopedic Treatment in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-    },
-    "second-medical-opinion-india": {
-      "title": "Second Medical Opinion in India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "keywords": [
-        "second medical opinion India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "medical second opinion from India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "specialist review India from Uzbekistan TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "treatment review India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "MedPobeda second opinion India TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
-      ],
-      "openGraphTitle": "Second Medical Opinion in India | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+      "openGraphTitle": "Матбуот және ресмағз навсозиҳо | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group ширкатсының ресмағз ақпараты, медиа тамос маълумоті, жария жаңартулар және расталған бренд фактілері Тошкенттен."
     },
     "medical-disclaimer": {
-      "title": "Medical Disclaimer | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "Important medical and liability disclaimer for MedPobeda Group website. Read about healthcare services limitations and responsibilities. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
+      "title": "Тиббӣқ раддия | MedPobeda Group",
+      "description": "MedPobeda Group веб-сайты үшін маңызды тиббӣқ және масъулияттен бас тарту. Денсаулық сақтау хизматтерінің шектеулері мен міндетттабобателері туралы оқыңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Medical Disclaimer TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Healthcare Disclaimer TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Legal TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+        "MedPobeda Group",
+        "Тиббӣқ раддия",
+        "Денсаулық сақтау раддияі",
+        "Құқықтық"
       ],
-      "openGraphTitle": "Medical Disclaimer | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "Important medical and liability disclaimer for MedPobeda Group website. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+      "openGraphTitle": "Тиббӣқ раддия | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group веб-сайты үшін маңызды тиббӣқ және масъулияттен бас тарту."
     },
     "cookie-policy": {
-      "title": "Cookie Policy | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "description": "Review MedPobeda Group cookie policy regarding website cookies, user preferences, and data collection practices. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
+      "title": "Cookie саясаты | MedPobeda Group",
+      "description": "MedPobeda Group ширкатсының cookie файлдары, пайдаланушы параметрлері және маълумот жинау тәжірибелері туралы cookie саясатын қараңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Cookie Policy TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Website Cookies TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-        "Privacy TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+        "MedPobeda Group",
+        "Cookie саясаты",
+        "Веб-сайт cookie файлдары",
+        "Құпиялылық"
       ],
-      "openGraphTitle": "Cookie Policy | MedPobeda Group TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
-      "openGraphDescription": "MedPobeda Group cookie policy regarding website cookies and user preferences. TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад."
+      "openGraphTitle": "Cookie саясаты | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group ширкатсының cookie файлдары мен пайдаланушы параметрлері туралы cookie саясаты."
     },
-    "doctors": {
-      "title": "Doctor Matching & Specialist Support",
-      "description": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group.",
+    "treatments": {
+      "title": "Ҳиндустондағы табобатлер",
+      "description": "MedPobeda Group ширкатсының онкология, кардиология, орган трансплантатсиясы, нейроҷарроҳӣ, ортопедия және Ҳиндустондағы табобатді банақшагирӣға тамосты екінші тиббӣқ пікірлерге арналған табобат беттерін қараңыз.",
       "keywords": [
-        "doctor matching",
-        "specialist selection",
-        "international patient support",
-        "medical tourism doctors",
-        "hospital referral"
+        "Ҳиндустондағы табобатлер Ӯзбекистоннан",
+        "Ҳиндустонда тиббӣқ табобат",
+        "Орталық Азияға арналған Ҳиндустонда табобатді банақшагирӣ",
+        "MedPobeda Ҳиндустондағы табобатлер",
+        "Ҳиндустон табобат жолдары"
       ],
-      "openGraphTitle": "Doctor Matching & Specialist Support",
-      "openGraphDescription": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group."
+      "openGraphTitle": "Ҳиндустондағы табобатлер | MedPobeda Group",
+      "openGraphDescription": "Онкология, кардиология, трансплантатсия, нейроҷарроҳӣ, ортопедия және Ҳиндустонға тамосты екінші тиббӣқ пікірді банақшагирӣға арналған табобат беттері."
     },
-    "patient-support": {
-      "title": "Patient Support Services",
-      "description": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors.",
+    "oncology-treatment-india": {
+      "title": "Ҳиндустонда онкологиялық табобат",
+      "description": "MedPobeda Group мутахассисдармен тамос, есептерді бағыттау, бтабобаторхона талқылаулары және Ӯзбекистон мен Орталық Азиядан табобат-сафарды банақшагирӣ арқылы Ҳиндустонда онкологиялық табобатделуге ұмтылатын бтабобатортерді қолдайды.",
       "keywords": [
-        "patient support",
-        "international patient assistance",
-        "medical tourism support",
-        "hospital communication",
-        "patient coordination"
+        "Ҳиндустонда онкологиялық табобат",
+        "Ҳиндустонда қатерлі ісік табобат Ӯзбекистоннан",
+        "Ҳиндустон онкологиялық бтабобаторхонасы",
+        "Ҳиндустонда онкологиялық табобатді банақшагирӣ",
+        "MedPobeda Ҳиндустонда онкологиялық табобат"
       ],
-      "openGraphTitle": "Patient Support Services",
-      "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+      "openGraphTitle": "Ҳиндустонда онкологиялық табобат | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Ҳиндустонда онкологиялық табобатделуге ұмтылатын бтабобатортерді мутахассисдармен тамос, есептерді бағыттау, бтабобаторхона талқылаулары және табобат-сафарды банақшагирӣ арқылы қолдайды."
+    },
+    "cardiology-treatment-india": {
+      "title": "Ҳиндустонда кардиологиялық табобат",
+      "description": "MedPobeda Group Ӯзбекистон мен Орталық Азиядан келген бтабобатортер үшін диагностикалық шолу, бтабобаторхонамен тамос, мутахассисдарды сәйкестендіру және сафарға дайындық арқылы Ҳиндустонда кардиологиялық табобатді банақшагирӣды қолдайды.",
+      "keywords": [
+        "Ҳиндустонда кардиологиялық табобат",
+        "Ҳиндустонда дил бтабобаторӣын табобат Ӯзбекистоннан",
+        "Ҳиндустон кардиологиялық бтабобаторхоналары",
+        "Ҳиндустонда дил бтабобаторӣын табобатді банақшагирӣ",
+        "MedPobeda Ҳиндустон кардиологиясы"
+      ],
+      "openGraphTitle": "Ҳиндустонда кардиологиялық табобат | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Ӯзбекистон мен Орталық Азиядан келген бтабобатортер үшін диагностикалық шолу, бтабобаторхонамен тамос, мутахассисдарды сәйкестендіру және сафарға дайындық арқылы Ҳиндустонда кардиологиялық табобатді банақшагирӣды қолдайды."
+    },
+    "organ-transplant-india": {
+      "title": "Ҳиндустонда орган трансплантатсиясы",
+      "description": "MedPobeda Group құжаттарды мұқият бағыттау, бтабобаторхонамен тамос, мутахассисдар талқылаулары және шекарааралық бтабобатортер үшін табобат-сафарды банақшагирӣ арқылы Ҳиндустонда орган трансплантатсиясына тамосты сұрауларды қолдайды.",
+      "keywords": [
+        "Ҳиндустонда орган трансплантатсиясы Ӯзбекистоннан",
+        "Ҳиндустонда трансплантатсиялық табобат",
+        "Ҳиндустонда ҷигар трансплантатсиясы",
+        "Ҳиндустонда гурда трансплантатсиясын ҳамоҳангсозӣ",
+        "MedPobeda Ҳиндустонда орган трансплантатсиясы"
+      ],
+      "openGraphTitle": "Ҳиндустонда орган трансплантатсиясы | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group құжаттарды бағыттау, бтабобаторхонамен тамос, мутахассисдар талқылаулары және шекарааралық бтабобатортер үшін табобат-сафарды банақшагирӣ арқылы Ҳиндустонда орган трансплантатсиясы сұрауларын қолдайды."
+    },
+    "neurosurgery-treatment-india": {
+      "title": "Ҳиндустонда нейроҷарроҳӣлық табобат",
+      "description": "MedPobeda Group диагностикалық бағыттау, мутахассисдармен тамос, бтабобаторхона талқылаулары және шекарааралық табобатге дайындық арқылы Ҳиндустонда нейроҷарроҳӣлық табобатді банақшагирӣды қолдайды.",
+      "keywords": [
+        "Ҳиндустонда нейроҷарроҳӣлық табобат",
+        "Ҳиндустонда мағз ҷарроҳӣсы Ӯзбекистоннан",
+        "Ҳиндустон нейроҷарроҳӣлық бтабобаторхонасы",
+        "Ҳиндустонда нейроҷарроҳӣ бойынша екінші пікір",
+        "MedPobeda Ҳиндустон нейроҷарроҳӣсы"
+      ],
+      "openGraphTitle": "Ҳиндустонда нейроҷарроҳӣлық табобат | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group диагностикалық бағыттау, мутахассисдармен тамос, бтабобаторхона талқылаулары және шекарааралық табобатге дайындық арқылы Ҳиндустонда нейроҷарроҳӣлық табобатді банақшагирӣды қолдайды."
+    },
+    "orthopedic-treatment-india": {
+      "title": "Ҳиндустонда ортопедиялық табобат",
+      "description": "MedPobeda Group халықаралық бтабобатортер үшін құжаттарды баррасӣ, бтабобаторхонамен тамос, мутахассисдарды сәйкестендіру және сафарды ҳамоҳангсозӣ арқылы Ҳиндустонда ортопедиялық табобатді банақшагирӣды қолдайды.",
+      "keywords": [
+        "Ҳиндустонда ортопедиялық табобат",
+        "Ҳиндустонда устухон және банд бтабобаторӣларын табобат Ӯзбекистоннан",
+        "Ҳиндустон ортопедиялық бтабобаторхонасы",
+        "Ҳиндустонда ортопедиялық ҷарроҳӣны банақшагирӣ",
+        "MedPobeda Ҳиндустон ортопедиясы"
+      ],
+      "openGraphTitle": "Ҳиндустонда ортопедиялық табобат | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group халықаралық бтабобатортер үшін құжаттарды баррасӣ, бтабобаторхонамен тамос, мутахассисдарды сәйкестендіру және сафарды ҳамоҳангсозӣ арқылы Ҳиндустонда ортопедиялық табобатді банақшагирӣды қолдайды."
+    },
+    "second-medical-opinion-india": {
+      "title": "Ҳиндустонда екінші тиббӣқ пікір",
+      "description": "MedPobeda Group есептерді бағыттау, мутахассисдармен тамос, бтабобаторхона талқылаулары және келесі қадамды банақшагирӣ арқылы Ҳиндустонға бағытталған екінші тиббӣқ пікір сұрауларын қолдайды.",
+      "keywords": [
+        "Ҳиндустонда екінші тиббӣқ пікір",
+        "Ҳиндустоннан тиббӣқ екінші пікір",
+        "Ҳиндустоннан мутахассисның пікірі Ӯзбекистон",
+        "Ҳиндустонда табобатді баррасӣ",
+        "MedPobeda Ҳиндустонда екінші пікір"
+      ],
+      "openGraphTitle": "Ҳиндустонда екінші тиббӣқ пікір | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group есептерді бағыттау, мутахассисдармен тамос, бтабобаторхона талқылаулары және келесі қадамды банақшагирӣ арқылы Ҳиндустонға бағытталған екінші тиббӣқ пікір сұрауларын қолдайды."
     }
   },
   "forms": {

@@ -53,7 +53,7 @@
       "closeAriaLabel": "Close navigation menu"
     },
     "footer": {
-      "description": "MedPobeda Group helps patients, hospitals, and institutions manage medical tourism inquiries, hospital partnerships, and cross-border healthcare communication from Tashkent, Uzbekistan.",
+      "description": "We're MedPobeda Group, a small team in Tashkent that walks with patients, families, hospitals, and institutions through every step of cross-border healthcare — calmly, honestly, and with real people on the other end.",
       "quickLinks": "Quick Links",
       "services": "Services",
       "contact": "Contact",
@@ -65,12 +65,12 @@
         "Student mobility guidance",
         "Clinical exposure planning"
       ],
-      "addressHelper": "Tashkent-based healthcare coordination office.",
+      "addressHelper": "Our home base in Tashkent, Uzbekistan.",
       "rightsReserved": "All rights reserved.",
-      "whatsAppMessage": "Hello MedPobeda Group, I would like to discuss a healthcare collaboration opportunity.",
-      "emailLabel": "Send Inquiry by Email",
-      "phoneLabel": "Phone / WhatsApp / Telegram",
-      "websiteLabel": "Official Website"
+      "whatsAppMessage": "Hi MedPobeda team, I'd love to talk about a healthcare collaboration.",
+      "emailLabel": "Send us an email",
+      "phoneLabel": "Call, WhatsApp, or Telegram",
+      "websiteLabel": "Our website"
     },
     "floatingButtons": {
       "badge": "Live Coordination",
@@ -1069,9 +1069,9 @@
   "site": {
     "name": "MedPobeda Group",
     "shortName": "MedPobeda",
-    "tagline": "Medical Tourism • International Patient Support • Healthcare Partnerships",
-    "description": "MedPobeda Group is a Tashkent-based healthcare collaboration platform supporting medical tourism, international patient assistance, hospital partnerships, and student mobility between Uzbekistan, India, and global healthcare institutions.",
-    "defaultTitle": "MedPobeda Group | Medical Tourism & Healthcare Partnerships in Uzbekistan",
+    "tagline": "Walking with you between Uzbekistan, India, and world-class care",
+    "description": "We’re MedPobeda Group, a Tashkent team that helps patients, families, hospitals, and students find their way through cross-border healthcare. We focus on medical journeys, patient support, hospital partnerships, and student exchanges — with real people who care.",
+    "defaultTitle": "MedPobeda Group | Walking with you to better healthcare",
     "socialPreviewAlt": "MedPobeda Group social preview",
     "location": "Tashkent, Uzbekistan",
     "contactEmailFallback": "info@medpobedagroup.uz",
@@ -1148,8 +1148,8 @@
           "Patient & Institution Focused",
           "Multilingual Communication"
         ],
-        "title": "Building a Trusted Healthcare Bridge Between Uzbekistan, India & International Patients",
-        "description": "MedPobeda Group helps patients, hospitals, and institutions manage cross-border healthcare inquiries, medical tourism planning, hospital partnerships, and student mobility through a structured Tashkent-based coordination model.",
+        "title": "Walking with you between Uzbekistan, India & the world’s best healthcare",
+        "description": "We’re a small team in Tashkent, and we help patients, families, hospitals, and students find their way through cross-border healthcare. Medical journeys, hospital partnerships, student exchanges — we treat every inquiry like it matters, because it does.",
         "primaryCta": "Request Patient Assistance",
         "secondaryCta": "Discuss Hospital Partnership",
         "stats": [
@@ -1183,10 +1183,10 @@
           "Medical coordinator assisting an international patient with arrival support."
         ]
       },
-      "trustStats": {
+        "trustStats": {
         "eyebrow": "Why MedPobeda Group",
-        "title": "Trust built through structure, not inflated numbers",
-        "description": "MedPobeda Group is positioned as a serious operating bridge for patients, hospitals, and institutions that need clarity, discretion, and dependable cross-border healthcare communication.",
+        "title": "Trust we earn by being real — not by shouting louder",
+        "description": "We exist for the moments when healthcare gets complicated. Patients need clarity. Hospitals need trustworthy partners. Institutions need people who actually pick up the phone. That’s the space we live in.",
         "stats": [
           {
             "value": "Bridge",
@@ -1222,9 +1222,9 @@
       },
       "about": {
         "eyebrow": "About MedPobeda Group",
-        "title": "A healthcare bridge anchored in Uzbekistan and connected to India",
-        "description": "MedPobeda Group brings medical tourism, international patient assistance, hospital relationships, and student mobility into one structured platform.",
-        "body": "The platform is designed for patients, hospitals, and institutions that need a clear route into cross-border healthcare communication. It brings together patient inquiry handling, institutional dialogue, and practical planning for treatment travel, referrals, and academic exchange.",
+        "title": "A bridge rooted in Uzbekistan, reaching out to India and beyond",
+        "description": "We bring together medical travel, patient support, hospital relationships, and student opportunities — all under one roof, all run by people who genuinely care.",
+        "body": "We built this for the people who needed it most. Patients who didn’t know where to start. Hospitals that wanted to reach across borders. Universities looking for real clinical experiences. We pull it all together so the path feels less lonely.",
         "badges": [
           "Medical Tourism Facilitation",
           "International Patient Assistance",
@@ -1240,9 +1240,9 @@
         ]
       },
       "services": {
-        "eyebrow": "Core Services",
-        "title": "Core services shaped for patients, hospitals, and healthcare institutions",
-        "description": "Each service lane is built around practical healthcare access, careful communication, and realistic next steps.",
+        "eyebrow": "What We Help With",
+        "title": "Services built around real people: patients, hospitals, and institutions",
+        "description": "Every service we offer is built around one idea: getting you real, useful help, without the runaround.",
         "items": [
           {
             "title": "Medical Tourism Facilitation",
@@ -1271,9 +1271,9 @@
         ]
       },
       "journey": {
-        "eyebrow": "Medical Tourism Journey",
-        "title": "An 8-step pathway from first inquiry to follow-up",
-        "description": "The patient journey is organized to keep treatment planning clear, calm, and properly sequenced.",
+        "eyebrow": "How We Walk With You",
+        "title": "Eight small steps from your first message to getting you home safe",
+        "description": "We keep the journey clear, calm, and properly paced — no rushing, no surprises.",
         "items": [
           {
             "title": "Initial Inquiry",
@@ -1676,8 +1676,8 @@
       "schemaDescription": "MedPobeda Group is a premium healthcare collaboration platform connecting patients, hospitals, and institutions through international healthcare facilitation.",
       "hero": {
         "eyebrow": "About MedPobeda Group",
-        "title": "Building a trusted healthcare bridge between patients, hospitals, and institutions",
-        "description": "MedPobeda Group is designed as a premium international healthcare collaboration platform focused on medical tourism, hospital partnerships, international patient support, student mobility, and institutional cooperation.",
+        "title": "Walking with patients, hospitals, and institutions across borders",
+        "description": "We’re a Tashkent-based healthcare collaboration team focused on medical travel, hospital partnerships, patient support, student exchanges, and working with institutions. We do it with a premium feel because healthcare deserves nothing less.",
         "highlights": [
           "Healthcare Bridge",
           "International Collaboration",
@@ -1714,11 +1714,11 @@
       },
       "story": {
         "eyebrow": "Our Story",
-        "title": "A modern healthcare collaboration brand built around clarity, trust, and international access",
-        "description": "The company positioning is shaped by what healthcare stakeholders expect: premium presentation, human communication, and a serious operational tone.",
+        "title": "We started MedPobeda Group because healthcare deserved better",
+        "description": "Cross-border healthcare felt too cold, too complicated, too corporate. We knew we could do better — and we did.",
         "body": [
-          "MedPobeda Group is intended to make cross-border healthcare relationships feel more structured. Patients need better guidance, hospitals need credible international pathways, and institutions need a collaboration partner that understands healthcare expectations.",
-          "That is why the brand combines white-space, trust-led design, premium medical visuals, and careful wording with service routes that support real healthcare facilitation rather than generic promotion."
+          "We started MedPobeda Group because cross-border healthcare felt too cold and too complicated. Patients deserved better guidance. Hospitals deserved credible partners. Institutions deserved a team that actually understood healthcare. So that’s what we built.",
+          "That’s why everything we do — from how our website looks to the words we use — is meant to feel reassuring, real, and rooted in actual healthcare work."
         ],
         "badges": [
           "Medical Tourism",
@@ -1802,33 +1802,33 @@
         "imageAlt": "Healthcare operations overview and trust-led coordination environment."
       },
       "principles": {
-        "eyebrow": "Operating Principles",
-        "title": "How MedPobeda Group approaches international healthcare collaboration",
-        "description": "These principles guide how the brand turns inquiries into clearer healthcare conversations.",
+        "eyebrow": "How We Work",
+        "title": "Six simple promises we keep, every day",
+        "description": "These aren’t slogans — they’re how we actually try to show up for patients, hospitals, and institutions.",
         "items": [
           {
-            "title": "Listen First",
-            "description": "Understand whether the need is patient support, hospital partnership, or institutional collaboration."
+            "title": "Listen first — always",
+            "description": "Before we do anything, we listen. Is this about a patient? A hospital? An institution? The answer shapes everything."
           },
           {
-            "title": "Map the Right Route",
-            "description": "Direct the inquiry into the service lane that best fits the healthcare objective."
+            "title": "Find the right path",
+            "description": "We help you find the right path through our services, based on what you actually need."
           },
           {
-            "title": "Coordinate With Care",
-            "description": "Keep communication aligned with hospital workflows, patient needs, and professional expectations."
+            "title": "Coordinate with care",
+            "description": "We keep the conversation aligned with how hospitals work, what patients need, and the standards professionals expect."
           },
           {
-            "title": "Connect Across Borders",
-            "description": "Support relationships that link Uzbekistan, India, and relevant international stakeholders."
+            "title": "Bridge the borders",
+            "description": "We build bridges between Uzbekistan, India, and the wider world — one real relationship at a time."
           },
           {
-            "title": "Support Humanly",
-            "description": "Patients and families should feel reassured, not overwhelmed, when engaging the platform."
+            "title": "Lead with heart",
+            "description": "Patients and families should feel held, not overwhelmed. That’s a promise we take seriously."
           },
           {
-            "title": "Maintain Trust",
-            "description": "Use careful language, realistic positioning, and a premium presentation that respects healthcare seriousness."
+            "title": "Keep trust sacred",
+            "description": "We use careful words, real expectations, and a presentation that respects how serious healthcare is."
           }
         ]
       },
@@ -1868,35 +1868,36 @@
       "schemaName": "Medical Tourism",
       "schemaDescription": "MedPobeda Group facilitates international medical tourism through patient guidance, hospital coordination, and treatment travel support.",
       "serviceSchemaName": "Medical Tourism Facilitation",
-      "serviceSchemaDescription": "Structured support for international patients seeking treatment coordination abroad.",
+      "serviceSchemaDescription": "Clear and structured facilitation for patients exploring medical tourism pathways.",
       "hero": {
         "eyebrow": "Medical Tourism",
-        "title": "International treatment coordination shaped around clarity, hospitality, and trust",
-        "description": "MedPobeda Group facilitates medical tourism for patients and families seeking structured support across hospital matching, treatment planning, travel guidance, and cross-border coordination.",
+        "title": "Walking with you toward the right care, in the right place, at the right time",
+        "description": "Medical tourism shouldn't feel like a gamble. We help patients and families navigate hospital matching, treatment planning, and cross-border coordination — with real people who stay with you from the first question to the moment you get home.",
         "highlights": [
-          "Medical Tourism",
-          "Patient Coordination",
-          "Treatment Travel"
+          "Treatment Planning",
+          "Hospital Matching",
+          "Travel Guidance",
+          "Family Support"
         ],
         "primaryCta": "Start Medical Tourism Inquiry",
-        "secondaryCta": "Request Patient Assistance",
+        "secondaryCta": "Contact MedPobeda Group",
         "stats": [
           {
-            "value": "8-step",
-            "label": "patient journey from inquiry to follow-up"
+            "value": "Patient-first",
+            "label": "coordination across treatment and travel questions"
+          },
+          {
+            "value": "Warm & clear",
+            "label": "communication designed for patients and families"
           },
           {
             "value": "Cross-border",
-            "label": "coordination between treatment, travel, and family support"
-          },
-          {
-            "value": "Hospital-ready",
-            "label": "intake flow for documents, reports, and treatment goals"
+            "label": "support around hospital access and follow-through"
           }
         ],
         "floatingCards": [
-          "Case Review",
-          "Doctor Matching",
+          "Treatment Planning",
+          "Hospital Matching",
           "Travel Guidance",
           "Family Support"
         ],
@@ -2089,8 +2090,8 @@
       "serviceSchemaDescription": "Partnership support for hospitals seeking international collaboration and patient access growth.",
       "hero": {
         "eyebrow": "Hospital Partnerships",
-        "title": "Build premium international healthcare partnerships with MedPobeda Group",
-        "description": "MedPobeda Group works with hospitals, international desks, and healthcare institutions to facilitate patient referrals, medical tourism programs, clinical exchange, and cross-border growth opportunities.",
+        "title": "Real partnerships for hospitals that want to reach across borders — without the noise",
+        "description": "We work with hospitals, international desks, and healthcare institutions to build real referral pathways, medical tourism programs, clinical exchange, and cross-border growth — the kind that actually makes a difference for patients and providers alike.",
         "highlights": [
           "Hospital Collaboration",
           "International Referrals",
@@ -2127,8 +2128,8 @@
       },
       "story": {
         "eyebrow": "Partnership Strategy",
-        "title": "An international healthcare collaboration page designed for serious institutional discussions",
-        "description": "This route is shaped around hospitals that need premium presentation, structured next steps, and a credible cross-border operating partner.",
+        "title": "Built for hospitals that want actual collaboration, not just paperwork",
+        "description": "This route is shaped around hospitals that need a credible cross-border operating partner — not someone who just sends referrals and walks away.",
         "body": [
           "MedPobeda Group helps hospitals think beyond isolated patient referrals. The platform is positioned to support international patient desk models, specialist collaboration, visibility in new markets, and healthcare growth through structured partnerships.",
           "The emphasis remains on trust, process clarity, and practical institutional value. That means collaboration formats should be realistic, operationally useful, and aligned with healthcare expectations on both sides of the relationship."
@@ -2289,8 +2290,8 @@
       "serviceSchemaDescription": "Personalized coordination support for patients seeking healthcare across borders.",
       "hero": {
         "eyebrow": "International Patients",
-        "title": "Personalized support for international patients and their families",
-        "description": "MedPobeda Group helps international patients navigate treatment guidance, hospital appointments, doctor selection, travel readiness, language support, and follow-up coordination through a more premium healthcare experience.",
+        "title": "You're not just a patient — you're family, and we treat you that way",
+        "description": "International patient support doesn't have to feel cold. We help you navigate treatment guidance, hospital appointments, doctor selection, travel readiness, and language assistance — with warmth, care, and real human attention every step of the way.",
         "highlights": [
           "International Patients",
           "Patient Support",
@@ -2497,8 +2498,8 @@
       "serviceSchemaDescription": "Healthcare-linked mobility support for institutions, students, and clinical collaboration partners.",
       "hero": {
         "eyebrow": "Student Mobility",
-        "title": "Clinical exposure and institutional mobility designed for healthcare collaboration",
-        "description": "MedPobeda Group supports student mobility through healthcare-focused observerships, hospital visits, clinical exposure opportunities, and institutional collaboration between academic and medical partners.",
+        "title": "Real clinical exposure for students who want more than a certificate",
+        "description": "Student mobility shouldn't be a checkbox. We help students and institutions build real clinical exposure through observerships, hospital visits, and healthcare-linked programs — the kind that actually shape future doctors and healthcare professionals.",
         "highlights": [
           "Student Mobility",
           "Clinical Exposure",
@@ -2695,8 +2696,8 @@
       "schemaDescription": "Contact MedPobeda Group for medical tourism, hospital partnerships, international patient coordination, and healthcare collaboration.",
       "hero": {
         "eyebrow": "Contact",
-        "title": "Open the right healthcare conversation with MedPobeda Group",
-        "description": "The contact experience is designed for patients, hospitals, and institutions who need a premium healthcare interface with clear routing, structured inquiry paths, and responsive coordination options.",
+        "title": "Say hello, ask a question, or start a conversation — we're here",
+        "description": "Not sure where to start? That's okay. Whether you're a patient, a hospital, or an institution, the contact desk is where we figure it out together — with real people who listen first and guide next.",
         "highlights": [
           "Contact Desk",
           "Patient Assistance",
@@ -2850,8 +2851,8 @@
       "schemaDescription": "A multilingual MedPobeda Group editorial library covering medical tourism, treatment planning in India, hospital partnerships, international patient support, and healthcare collaboration.",
       "hero": {
         "eyebrow": "Blog",
-        "title": "Healthcare insights for patients, hospitals, and international partners",
-        "description": "Read MedPobeda Group articles on treatment planning in India, patient travel preparation, hospital partnerships, and healthcare cooperation across Uzbekistan, India, and Central Asia.",
+        "title": "Stories, guides, and real talk about cross-border healthcare",
+        "description": "Read MedPobeda Group articles on treatment planning in India, patient travel preparation, hospital partnerships, and healthcare cooperation across Uzbekistan, India, and Central Asia — written by people who actually do this work every day.",
         "points": [
           "Medical tourism guidance and travel planning",
           "International patient communication and preparation",
@@ -4339,8 +4340,8 @@
       "schemaDescription": "MedPobeda Group organizes treatment-focused healthcare pages covering India-bound oncology, cardiology, transplant, neurosurgery, orthopedic, and second-opinion discussions.",
       "hero": {
         "eyebrow": "Treatments",
-        "title": "Treatment pathways in India for patients from Uzbekistan and Central Asia",
-        "description": "This treatment hub helps patients and families move from a broad international healthcare enquiry into a more specific treatment-focused discussion around hospital communication, document routing, and next-step planning in India.",
+        "title": "Finding the right treatment path shouldn't feel overwhelming — we're here for that",
+        "description": "Every treatment journey begins with a question: where do I start? This hub helps patients and families move from a broad health concern into a focused discussion around the right specialty, the right hospital, and the right next step.",
         "highlights": [
           "Oncology",
           "Cardiology",

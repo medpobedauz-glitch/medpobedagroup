@@ -158,17 +158,17 @@
   },
   "routes": {
     "home": {
-      "title": "Premium halkara saglygy goraýyş köprüsi",
-      "description": "MedPobeda Group — Daşkentde ýerleşýän saglygy goraýyş hyzmatdaşlyk platformasy bolup, Özbegistan, Hindistan we halkara lukmançylyk edaralarynyň arasynda lukmançylyk syýahatçylygyny, halkara näsaglara kömegi, hassahana hyzmatdaşlyklaryny we talyp hereketliligini goldaýar.",
+      "title": "MedPobeda Group | Medisinaқ туризм және saglygy goraýyş hyzmatdaşlykтері Özbegistanда",
+      "description": "MedPobeda Group — Daşkentте орналасқан saglygy goraýyş hyzmatdaşlyk платформасы. Ол Özbegistan, Hindistan және халықаралық lukmançylykқ мекbejergiелер арасындағы lukmançylykқ туризмді, халықаралық näsagтерге көмекті, hassahana hyzmatdaşlykтерін және студенттік ұтқырлықты қолдайды.",
       "keywords": [
         "MedPobeda Group",
-        "Medisina turizmi",
-        "Hyzmatdaşlyk",
-        "Halkara hassalar",
-        "Talyp hereketliligi"
+        "Medisinaқ туризм",
+        "Серіктестік",
+        "Халықаралық näsagтер",
+        "Студенттік ұтқырлық"
       ],
-      "openGraphTitle": "Premium halkara saglygy goraýyş köprüsi",
-      "openGraphDescription": "MedPobeda Group is a Tashkent-based healthcare collaboration platform supporting medical tourism, international patient assistance, hospital partnerships, and student mobility between Uzbekistan, India, and global healthcare institutions. TODO: Hünärli ýerli terjime soňra takyklanar."
+      "openGraphTitle": "MedPobeda Group | Medisinaқ туризм және saglygy goraýyş hyzmatdaşlykтері Özbegistanда",
+      "openGraphDescription": "MedPobeda Group — Daşkentте орналасқан saglygy goraýyş hyzmatdaşlyk платформасы. Ол Özbegistan, Hindistan және халықаралық lukmançylykқ мекbejergiелер арасындағы lukmançylykқ туризмді, халықаралық näsagтерге көмекті, hassahana hyzmatdaşlykтерін және студенттік ұтқырлықты қолдайды."
     },
     "about": {
       "title": "MedPobeda Group barada",
@@ -479,171 +479,145 @@
       "openGraphDescription": "Structured treatment-in-India support for patients and families in Tajikistan, including hospital communication, document routing, travel planning, and cross-border healthcare guidance from Tashkent."
     },
     "company-profile": {
-      "title": "Company Profile | MedPobeda Group MCHJ TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "Review the official company profile of MedPobeda Group MCHJ, a Tashkent-based healthcare company supporting medical tourism, international patient communication, hospital partnerships, and institutional healthcare links. TODO: Hünärli ýerli terjime soňra takyklanar.",
+      "title": "Компания profili | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group MCHJ kompaniýaсының ресbeyn profiliн қараңыз. Daşkentте орналасқан lukmançylykқ туризм, халықаралық näsagтермен habarlaşmak, hassahana hyzmatdaşlykтері және институционалдық lukmançylykқ habarlaşmakтарды қолдайтын saglygy goraýyş kompaniýaсы.",
       "keywords": [
-        "MedPobeda Group company profile TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda Group MCHJ TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "medical tourism company Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "healthcare company Tashkent TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "international patient coordination Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar."
+        "MedPobeda Group kompaniýa profili",
+        "MedPobeda Group MCHJ",
+        "Medisinaқ туризм kompaniýaсы Özbegistan",
+        "Денсаулық сақтау kompaniýaсы Daşkent",
+        "Халықаралық näsagтерді utgaşdyrmak Özbegistan"
       ],
-      "openGraphTitle": "Company Profile | MedPobeda Group MCHJ TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "Official company profile for MedPobeda Group MCHJ covering healthcare positioning, patient communication, hospital partnerships, and institutional routes from Tashkent, Uzbekistan. TODO: Hünärli ýerli terjime soňra takyklanar."
+      "openGraphTitle": "Компания profili | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group MCHJ kompaniýaсының ресbeyn profili. Daşkentтен saglygy goraýyş hyzmatтері, näsagтермен habarlaşmak, hassahana hyzmatdaşlykтері және институционалдық habarlaşmakтар."
     },
     "press": {
-      "title": "Press & Official Updates | MedPobeda Group MCHJ TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "Read official MedPobeda Group company information, press contact details, brand facts, and public healthcare updates from Tashkent, Uzbekistan. TODO: Hünärli ýerli terjime soňra takyklanar.",
+      "title": "Metbugat және ресbeyn täzelikler | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group kompaniýaсының ресbeyn ақпаратын, metbugat habarlaşmak maglumatlarін, бренд фактілерін және Daşkentтен алынған saglygy goraýyş жаңартуларын оқыңыз.",
       "keywords": [
-        "MedPobeda Group press TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda Group news TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda Group official updates TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "healthcare company Uzbekistan press TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "medical tourism company press TODO: Hünärli ýerli terjime soňra takyklanar."
+        "MedPobeda Group metbugat",
+        "MedPobeda Group täzeliklerы",
+        "MedPobeda Group ресbeyn жаңартулары",
+        "Денсаулық сақтау kompaniýaсы Özbegistan metbugatі",
+        "Medisinaқ туризм kompaniýaсы metbugatі"
       ],
-      "openGraphTitle": "Press & Official Updates | MedPobeda Group MCHJ TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "Official MedPobeda Group company information, media contact routes, public-facing updates, and verified brand facts from Tashkent, Uzbekistan. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "treatments": {
-      "title": "Treatments in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "Explore MedPobeda Group treatment pages for oncology, cardiology, organ transplant, neurosurgery, orthopedics, and second medical opinions linked to India treatment planning. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "treatments in India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "medical treatment India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "treatment planning India Central Asia TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda treatments India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "India treatment pathways TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Treatments in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "Treatment-focused pages for oncology, cardiology, transplant, neurosurgery, orthopedics, and second medical opinion planning linked to India. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "oncology-treatment-india": {
-      "title": "Oncology Treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "oncology treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "cancer treatment India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "oncology hospital India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "oncology treatment planning India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda oncology treatment India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Oncology Treatment in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "cardiology-treatment-india": {
-      "title": "Cardiology Treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "cardiology treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "heart treatment India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "cardiology hospitals India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "cardiac treatment planning India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda cardiology India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Cardiology Treatment in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "organ-transplant-india": {
-      "title": "Organ Transplant in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "organ transplant India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "transplant treatment India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "liver transplant India Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "kidney transplant India coordination TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda organ transplant India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Organ Transplant in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "neurosurgery-treatment-india": {
-      "title": "Neurosurgery Treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "neurosurgery treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "brain surgery India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "neurosurgery hospital India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "neurosurgery second opinion India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda neurosurgery India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Neurosurgery Treatment in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "orthopedic-treatment-india": {
-      "title": "Orthopedic Treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "orthopedic treatment in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "bone and joint treatment India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "orthopedic hospital India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "orthopedic surgery India planning TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda orthopedic India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Orthopedic Treatment in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Hünärli ýerli terjime soňra takyklanar."
-    },
-    "second-medical-opinion-india": {
-      "title": "Second Medical Opinion in India TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "keywords": [
-        "second medical opinion India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "medical second opinion from India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "specialist review India from Uzbekistan TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "treatment review India TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "MedPobeda second opinion India TODO: Hünärli ýerli terjime soňra takyklanar."
-      ],
-      "openGraphTitle": "Second Medical Opinion in India | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Hünärli ýerli terjime soňra takyklanar."
+      "openGraphTitle": "Metbugat және ресbeyn täzelikler | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group kompaniýaсының ресbeyn ақпараты, медиа habarlaşmak maglumatlarі, жария жаңартулар және расталған бренд фактілері Daşkentтен."
     },
     "medical-disclaimer": {
-      "title": "Medical Disclaimer | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "Important medical and liability disclaimer for MedPobeda Group website. Read about healthcare services limitations and responsibilities. TODO: Hünärli ýerli terjime soňra takyklanar.",
+      "title": "Medisinaқ bellik | MedPobeda Group",
+      "description": "MedPobeda Group веб-сайты үшін маңызды lukmançylykқ және jogapkärçilikтен бас тарту. Денсаулық сақтау hyzmatтерінің шектеулері мен міндеттbejergiелері туралы оқыңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Medical Disclaimer TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Healthcare Disclaimer TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Legal TODO: Hünärli ýerli terjime soňra takyklanar."
+        "MedPobeda Group",
+        "Medisinaқ bellik",
+        "Денсаулық сақтау bellikі",
+        "Құқықтық"
       ],
-      "openGraphTitle": "Medical Disclaimer | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "Important medical and liability disclaimer for MedPobeda Group website. TODO: Hünärli ýerli terjime soňra takyklanar."
+      "openGraphTitle": "Medisinaқ bellik | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group веб-сайты үшін маңызды lukmançylykқ және jogapkärçilikтен бас тарту."
     },
     "cookie-policy": {
-      "title": "Cookie Policy | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "description": "Review MedPobeda Group cookie policy regarding website cookies, user preferences, and data collection practices. TODO: Hünärli ýerli terjime soňra takyklanar.",
+      "title": "Cookie саясаты | MedPobeda Group",
+      "description": "MedPobeda Group kompaniýaсының cookie файлдары, пайдаланушы параметрлері және maglumatlar жинау тәжірибелері туралы cookie саясатын қараңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Cookie Policy TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Website Cookies TODO: Hünärli ýerli terjime soňra takyklanar.",
-        "Privacy TODO: Hünärli ýerli terjime soňra takyklanar."
+        "MedPobeda Group",
+        "Cookie саясаты",
+        "Веб-сайт cookie файлдары",
+        "Құпиялылық"
       ],
-      "openGraphTitle": "Cookie Policy | MedPobeda Group TODO: Hünärli ýerli terjime soňra takyklanar.",
-      "openGraphDescription": "MedPobeda Group cookie policy regarding website cookies and user preferences. TODO: Hünärli ýerli terjime soňra takyklanar."
+      "openGraphTitle": "Cookie саясаты | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group kompaniýaсының cookie файлдары мен пайдаланушы параметрлері туралы cookie саясаты."
     },
-    "doctors": {
-      "title": "Doctor Matching & Specialist Support",
-      "description": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group.",
+    "treatments": {
+      "title": "Hindistanдағы bejergiлер",
+      "description": "MedPobeda Group kompaniýaсының onkologiýa, kardiologiýa, орган transplantasiýaсы, нейроhirurgiýa, ortopediýa және Hindistanдағы bejergiді meýilleşdirmekға habarlaşmakты екінші lukmançylykқ пікірлерге арналған bejergi беттерін қараңыз.",
       "keywords": [
-        "doctor matching",
-        "specialist selection",
-        "international patient support",
-        "medical tourism doctors",
-        "hospital referral"
+        "Hindistanдағы bejergiлер Özbegistanнан",
+        "Hindistanда lukmançylykқ bejergi",
+        "Орталық Азияға арналған Hindistanда bejergiді meýilleşdirmek",
+        "MedPobeda Hindistanдағы bejergiлер",
+        "Hindistan bejergi жолдары"
       ],
-      "openGraphTitle": "Doctor Matching & Specialist Support",
-      "openGraphDescription": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group."
+      "openGraphTitle": "Hindistanдағы bejergiлер | MedPobeda Group",
+      "openGraphDescription": "Онкология, kardiologiýa, transplantasiýa, нейроhirurgiýa, ortopediýa және Hindistanға habarlaşmakты екінші lukmançylykқ пікірді meýilleşdirmekға арналған bejergi беттері."
     },
-    "patient-support": {
-      "title": "Patient Support Services",
-      "description": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors.",
+    "oncology-treatment-india": {
+      "title": "Hindistanда onkologiýaлық bejergi",
+      "description": "MedPobeda Group hünärmenдармен habarlaşmak, есептерді бағыттау, hassahana талқылаулары және Özbegistan мен Орталық Азиядан bejergi-syýahatды meýilleşdirmek арқылы Hindistanда onkologiýaлық bejergiделуге ұмтылатын näsagтерді қолдайды.",
       "keywords": [
-        "patient support",
-        "international patient assistance",
-        "medical tourism support",
-        "hospital communication",
-        "patient coordination"
+        "Hindistanда onkologiýaлық bejergi",
+        "Hindistanда қатерлі ісік bejergi Özbegistanнан",
+        "Hindistan onkologiýaлық hassahanaсы",
+        "Hindistanда onkologiýaлық bejergiді meýilleşdirmek",
+        "MedPobeda Hindistanда onkologiýaлық bejergi"
       ],
-      "openGraphTitle": "Patient Support Services",
-      "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+      "openGraphTitle": "Hindistanда onkologiýaлық bejergi | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Hindistanда onkologiýaлық bejergiделуге ұмтылатын näsagтерді hünärmenдармен habarlaşmak, есептерді бағыттау, hassahana талқылаулары және bejergi-syýahatды meýilleşdirmek арқылы қолдайды."
+    },
+    "cardiology-treatment-india": {
+      "title": "Hindistanда kardiologiýaлық bejergi",
+      "description": "MedPobeda Group Özbegistan мен Орталық Азиядан келген näsagтер үшін диагностикалық шолу, hassahanaмен habarlaşmak, hünärmenдарды сәйкестендіру және syýahatға дайындық арқылы Hindistanда kardiologiýaлық bejergiді meýilleşdirmekды қолдайды.",
+      "keywords": [
+        "Hindistanда kardiologiýaлық bejergi",
+        "Hindistanда ýürek keselын bejergi Özbegistanнан",
+        "Hindistan kardiologiýaлық hassahanaлары",
+        "Hindistanда ýürek keselын bejergiді meýilleşdirmek",
+        "MedPobeda Hindistan kardiologiýaсы"
+      ],
+      "openGraphTitle": "Hindistanда kardiologiýaлық bejergi | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Özbegistan мен Орталық Азиядан келген näsagтер үшін диагностикалық шолу, hassahanaмен habarlaşmak, hünärmenдарды сәйкестендіру және syýahatға дайындық арқылы Hindistanда kardiologiýaлық bejergiді meýilleşdirmekды қолдайды."
+    },
+    "organ-transplant-india": {
+      "title": "Hindistanда орган transplantasiýaсы",
+      "description": "MedPobeda Group құжаттарды мұқият бағыттау, hassahanaмен habarlaşmak, hünärmenдар талқылаулары және шекарааралық näsagтер үшін bejergi-syýahatды meýilleşdirmek арқылы Hindistanда орган transplantasiýaсына habarlaşmakты сұрауларды қолдайды.",
+      "keywords": [
+        "Hindistanда орган transplantasiýaсы Özbegistanнан",
+        "Hindistanда transplantasiýaлық bejergi",
+        "Hindistanда bagyr transplantasiýaсы",
+        "Hindistanда böwrek transplantasiýaсын utgaşdyrmak",
+        "MedPobeda Hindistanда орган transplantasiýaсы"
+      ],
+      "openGraphTitle": "Hindistanда орган transplantasiýaсы | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group құжаттарды бағыттау, hassahanaмен habarlaşmak, hünärmenдар талқылаулары және шекарааралық näsagтер үшін bejergi-syýahatды meýilleşdirmek арқылы Hindistanда орган transplantasiýaсы сұрауларын қолдайды."
+    },
+    "neurosurgery-treatment-india": {
+      "title": "Hindistanда нейроhirurgiýaлық bejergi",
+      "description": "MedPobeda Group диагностикалық бағыттау, hünärmenдармен habarlaşmak, hassahana талқылаулары және шекарааралық bejergiге дайындық арқылы Hindistanда нейроhirurgiýaлық bejergiді meýilleşdirmekды қолдайды.",
+      "keywords": [
+        "Hindistanда нейроhirurgiýaлық bejergi",
+        "Hindistanда beyn hirurgiýaсы Özbegistanнан",
+        "Hindistan нейроhirurgiýaлық hassahanaсы",
+        "Hindistanда нейроhirurgiýa бойынша екінші пікір",
+        "MedPobeda Hindistan нейроhirurgiýaсы"
+      ],
+      "openGraphTitle": "Hindistanда нейроhirurgiýaлық bejergi | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group диагностикалық бағыттау, hünärmenдармен habarlaşmak, hassahana талқылаулары және шекарааралық bejergiге дайындық арқылы Hindistanда нейроhirurgiýaлық bejergiді meýilleşdirmekды қолдайды."
+    },
+    "orthopedic-treatment-india": {
+      "title": "Hindistanда ortopediýaлық bejergi",
+      "description": "MedPobeda Group халықаралық näsagтер үшін құжаттарды gözden geçirmek, hassahanaмен habarlaşmak, hünärmenдарды сәйкестендіру және syýahatды utgaşdyrmak арқылы Hindistanда ortopediýaлық bejergiді meýilleşdirmekды қолдайды.",
+      "keywords": [
+        "Hindistanда ortopediýaлық bejergi",
+        "Hindistanда süňk және bogun keselларын bejergi Özbegistanнан",
+        "Hindistan ortopediýaлық hassahanaсы",
+        "Hindistanда ortopediýaлық hirurgiýaны meýilleşdirmek",
+        "MedPobeda Hindistan ortopediýaсы"
+      ],
+      "openGraphTitle": "Hindistanда ortopediýaлық bejergi | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group халықаралық näsagтер үшін құжаттарды gözden geçirmek, hassahanaмен habarlaşmak, hünärmenдарды сәйкестендіру және syýahatды utgaşdyrmak арқылы Hindistanда ortopediýaлық bejergiді meýilleşdirmekды қолдайды."
+    },
+    "second-medical-opinion-india": {
+      "title": "Hindistanда екінші lukmançylykқ пікір",
+      "description": "MedPobeda Group есептерді бағыттау, hünärmenдармен habarlaşmak, hassahana талқылаулары және келесі қадамды meýilleşdirmek арқылы Hindistanға бағытталған екінші lukmançylykқ пікір сұрауларын қолдайды.",
+      "keywords": [
+        "Hindistanда екінші lukmançylykқ пікір",
+        "Hindistanнан lukmançylykқ екінші пікір",
+        "Hindistanнан hünärmenның пікірі Özbegistan",
+        "Hindistanда bejergiді gözden geçirmek",
+        "MedPobeda Hindistanда екінші пікір"
+      ],
+      "openGraphTitle": "Hindistanда екінші lukmançylykқ пікір | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group есептерді бағыттау, hünärmenдармен habarlaşmak, hassahana талқылаулары және келесі қадамды meýilleşdirmek арқылы Hindistanға бағытталған екінші lukmançylykқ пікір сұрауларын қолдайды."
     }
   },
   "forms": {

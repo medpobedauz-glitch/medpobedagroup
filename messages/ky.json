@@ -158,17 +158,17 @@
   },
   "routes": {
     "home": {
-      "title": "Премиум эл аралык саламаттык сактоо көпүрөсү",
-      "description": "MedPobeda Group — Ташкентте жайгашкан саламаттык сактоо кызматташтык платформасы. Ал Өзбекстан, Индия жана эл аралык медициналык мекемелердин ортосунда медициналык туризмди, эл аралык бейтаптарга жардамды, оорукана өнөктөштүктөрүн жана студенттик мобилдүүлүктү колдойт.",
+      "title": "MedPobeda Group | Медициналыкқ туризм және саламаттык сактоо өнөктөштүктері Өзбекстанда",
+      "description": "MedPobeda Group — Ташкентте орналасқан саламаттык сактоо өнөктөштүк платформасы. Ол Өзбекстан, Индия және халықаралық медициналык мекемелер арасындағы медициналык туризмді, халықаралық бейтаптерге көмекті, оорукана өнөктөштүктерін және студенттік ұтқырлықты қолдайды.",
       "keywords": [
         "MedPobeda Group",
-        "Медициналык туризм",
-        "Өнөктөштүк",
-        "Эл аралык бейтаптар",
-        "Студенттик мобилдүүлүк"
+        "Медициналыкқ туризм",
+        "Серіктестік",
+        "Халықаралық бейтаптер",
+        "Студенттік ұтқырлық"
       ],
-      "openGraphTitle": "Премиум эл аралык саламаттык сактоо көпүрөсү",
-      "openGraphDescription": "MedPobeda Group is a Tashkent-based healthcare collaboration platform supporting medical tourism, international patient assistance, hospital partnerships, and student mobility between Uzbekistan, India, and global healthcare institutions. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+      "openGraphTitle": "MedPobeda Group | Медициналыкқ туризм және саламаттык сактоо өнөктөштүктері Өзбекстанда",
+      "openGraphDescription": "MedPobeda Group — Ташкентте орналасқан саламаттык сактоо өнөктөштүк платформасы. Ол Өзбекстан, Индия және халықаралық медициналык мекемелер арасындағы медициналык туризмді, халықаралық бейтаптерге көмекті, оорукана өнөктөштүктерін және студенттік ұтқырлықты қолдайды."
     },
     "about": {
       "title": "MedPobeda Group жөнүндө",
@@ -479,171 +479,145 @@
       "openGraphDescription": "Structured treatment-in-India support for patients and families in Tajikistan, including hospital communication, document routing, travel planning, and cross-border healthcare guidance from Tashkent."
     },
     "company-profile": {
-      "title": "Company Profile | MedPobeda Group MCHJ TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "Review the official company profile of MedPobeda Group MCHJ, a Tashkent-based healthcare company supporting medical tourism, international patient communication, hospital partnerships, and institutional healthcare links. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
+      "title": "Компания профили | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group MCHJ компаниясының ресмээ профилин қараңыз. Ташкентте орналасқан медициналык туризм, халықаралық бейтаптермен байланыш, оорукана өнөктөштүктері және институционалдық медициналык байланыштарды қолдайтын саламаттык сактоо компаниясы.",
       "keywords": [
-        "MedPobeda Group company profile TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda Group MCHJ TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "medical tourism company Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "healthcare company Tashkent TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "international patient coordination Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+        "MedPobeda Group компания профили",
+        "MedPobeda Group MCHJ",
+        "Медициналыкқ туризм компаниясы Өзбекстан",
+        "Денсаулық сақтау компаниясы Ташкент",
+        "Халықаралық бейтаптерді координациялоо Өзбекстан"
       ],
-      "openGraphTitle": "Company Profile | MedPobeda Group MCHJ TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "Official company profile for MedPobeda Group MCHJ covering healthcare positioning, patient communication, hospital partnerships, and institutional routes from Tashkent, Uzbekistan. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+      "openGraphTitle": "Компания профили | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group MCHJ компаниясының ресмээ профили. Ташкенттен саламаттык сактоо кызматтері, бейтаптермен байланыш, оорукана өнөктөштүктері және институционалдық байланыштар."
     },
     "press": {
-      "title": "Press & Official Updates | MedPobeda Group MCHJ TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "Read official MedPobeda Group company information, press contact details, brand facts, and public healthcare updates from Tashkent, Uzbekistan. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
+      "title": "Пресс және ресмээ жаңылыктар | MedPobeda Group MCHJ",
+      "description": "MedPobeda Group компаниясының ресмээ ақпаратын, пресс байланыш маалыматтарін, бренд фактілерін және Ташкенттен алынған саламаттык сактоо жаңартуларын оқыңыз.",
       "keywords": [
-        "MedPobeda Group press TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda Group news TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda Group official updates TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "healthcare company Uzbekistan press TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "medical tourism company press TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+        "MedPobeda Group пресс",
+        "MedPobeda Group жаңылыктары",
+        "MedPobeda Group ресмээ жаңартулары",
+        "Денсаулық сақтау компаниясы Өзбекстан прессі",
+        "Медициналыкқ туризм компаниясы прессі"
       ],
-      "openGraphTitle": "Press & Official Updates | MedPobeda Group MCHJ TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "Official MedPobeda Group company information, media contact routes, public-facing updates, and verified brand facts from Tashkent, Uzbekistan. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "treatments": {
-      "title": "Treatments in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "Explore MedPobeda Group treatment pages for oncology, cardiology, organ transplant, neurosurgery, orthopedics, and second medical opinions linked to India treatment planning. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "treatments in India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "medical treatment India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "treatment planning India Central Asia TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda treatments India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "India treatment pathways TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Treatments in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "Treatment-focused pages for oncology, cardiology, transplant, neurosurgery, orthopedics, and second medical opinion planning linked to India. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "oncology-treatment-india": {
-      "title": "Oncology Treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "oncology treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "cancer treatment India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "oncology hospital India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "oncology treatment planning India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda oncology treatment India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Oncology Treatment in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports patients seeking oncology treatment in India through specialist communication, report routing, hospital discussions, and treatment-travel planning from Uzbekistan and Central Asia. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "cardiology-treatment-india": {
-      "title": "Cardiology Treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "cardiology treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "heart treatment India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "cardiology hospitals India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "cardiac treatment planning India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda cardiology India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Cardiology Treatment in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports cardiology treatment planning in India through diagnostic review routing, hospital communication, specialist matching, and travel preparation for patients from Uzbekistan and Central Asia. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "organ-transplant-india": {
-      "title": "Organ Transplant in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "organ transplant India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "transplant treatment India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "liver transplant India Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "kidney transplant India coordination TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda organ transplant India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Organ Transplant in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports organ transplant-related enquiries in India through careful document routing, hospital communication, specialist discussions, and treatment-travel planning for cross-border patients. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "neurosurgery-treatment-india": {
-      "title": "Neurosurgery Treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "neurosurgery treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "brain surgery India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "neurosurgery hospital India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "neurosurgery second opinion India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda neurosurgery India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Neurosurgery Treatment in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports neurosurgery treatment planning in India through diagnostic routing, specialist communication, hospital discussions, and cross-border treatment preparation. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "orthopedic-treatment-india": {
-      "title": "Orthopedic Treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "orthopedic treatment in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "bone and joint treatment India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "orthopedic hospital India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "orthopedic surgery India planning TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda orthopedic India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Orthopedic Treatment in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports orthopedic treatment planning in India through document review routing, hospital communication, specialist matching, and travel coordination for international patients. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-    },
-    "second-medical-opinion-india": {
-      "title": "Second Medical Opinion in India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "keywords": [
-        "second medical opinion India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "medical second opinion from India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "specialist review India from Uzbekistan TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "treatment review India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "MedPobeda second opinion India TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
-      ],
-      "openGraphTitle": "Second Medical Opinion in India | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+      "openGraphTitle": "Пресс және ресмээ жаңылыктар | MedPobeda Group MCHJ",
+      "openGraphDescription": "MedPobeda Group компаниясының ресмээ ақпараты, медиа байланыш маалыматтарі, жария жаңартулар және расталған бренд фактілері Ташкенттен."
     },
     "medical-disclaimer": {
-      "title": "Medical Disclaimer | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "Important medical and liability disclaimer for MedPobeda Group website. Read about healthcare services limitations and responsibilities. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
+      "title": "Медициналыкқ эскертүү | MedPobeda Group",
+      "description": "MedPobeda Group веб-сайты үшін маңызды медициналык және жоопкерчиликтен бас тарту. Денсаулық сақтау кызматтерінің шектеулері мен міндеттемелері туралы оқыңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Medical Disclaimer TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Healthcare Disclaimer TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Legal TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+        "MedPobeda Group",
+        "Медициналыкқ эскертүү",
+        "Денсаулық сақтау эскертүүі",
+        "Құқықтық"
       ],
-      "openGraphTitle": "Medical Disclaimer | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "Important medical and liability disclaimer for MedPobeda Group website. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+      "openGraphTitle": "Медициналыкқ эскертүү | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group веб-сайты үшін маңызды медициналык және жоопкерчиликтен бас тарту."
     },
     "cookie-policy": {
-      "title": "Cookie Policy | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "description": "Review MedPobeda Group cookie policy regarding website cookies, user preferences, and data collection practices. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
+      "title": "Cookie саясаты | MedPobeda Group",
+      "description": "MedPobeda Group компаниясының cookie файлдары, пайдаланушы параметрлері және маалыматтар жинау тәжірибелері туралы cookie саясатын қараңыз.",
       "keywords": [
-        "MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Cookie Policy TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Website Cookies TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-        "Privacy TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+        "MedPobeda Group",
+        "Cookie саясаты",
+        "Веб-сайт cookie файлдары",
+        "Құпиялылық"
       ],
-      "openGraphTitle": "Cookie Policy | MedPobeda Group TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
-      "openGraphDescription": "MedPobeda Group cookie policy regarding website cookies and user preferences. TODO: Кесипкөй жергиликтүү котормо күтүлүүдө."
+      "openGraphTitle": "Cookie саясаты | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group компаниясының cookie файлдары мен пайдаланушы параметрлері туралы cookie саясаты."
     },
-    "doctors": {
-      "title": "Doctor Matching & Specialist Support",
-      "description": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group.",
+    "treatments": {
+      "title": "Индиядағы дарылоолер",
+      "description": "MedPobeda Group компаниясының онкология, кардиология, орган трансплантациясы, нейрохирургия, ортопедия және Индиядағы дарылооді пландаштырууға байланышты екінші медициналык пікірлерге арналған дарылоо беттерін қараңыз.",
       "keywords": [
-        "doctor matching",
-        "specialist selection",
-        "international patient support",
-        "medical tourism doctors",
-        "hospital referral"
+        "Индиядағы дарылоолер Өзбекстаннан",
+        "Индияда медициналык дарылоо",
+        "Орталық Азияға арналған Индияда дарылооді пландаштыруу",
+        "MedPobeda Индиядағы дарылоолер",
+        "Индия дарылоо жолдары"
       ],
-      "openGraphTitle": "Doctor Matching & Specialist Support",
-      "openGraphDescription": "Find the right doctors, coordinate specialist consultations, and support international treatment planning with MedPobeda Group."
+      "openGraphTitle": "Индиядағы дарылоолер | MedPobeda Group",
+      "openGraphDescription": "Онкология, кардиология, трансплантация, нейрохирургия, ортопедия және Индияға байланышты екінші медициналык пікірді пландаштырууға арналған дарылоо беттері."
     },
-    "patient-support": {
-      "title": "Patient Support Services",
-      "description": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors.",
+    "oncology-treatment-india": {
+      "title": "Индияда онкологиялық дарылоо",
+      "description": "MedPobeda Group адисдармен байланыш, есептерді бағыттау, оорукана талқылаулары және Өзбекстан мен Орталық Азиядан дарылоо-сапарды пландаштыруу арқылы Индияда онкологиялық емделуге ұмтылатын бейтаптерді қолдайды.",
       "keywords": [
-        "patient support",
-        "international patient assistance",
-        "medical tourism support",
-        "hospital communication",
-        "patient coordination"
+        "Индияда онкологиялық дарылоо",
+        "Индияда қатерлі ісік дарылоо Өзбекстаннан",
+        "Индия онкологиялық ооруканасы",
+        "Индияда онкологиялық дарылооді пландаштыруу",
+        "MedPobeda Индияда онкологиялық дарылоо"
       ],
-      "openGraphTitle": "Patient Support Services",
-      "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+      "openGraphTitle": "Индияда онкологиялық дарылоо | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Индияда онкологиялық емделуге ұмтылатын бейтаптерді адисдармен байланыш, есептерді бағыттау, оорукана талқылаулары және дарылоо-сапарды пландаштыруу арқылы қолдайды."
+    },
+    "cardiology-treatment-india": {
+      "title": "Индияда кардиологиялық дарылоо",
+      "description": "MedPobeda Group Өзбекстан мен Орталық Азиядан келген бейтаптер үшін диагностикалық шолу, ооруканамен байланыш, адисдарды сәйкестендіру және сапарға дайындық арқылы Индияда кардиологиялық дарылооді пландаштырууды қолдайды.",
+      "keywords": [
+        "Индияда кардиологиялық дарылоо",
+        "Индияда жүрөк ооруын дарылоо Өзбекстаннан",
+        "Индия кардиологиялық ооруканалары",
+        "Индияда жүрөк ооруын дарылооді пландаштыруу",
+        "MedPobeda Индия кардиологиясы"
+      ],
+      "openGraphTitle": "Индияда кардиологиялық дарылоо | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group Өзбекстан мен Орталық Азиядан келген бейтаптер үшін диагностикалық шолу, ооруканамен байланыш, адисдарды сәйкестендіру және сапарға дайындық арқылы Индияда кардиологиялық дарылооді пландаштырууды қолдайды."
+    },
+    "organ-transplant-india": {
+      "title": "Индияда орган трансплантациясы",
+      "description": "MedPobeda Group құжаттарды мұқият бағыттау, ооруканамен байланыш, адисдар талқылаулары және шекарааралық бейтаптер үшін дарылоо-сапарды пландаштыруу арқылы Индияда орган трансплантациясына байланышты сұрауларды қолдайды.",
+      "keywords": [
+        "Индияда орган трансплантациясы Өзбекстаннан",
+        "Индияда трансплантациялық дарылоо",
+        "Индияда боор трансплантациясы",
+        "Индияда бөйрөк трансплантациясын координациялоо",
+        "MedPobeda Индияда орган трансплантациясы"
+      ],
+      "openGraphTitle": "Индияда орган трансплантациясы | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group құжаттарды бағыттау, ооруканамен байланыш, адисдар талқылаулары және шекарааралық бейтаптер үшін дарылоо-сапарды пландаштыруу арқылы Индияда орган трансплантациясы сұрауларын қолдайды."
+    },
+    "neurosurgery-treatment-india": {
+      "title": "Индияда нейрохирургиялық дарылоо",
+      "description": "MedPobeda Group диагностикалық бағыттау, адисдармен байланыш, оорукана талқылаулары және шекарааралық дарылооге дайындық арқылы Индияда нейрохирургиялық дарылооді пландаштырууды қолдайды.",
+      "keywords": [
+        "Индияда нейрохирургиялық дарылоо",
+        "Индияда мээ хирургиясы Өзбекстаннан",
+        "Индия нейрохирургиялық ооруканасы",
+        "Индияда нейрохирургия бойынша екінші пікір",
+        "MedPobeda Индия нейрохирургиясы"
+      ],
+      "openGraphTitle": "Индияда нейрохирургиялық дарылоо | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group диагностикалық бағыттау, адисдармен байланыш, оорукана талқылаулары және шекарааралық дарылооге дайындық арқылы Индияда нейрохирургиялық дарылооді пландаштырууды қолдайды."
+    },
+    "orthopedic-treatment-india": {
+      "title": "Индияда ортопедиялық дарылоо",
+      "description": "MedPobeda Group халықаралық бейтаптер үшін құжаттарды карап чыгуу, ооруканамен байланыш, адисдарды сәйкестендіру және сапарды координациялоо арқылы Индияда ортопедиялық дарылооді пландаштырууды қолдайды.",
+      "keywords": [
+        "Индияда ортопедиялық дарылоо",
+        "Индияда сөөк және муун ооруларын дарылоо Өзбекстаннан",
+        "Индия ортопедиялық ооруканасы",
+        "Индияда ортопедиялық хирургияны пландаштыруу",
+        "MedPobeda Индия ортопедиясы"
+      ],
+      "openGraphTitle": "Индияда ортопедиялық дарылоо | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group халықаралық бейтаптер үшін құжаттарды карап чыгуу, ооруканамен байланыш, адисдарды сәйкестендіру және сапарды координациялоо арқылы Индияда ортопедиялық дарылооді пландаштырууды қолдайды."
+    },
+    "second-medical-opinion-india": {
+      "title": "Индияда екінші медициналык пікір",
+      "description": "MedPobeda Group есептерді бағыттау, адисдармен байланыш, оорукана талқылаулары және келесі қадамды пландаштыруу арқылы Индияға бағытталған екінші медициналык пікір сұрауларын қолдайды.",
+      "keywords": [
+        "Индияда екінші медициналык пікір",
+        "Индиянан медициналык екінші пікір",
+        "Индиянан адисның пікірі Өзбекстан",
+        "Индияда дарылооді карап чыгуу",
+        "MedPobeda Индияда екінші пікір"
+      ],
+      "openGraphTitle": "Индияда екінші медициналык пікір | MedPobeda Group",
+      "openGraphDescription": "MedPobeda Group есептерді бағыттау, адисдармен байланыш, оорукана талқылаулары және келесі қадамды пландаштыруу арқылы Индияға бағытталған екінші медициналык пікір сұрауларын қолдайды."
     }
   },
   "forms": {
