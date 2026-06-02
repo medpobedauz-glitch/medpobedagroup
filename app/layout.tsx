@@ -20,6 +20,7 @@ import FreeConsultationPopup from "@/components/common/FreeConsultationPopup";
 import { FloatingButtons } from "@/components/shared/floating-buttons";
 import { InquiryConcierge } from "@/components/shared/inquiry-concierge";
 import { StickyMobileContactBar } from "@/components/shared/sticky-mobile-contact-bar";
+import { SiteSearchPalette } from "@/components/common/SiteSearchPalette";
 import CentralAsiaPatientsSection from "@/components/sections/CentralAsiaPatientsSection";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -149,6 +150,9 @@ export default function RootLayout({
             <InquiryConcierge />
             <FloatingButtons />
             <StickyMobileContactBar />
+            <div className="fixed bottom-20 left-4 z-40 sm:bottom-6 sm:left-6">
+              <SiteSearchPalette />
+            </div>
             <CentralAsiaPatientsSection />
             <SiteFooter />
           </div>
