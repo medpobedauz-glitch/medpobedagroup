@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { costGuideCategories, costGuideData, type CostItem } from "@/lib/data/cost-guide";
+import { CostCalculator } from "@/components/sections/cost-calculator";
 
 const formatPrice = (n: number) =>
   `$${n.toLocaleString("en-US")}`;
@@ -74,6 +75,13 @@ export function CostGuidePageContent() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Cost Calculator */}
+      <section className="section-shell-compact pt-0">
+        <div className="container-wide">
+          <CostCalculator />
         </div>
       </section>
 
