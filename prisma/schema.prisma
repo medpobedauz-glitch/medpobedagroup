@@ -784,6 +784,7 @@ model BlogPost {
   updatedAt      DateTime       @updatedAt
   author         User?          @relation("AuthorBlogPosts", fields: [authorId], references: [id], onDelete: SetNull)
   uploadedFiles  UploadedFile[]
+  aiRuns         BlogAiRun[]
 
   @@index([status, publishedAt])
   @@index([createdAt])
@@ -1331,4 +1332,32 @@ model CountryPage {
   @@index([countryCode])
   @@index([slug])
   @@index([isPublished])
+}
+
+// ─── BLOG AI GENERATION (MedPobeda automated blog writer) ─────────────────────
+
+enum BlogAiRunStatus {
+  SUCCESS
+  FAILED
+  SKIPPED
+}
+
+model BlogAiRun {
+  id           String         @id @default(cuid())
+  topic        String         @db.Text
+  category     String?
+  model        String
+  status       BlogAiRunStatus
+  errorMessage String?        @db.Text
+  wordCount    Int?
+  blogPostId   String?
+  durationMs   Int?
+  rawOutput    String?        @db.Text
+  triggeredBy  String?
+  createdAt    DateTime       @default(now())
+  blogPost     BlogPost?      @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([category, createdAt])
+  @@index([createdAt])
 }

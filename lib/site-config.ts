@@ -10,7 +10,7 @@ export const siteConfig = {
   location: "Tashkent, Uzbekistan",
   website: "medpobedagroup.uz",
   socialLinks: {
-    instagram: "",
+    instagram: "https://www.instagram.com/medpobedagroup/",
     facebook: "",
     linkedin: "",
     telegram: "https://t.me/998910124043",
