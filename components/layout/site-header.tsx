@@ -25,6 +25,7 @@ export function SiteHeader() {
     { href: "/doctors", label: messages.chrome.navigation.doctors },
     { href: "/patient-support", label: messages.chrome.navigation.patientSupport },
     { href: "/about", label: messages.chrome.navigation.about },
+    { href: "/others", label: messages.chrome.navigation.others },
     { href: "/blog", label: messages.routes.blog.title },
     { href: "/contact", label: messages.chrome.navigation.contact },
   ];

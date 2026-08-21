@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
+  BookOpen,
   Building2,
   CheckCircle2,
   ClipboardList,
@@ -153,6 +154,11 @@ const brandHubCardConfigs = [
     icon: MapPin,
     href: "/contact",
     image: image("contact-trust", "tashkent-coordination-base", ""),
+  },
+  {
+    icon: BookOpen,
+    href: "/others",
+    image: image("gallery", "uzbekistan-healthcare-bridge", ""),
   },
 ] as const;
 

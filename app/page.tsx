@@ -62,6 +62,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     { name: messages.pages.home.brandHub.items[3].title, path: "/hospital-partnerships" },
     { name: messages.pages.home.brandHub.items[4].title, path: "/international-patients" },
     { name: messages.pages.home.brandHub.items[5].title, path: "/contact" },
+    { name: messages.pages.home.brandHub.items[6].title, path: "/others" },
   ];
   const homeSchema = createHomePageSchemaGraph({
     locale,

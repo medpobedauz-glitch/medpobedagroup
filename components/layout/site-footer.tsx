@@ -55,6 +55,7 @@ export function SiteFooter() {
     },
     { href: "/student-mobility", label: messages.chrome.navigation.studentMobility },
     { href: "/about", label: messages.chrome.navigation.about },
+    { href: "/others", label: messages.chrome.navigation.others },
     { href: "/company-profile", label: messages.chrome.navigation.companyProfile },
     { href: "/press", label: messages.chrome.navigation.press },
     { href: "/contact", label: messages.chrome.navigation.contact },

@@ -137,6 +137,7 @@ export function resolveLocaleFromAcceptLanguage(headerValue?: string | null) {
 export const localizedRouteKeys = [
   "home",
   "about",
+  "others",
   "company-profile",
   "services",
   "doctors",
@@ -180,6 +181,7 @@ export type LocalizedRouteKey = (typeof localizedRouteKeys)[number];
 const routeKeyByPath: Record<string, LocalizedRouteKey> = {
   "/": "home",
   "/about": "about",
+  "/others": "others",
   "/company-profile": "company-profile",
   "/services": "services",
   "/doctors": "doctors",

@@ -14,7 +14,8 @@
       "treatments": "Treatments TODO: Кесипкөй жергиликтүү котормо күтүлүүдө.",
       "services": "Services",
       "doctors": "Doctors",
-      "patientSupport": "Patient Support"
+      "patientSupport": "Patient Support",
+      "others": "Башкалар"
     },
     "actions": {
       "partnerWithUs": "Биз менен өнөктөш болуңуз",
@@ -644,6 +645,19 @@
       ],
       "openGraphTitle": "Patient Support Services",
       "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+    },
+    "others": {
+      "title": "Башкалар | MedPobeda Group",
+      "description": "Explore additional MedPobeda Group pages including FAQs, cost guide, success stories, team, why India, blog, press, and company profile.",
+      "keywords": [
+        "MedPobeda Group",
+        "Others",
+        "FAQ",
+        "Cost Guide",
+        "Success Stories"
+      ],
+      "openGraphTitle": "Башкалар | MedPobeda Group",
+      "openGraphDescription": "Additional MedPobeda Group resources for patients, hospitals, and institutions."
     }
   },
   "forms": {
