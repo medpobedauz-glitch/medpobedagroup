@@ -14,7 +14,8 @@
       "treatments": "Treatments",
       "services": "Services",
       "doctors": "Doctors",
-      "patientSupport": "Patient Support"
+      "patientSupport": "Patient Support",
+      "others": "Others"
     },
     "actions": {
       "partnerWithUs": "Partner With Us",
@@ -618,6 +619,19 @@
       ],
       "openGraphTitle": "Second Medical Opinion in India | MedPobeda Group",
       "openGraphDescription": "MedPobeda Group supports India-focused second medical opinion requests through report routing, specialist communication, hospital-facing discussion, and next-step treatment planning."
+    },
+    "others": {
+      "title": "Others | Extra Pages | MedPobeda Group",
+      "description": "Explore additional MedPobeda Group pages including FAQs, cost guide, success stories, team, why India, blog, press, and company profile.",
+      "keywords": [
+        "MedPobeda Group",
+        "Others",
+        "FAQ",
+        "Cost Guide",
+        "Success Stories"
+      ],
+      "openGraphTitle": "Others | Extra Pages | MedPobeda Group",
+      "openGraphDescription": "Additional MedPobeda Group resources for patients, hospitals, and institutions."
     }
   },
   "forms": {
@@ -1623,6 +1637,10 @@
           {
             "title": "Contact MedPobeda Group",
             "description": "The direct route for official company contact, healthcare inquiries, messaging channels, and partnership discussions."
+          },
+          {
+            "title": "Others",
+            "description": "Extra pages for FAQs, cost guidance, success stories, team, press, and company information."
           }
         ],
         "factsEyebrow": "Official Company Facts",
@@ -4842,6 +4860,119 @@
           "title": "Need guidance on second medical opinion planning?",
           "description": "Contact MedPobeda Group for structured case routing, hospital communication, and next-step planning connected to a second medical opinion in India."
         }
+      }
+    },
+    "others": {
+      "schemaName": "Others | Additional MedPobeda Group Pages",
+      "schemaDescription": "Explore additional MedPobeda Group resources including FAQs, cost guidance, success stories, team, press, and company profile.",
+      "hero": {
+        "eyebrow": "Others",
+        "title": "Additional pages for patients, families, and partners",
+        "description": "Use this hub to open FAQs, treatment cost guidance, patient stories, why India, the team, blog, press, and the official company profile.",
+        "highlights": [
+          "FAQs",
+          "Cost Guide",
+          "Success Stories",
+          "Company Profile"
+        ],
+        "primaryCta": "Contact MedPobeda Group",
+        "secondaryCta": "About MedPobeda Group",
+        "stats": [
+          {
+            "value": "Guides",
+            "label": "Practical answers on treatment planning, travel, and hospital questions."
+          },
+          {
+            "value": "Stories",
+            "label": "Patient and family journeys that explain how coordination works."
+          },
+          {
+            "value": "Company",
+            "label": "Official profile, press, and team information in one place."
+          }
+        ],
+        "floatingCards": [
+          "FAQ",
+          "Cost Guide",
+          "Success Stories",
+          "Press"
+        ],
+        "accentLabel": "More Resources",
+        "imageAlts": [
+          "Healthcare team discussing additional patient resources.",
+          "International healthcare bridge visual for extra guidance pages.",
+          "Coordinator supporting a family with extra planning questions."
+        ]
+      },
+      "resources": {
+        "eyebrow": "Resource Hub",
+        "title": "Open the extra pages most visitors look for next",
+        "description": "These routes sit alongside the main service pages and help patients, hospitals, and institutions find supporting information quickly.",
+        "items": [
+          {
+            "title": "FAQ",
+            "description": "Answers on medical tourism, visas, hospitals, costs, and travel."
+          },
+          {
+            "title": "Cost Guide",
+            "description": "Indicative treatment cost ranges and planning notes for India."
+          },
+          {
+            "title": "Success Stories",
+            "description": "Patient journeys and coordination examples from the MedPobeda network."
+          },
+          {
+            "title": "Why India",
+            "description": "Why families from Central Asia choose treatment pathways in India."
+          },
+          {
+            "title": "Team",
+            "description": "Meet the coordination and partnership team behind MedPobeda Group."
+          },
+          {
+            "title": "Blog",
+            "description": "Healthcare insights, planning articles, and public updates."
+          },
+          {
+            "title": "Press",
+            "description": "Official company facts and media contact routes."
+          },
+          {
+            "title": "Company Profile",
+            "description": "Formal corporate profile of MedPobeda Group MCHJ."
+          }
+        ]
+      },
+      "faq": {
+        "eyebrow": "Others FAQ",
+        "title": "What this page is for",
+        "description": "These answers explain how the Others hub fits next to the main MedPobeda Group service pages.",
+        "items": [
+          {
+            "question": "What is the Others page?",
+            "answer": "It is a hub for supporting pages such as FAQs, cost guidance, success stories, team, press, and company profile."
+          },
+          {
+            "question": "Is this a treatment or hospital page?",
+            "answer": "No. Treatment, hospitals, and medical tourism remain on their own dedicated routes. Others collects additional reference pages."
+          },
+          {
+            "question": "Where should I start if I need treatment help?",
+            "answer": "Use Medical Tourism or Contact for a case inquiry. Use Others when you need extra reading, FAQs, or company information."
+          },
+          {
+            "question": "Can hospitals use this page too?",
+            "answer": "Yes. Partners can open company profile, press, and team pages from this hub, then continue to Hospital Partnerships or Contact."
+          }
+        ]
+      },
+      "cta": {
+        "eyebrow": "Need a Direct Route",
+        "title": "Ready to talk with MedPobeda Group?",
+        "description": "If you have a patient case, hospital partnership, or institutional question, start with the official contact desk.",
+        "primary": "Contact MedPobeda Group",
+        "secondary": "Back to Home",
+        "imageAlt": "Healthcare conversation for extra resource and contact follow-up."
       }
     }
   }

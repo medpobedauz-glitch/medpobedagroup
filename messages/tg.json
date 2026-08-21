@@ -14,7 +14,8 @@
       "treatments": "Treatments TODO: Тарҷумаи касбии маҳаллӣ баъдтар илова мешавад.",
       "services": "Services",
       "doctors": "Doctors",
-      "patientSupport": "Patient Support"
+      "patientSupport": "Patient Support",
+      "others": "Дигар"
     },
     "actions": {
       "partnerWithUs": "Бо мо ҳамкорӣ кунед",
@@ -644,6 +645,19 @@
       ],
       "openGraphTitle": "Patient Support Services",
       "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+    },
+    "others": {
+      "title": "Дигар | MedPobeda Group",
+      "description": "Explore additional MedPobeda Group pages including FAQs, cost guide, success stories, team, why India, blog, press, and company profile.",
+      "keywords": [
+        "MedPobeda Group",
+        "Others",
+        "FAQ",
+        "Cost Guide",
+        "Success Stories"
+      ],
+      "openGraphTitle": "Дигар | MedPobeda Group",
+      "openGraphDescription": "Additional MedPobeda Group resources for patients, hospitals, and institutions."
     }
   },
   "forms": {

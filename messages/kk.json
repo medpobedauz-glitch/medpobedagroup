@@ -14,7 +14,8 @@
       "treatments": "Treatments TODO: Кәсіби жергілікті аударма кейін енгізіледі.",
       "services": "Services",
       "doctors": "Doctors",
-      "patientSupport": "Patient Support"
+      "patientSupport": "Patient Support",
+      "others": "Басқалары"
     },
     "actions": {
       "partnerWithUs": "Бізбен серіктес болыңыз",
@@ -644,6 +645,19 @@
       ],
       "openGraphTitle": "Patient Support Services",
       "openGraphDescription": "Patient support for international care coordination, treatment preparation, and communication with hospitals and doctors."
+    },
+    "others": {
+      "title": "Басқалары | MedPobeda Group",
+      "description": "Explore additional MedPobeda Group pages including FAQs, cost guide, success stories, team, why India, blog, press, and company profile.",
+      "keywords": [
+        "MedPobeda Group",
+        "Others",
+        "FAQ",
+        "Cost Guide",
+        "Success Stories"
+      ],
+      "openGraphTitle": "Басқалары | MedPobeda Group",
+      "openGraphDescription": "Additional MedPobeda Group resources for patients, hospitals, and institutions."
     }
   },
   "forms": {

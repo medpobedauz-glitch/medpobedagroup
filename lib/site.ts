@@ -61,6 +61,7 @@ export function getTelegramUrl(message?: string) {
 export const publicRoutes = [
   "/",
   "/about",
+  "/others",
   "/company-profile",
   "/hospitals",
   "/treatments",
