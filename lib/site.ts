@@ -64,6 +64,7 @@ export const publicRoutes = [
   "/company-profile",
   "/hospitals",
   "/treatments",
+  "/tremor",
   "/medical-tourism",
   "/medical-tourism-uzbekistan",
   "/treatment-in-india-from-uzbekistan",

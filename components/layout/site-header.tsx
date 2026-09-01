@@ -21,6 +21,7 @@ export function SiteHeader() {
     { href: "/international-patient-care", label: messages.chrome.navigation.medicalTourism },
     { href: "/services", label: messages.chrome.navigation.services },
     { href: "/treatments", label: messages.chrome.navigation.treatments },
+    { href: "/tremor", label: "Tremor" },
     { href: "/hospitals", label: messages.chrome.navigation.hospitals },
     { href: "/doctors", label: messages.chrome.navigation.doctors },
     { href: "/patient-support", label: messages.chrome.navigation.patientSupport },
