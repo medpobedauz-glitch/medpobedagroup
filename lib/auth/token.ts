@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 
-import { env } from "@/lib/env";
+import { env } from "../env";
 
 export const SESSION_COOKIE_NAME = "medpobeda_admin_session";
 

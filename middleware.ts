@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/auth/token";
+import { SESSION_COOKIE_NAME, verifySessionToken } from "./lib/auth/token";
 import {
   defaultLocale,
   getPathLocale,
@@ -14,7 +14,7 @@ import {
   resolveLocaleFromAcceptLanguage,
   resolveLocaleFromCountry,
   type AppLocale,
-} from "@/lib/i18n/config";
+} from "./lib/i18n/config";
 
 const ONE_YEAR_IN_SECONDS = 60 * 60 * 24 * 365;
 
