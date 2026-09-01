@@ -114,7 +114,7 @@ export function InquiryConcierge() {
   return (
     <>
       <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-center px-6 xl:flex">
-        <div className="pointer-events-auto flex items-center gap-4 rounded-full border border-slate-200/80 bg-white/96 px-5 py-3 shadow-panel backdrop-blur-3xl">
+        <div className="pointer-events-auto flex items-center gap-4 rounded-full border border-slate-200/80 bg-white px-5 py-3 shadow-[0_14px_42px_rgba(7,27,58,0.14)]">
           <div className="flex items-center gap-3">
             <Badge variant="solid">{messages.chrome.inquiryConcierge.badge}</Badge>
             <p className="text-sm text-slate-600">

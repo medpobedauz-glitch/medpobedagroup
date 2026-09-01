@@ -8,7 +8,7 @@ export const siteConfig = {
   telegramPhone: "+998910124043",
   telegramUrl: "https://t.me/998910124043",
   location: "Tashkent, Uzbekistan",
-  website: "medpobedagroup.uz",
+  website: "www.medpobedagroup.uz",
   socialLinks: {
     instagram: "https://www.instagram.com/medpobedagroup/",
     facebook: "",

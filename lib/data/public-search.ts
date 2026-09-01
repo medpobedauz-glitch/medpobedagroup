@@ -2,11 +2,18 @@ import "server-only";
 
 import { allFAQs, faqCategories } from "@/lib/data/faqs";
 import { costGuideCategories, costGuideData } from "@/lib/data/cost-guide";
+import { diseases } from "@/lib/data/diseases";
+import { doctors } from "@/lib/data/doctors";
+import { hospitals } from "@/lib/data/hospitals";
+import { treatments } from "@/lib/data/treatments";
 import { medicalSpecialties } from "@/lib/medical-specialties";
 
 export type PublicSearchItemType =
   | "page"
+  | "disease"
   | "treatment"
+  | "hospital"
+  | "doctor"
   | "cost"
   | "faq"
   | "specialty";
@@ -46,6 +53,21 @@ const STATIC_PAGES: PublicSearchItem[] = [
     description: "Browse the full catalogue of treatments we coordinate across our partner hospitals.",
     href: "/treatments",
     keywords: ["treatments", "procedures", "catalog", "services"],
+  },
+  {
+    id: "page-diseases",
+    type: "page",
+    title: "Disease Knowledge Center",
+    description:
+      "Search medical conditions, symptoms, treatments, hospitals, and specialist doctors.",
+    href: "/diseases",
+    keywords: [
+      "diseases",
+      "conditions",
+      "symptoms",
+      "medical knowledge center",
+      "health information",
+    ],
   },
   {
     id: "page-cost-guide",
@@ -238,8 +260,102 @@ function buildSpecialtyItems(): PublicSearchItem[] {
   }));
 }
 
+function buildDiseaseItems(): PublicSearchItem[] {
+  const treatmentBySlug = new Map(treatments.map((item) => [item.slug, item]));
+  const hospitalBySlug = new Map(hospitals.map((item) => [item.slug, item]));
+  const doctorBySlug = new Map(doctors.map((item) => [item.slug, item]));
+
+  return diseases.map((disease) => ({
+    id: `disease-${disease.slug}`,
+    type: "disease",
+    title: disease.name,
+    description: disease.shortDescription,
+    href: `/diseases/${disease.slug}`,
+    category: disease.category,
+    keywords: [
+      disease.specialty,
+      disease.organSystem,
+      ...disease.symptoms,
+      ...disease.warningSigns,
+      ...disease.relatedTreatments.map(
+        (slug) => treatmentBySlug.get(slug)?.name ?? slug,
+      ),
+      ...disease.relatedHospitals.map(
+        (slug) => hospitalBySlug.get(slug)?.name ?? slug,
+      ),
+      ...disease.relatedDoctors.flatMap((slug) => {
+        const doctor = doctorBySlug.get(slug);
+        return doctor ? [doctor.name, doctor.specialization] : [];
+      }),
+    ],
+    badge: disease.specialty,
+  }));
+}
+
+function buildTreatmentItems(): PublicSearchItem[] {
+  return treatments.map((treatment) => ({
+    id: `treatment-${treatment.slug}`,
+    type: "treatment",
+    title: treatment.name,
+    description: treatment.shortDescription,
+    href: `/treatments/${treatment.slug}`,
+    category: treatment.category,
+    keywords: [
+      treatment.specialty,
+      treatment.organSystem,
+      ...treatment.symptoms,
+      ...treatment.diagnosis,
+    ],
+    badge: treatment.specialty,
+  }));
+}
+
+function buildHospitalItems(): PublicSearchItem[] {
+  return hospitals.map((hospital) => ({
+    id: `hospital-${hospital.slug}`,
+    type: "hospital",
+    title: hospital.name,
+    description: hospital.shortDescription,
+    href: `/hospitals/${hospital.slug}`,
+    category: hospital.hospitalGroup,
+    keywords: [
+      hospital.city,
+      hospital.state,
+      ...hospital.specialties,
+      ...hospital.treatments,
+      ...hospital.diseases,
+    ],
+    badge: `${hospital.city}, ${hospital.state}`,
+  }));
+}
+
+function buildDoctorItems(): PublicSearchItem[] {
+  return doctors.map((doctor) => ({
+    id: `doctor-${doctor.slug}`,
+    type: "doctor",
+    title: doctor.name,
+    description: doctor.professionalSummary,
+    href: `/doctors/${doctor.slug}`,
+    category: doctor.specialization,
+    keywords: [
+      doctor.hospitalGroup,
+      doctor.city,
+      doctor.state,
+      ...doctor.subspecialties,
+      ...doctor.expertise,
+      ...doctor.diseases,
+      ...doctor.treatments,
+    ],
+    badge: doctor.specialization,
+  }));
+}
+
 const ALL_ITEMS: PublicSearchItem[] = [
   ...STATIC_PAGES,
+  ...buildDiseaseItems(),
+  ...buildTreatmentItems(),
+  ...buildHospitalItems(),
+  ...buildDoctorItems(),
   ...buildCostItems(),
   ...buildFaqItems(),
   ...buildSpecialtyItems(),
@@ -316,6 +432,10 @@ export function searchPublicContent(input: {
 export const PUBLIC_SEARCH_STATS = {
   totalItems: ALL_ITEMS.length,
   staticPages: STATIC_PAGES.length,
+  diseaseItems: diseases.length,
+  treatmentItems: treatments.length,
+  hospitalItems: hospitals.length,
+  doctorItems: doctors.length,
   costItems: costGuideData.length,
   faqItems: allFAQs.length,
   specialtyItems: medicalSpecialties.length,

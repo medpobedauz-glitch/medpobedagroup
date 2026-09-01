@@ -5,6 +5,10 @@ import { searchPublicContent, type PublicSearchItemType } from "@/lib/data/publi
 const ALLOWED_TYPES: ReadonlyArray<PublicSearchItemType | "all"> = [
   "all",
   "page",
+  "disease",
+  "treatment",
+  "hospital",
+  "doctor",
   "cost",
   "faq",
   "specialty",

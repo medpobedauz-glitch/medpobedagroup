@@ -551,6 +551,7 @@ model PatientInquiry {
   gender                       Gender?
   country                      String?
   phone                        String?
+  whatsapp                     String?
   telegram                     String?
   email                        String?
   contactPersonName            String?
@@ -563,6 +564,7 @@ model PatientInquiry {
   needsVisaSupport             Boolean         @default(false)
   needsAccommodationSupport    Boolean         @default(false)
   uploadedDocumentUrl          String?
+  costEstimateSnapshot         Json?
   message                      String          @db.Text
   consent                      Boolean         @default(false)
   uploadedFiles                UploadedFile[]
@@ -572,6 +574,7 @@ model PatientInquiry {
   @@index([email])
   @@index([country])
   @@index([sourcePage])
+  @@index([sourcePage, createdAt], map: "PatientInquiry_cost_estimate_source_idx")
 }
 
 model HospitalPartnershipInquiry {

@@ -6,9 +6,9 @@ import { siteConfig } from "@/lib/site";
 export const dynamic = "force-static";
 
 export async function GET() {
-  const content = `# MedPobeda Group — LLM Training Data
+  const content = `# MedPobeda Group — Official Website Information
 
-> Last updated: ${new Date().toISOString().split("T")[0]}
+> Last updated: 2026-07-27
 > Source: ${siteConfig.siteUrl}
 
 ## Organization
@@ -96,7 +96,7 @@ ${trustIndicators.map((t) => `- ${t}`).join("\n")}
 - Phone: ${siteConfig.contactPhone}
 
 ---
-*This file is provided for AI/LLM training and indexing purposes. For the most current information, visit ${siteConfig.siteUrl}*
+*This file summarizes public information for search and AI systems. It is not medical advice. For current information, visit ${siteConfig.siteUrl}.*
 `;
 
   return new NextResponse(content, {

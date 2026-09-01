@@ -20,7 +20,7 @@ function getSessionId() {
 }
 
 function sendAnalyticsEvent(payload: {
-  eventType: "PAGE_VIEW" | "FORM_SUCCESS";
+  eventType: "PAGE_VIEW" | "CTA_CLICK" | "FORM_SUCCESS";
   path: string;
   inquiryType?: InquiryTypeValue;
   metadata?: Record<string, unknown>;
@@ -89,6 +89,31 @@ export function AnalyticsTracker() {
   }, [pathname]);
 
   useEffect(() => {
+    function handleTrackedClick(event: MouseEvent) {
+      const element =
+        event.target instanceof Element
+          ? event.target.closest<HTMLElement>("[data-analytics-event]")
+          : null;
+
+      if (!element || !pathname) return;
+
+      sendAnalyticsEvent({
+        eventType: "CTA_CLICK",
+        path: pathname,
+        metadata: {
+          contentType: element.dataset.analyticsContentType,
+          diseaseSlug: element.dataset.analyticsDisease,
+          diseaseEvent: element.dataset.analyticsEvent,
+          target: element.dataset.analyticsTarget,
+        },
+      });
+    }
+
+    document.addEventListener("click", handleTrackedClick);
+    return () => document.removeEventListener("click", handleTrackedClick);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!pathname || pathname.startsWith("/admin") || pathname.startsWith("/api")) {
       return;
     }
@@ -111,6 +136,8 @@ export function AnalyticsTracker() {
       inquiryType,
       metadata: {
         inquiryId,
+        source: searchParams.get("source") ?? undefined,
+        diseaseSlug: searchParams.get("disease") ?? undefined,
       },
     });
 

@@ -67,6 +67,7 @@ export default function TremorPage() {
             path: "/tremor",
             locale,
             medicalAudience: "Patient",
+            areaServed: ["Uzbekistan", "Central Asia", "India"],
           }),
           createBreadcrumbSchema(
             [

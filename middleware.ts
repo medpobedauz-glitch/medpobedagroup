@@ -7,6 +7,7 @@ import {
   isPublicAssetPath,
   isSupportedLocale,
   localizePath,
+  nonLocalizedPublicRoutes,
   LOCALE_COOKIE_NAME,
   LOCALE_HEADER_NAME,
   LOCALE_SOURCE_COOKIE_NAME,
@@ -176,6 +177,15 @@ export async function middleware(request: NextRequest) {
 
   const pathLocale = getPathLocale(pathname);
   const persisted = getPersistedLocale(request);
+
+  if (
+    !pathLocale &&
+    nonLocalizedPublicRoutes.includes(
+      pathname.replace(/\/+$/, "") as (typeof nonLocalizedPublicRoutes)[number],
+    )
+  ) {
+    return createLocalizedNextResponse(request, defaultLocale);
+  }
 
   if (pathLocale) {
     const response = createLocalizedNextResponse(request, pathLocale);

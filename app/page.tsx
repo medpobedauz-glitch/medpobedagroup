@@ -8,11 +8,12 @@ import { createMetadata } from "@/lib/metadata";
 import { createFaqSchema, createHomePageSchemaGraph } from "@/lib/schema";
 import {
   getTrustStats,
-  getFeaturedHospitalPartners,
   getFeaturedSuccessStories,
   getTeamMembers,
   getAccreditations,
 } from "@/lib/data/site-content";
+import { featuredHospitals } from "@/lib/data/hospitals";
+import { createPatientVideoSchema, homepagePatientVideo } from "@/lib/data/patient-videos";
 
 export function generateMetadata() {
   const locale = getRequestLocale();
@@ -73,10 +74,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   });
 
   // Fetch data for enhanced sections
-  const [trustStats, hospitalPartners, successStories, teamMembers, accreditations] =
+  const [trustStats, successStories, teamMembers, accreditations] =
     await Promise.all([
       getTrustStats().catch(() => []),
-      getFeaturedHospitalPartners().catch(() => []),
       getFeaturedSuccessStories().catch(() => []),
       getTeamMembers().catch(() => []),
       getAccreditations().catch(() => []),
@@ -84,7 +84,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <>
-      <JsonLd data={[homeSchema, createFaqSchema(messages.pages.home.brandFaq.items)]} />
+      <JsonLd
+        data={[
+          homeSchema,
+          createFaqSchema(messages.pages.home.brandFaq.items),
+          createPatientVideoSchema(homepagePatientVideo),
+        ]}
+      />
       <PremiumHomePage
         honeypotField={env.SPAM_HONEYPOT_FIELD}
         submittedType={searchParams?.submitted}
@@ -92,8 +98,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       />
       <HomepageEnhancements
         trustStats={trustStats}
-        hospitalPartners={hospitalPartners}
+        hospitalPartners={featuredHospitals}
         successStories={successStories}
+        featuredPatientVideo={homepagePatientVideo}
         teamMembers={teamMembers}
         accreditations={accreditations}
       />

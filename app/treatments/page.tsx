@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Stethoscope,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 
 import { FAQAccordion } from "@/components/shared/faq-accordion";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -14,6 +15,7 @@ import { PremiumImageStorySection } from "@/components/marketing/premium-image-s
 import { PremiumPageHero } from "@/components/marketing/premium-page-hero";
 import { PremiumSplitTrustSection } from "@/components/marketing/premium-split-trust-section";
 import { TreatmentLinksSection } from "@/components/marketing/treatment-links-section";
+import { UzbekTreatmentDirectory } from "@/components/seo-pages/UzbekTreatmentDirectory";
 import { getMessages } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
@@ -27,6 +29,13 @@ import {
   treatmentAuthorityPageIdsForHub,
   treatmentPageIdsForHub,
 } from "@/lib/treatment-pages";
+import { hospitals } from "@/lib/data/hospitals";
+import { treatments } from "@/lib/data/treatments";
+
+const TreatmentDirectory = dynamic(
+  () => import("@/components/treatments/treatment-directory").then((module) => module.TreatmentDirectory),
+  { loading: () => <div className="min-h-[24rem]" aria-label="Loading treatment directory" /> },
+);
 
 export function generateMetadata() {
   const locale = getRequestLocale();
@@ -136,6 +145,21 @@ export default function TreatmentsPage() {
         pageIds={treatmentPageIdsForHub}
         columns={3}
       />
+
+      <section className="section-shell pt-0">
+        <div className="container-wide">
+          <div className="mb-10 max-w-3xl">
+            <span className="section-kicker">Complete Treatment Directory</span>
+            <h2 className="mt-5 heading-section">Search treatments, procedures, specialties, and partner hospitals</h2>
+            <p className="mt-4 body-lg">
+              Explore detailed treatment pathways and connect each medical need with suitable hospitals and international patient support.
+            </p>
+          </div>
+          <TreatmentDirectory treatments={treatments} hospitals={hospitals} />
+        </div>
+      </section>
+
+      {locale === "uz" ? <UzbekTreatmentDirectory /> : null}
 
       <PremiumSplitTrustSection
         eyebrow={page.trust.eyebrow}

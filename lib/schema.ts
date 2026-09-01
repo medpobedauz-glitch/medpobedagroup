@@ -5,17 +5,30 @@ import { media } from "@/lib/media";
 import { absoluteUrl } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 
-const servedRegions = [
+export const servedRegions = [
   "Uzbekistan",
   "Tashkent",
   "India",
   "Kazakhstan",
   "Kyrgyzstan",
   "Tajikistan",
+  "Turkmenistan",
+  "Russia",
   "Central Asia",
+  "Commonwealth of Independent States",
 ] as const;
 
-const supportedLanguages = [
+export const servedRegionCountries = [
+  "UZ",
+  "KZ",
+  "KG",
+  "TJ",
+  "TM",
+  "RU",
+  "IN",
+] as const;
+
+export const supportedLanguages = [
   "English",
   "Russian",
   "Uzbek",
@@ -43,6 +56,15 @@ const healthcareTopics = [
   "Second medical opinions",
   "Air ambulance coordination",
   "Medical visa support",
+  "Cancer treatment in India",
+  "Heart surgery in India",
+  "Liver transplant India",
+  "Kidney transplant India",
+  "Bone marrow transplant India",
+  "Knee replacement India",
+  "Spine surgery India",
+  "IVF treatment India",
+  "Fertility treatment India",
 ] as const;
 
 const serviceCatalog = [
@@ -85,7 +107,8 @@ function createAddressNode(location: string) {
   return {
     "@type": "PostalAddress",
     addressLocality: location.split(",")[0]?.trim() || location,
-    addressCountry: "Uzbekistan",
+    addressCountry: "UZ",
+    addressRegion: "Tashkent",
   };
 }
 
@@ -98,6 +121,7 @@ function createContactPointNode() {
     areaServed: [...servedRegions],
     availableLanguage: [...supportedLanguages],
     url: siteConfig.telegramUrl,
+    contactOption: ["TollFree", "Telegram", "WhatsApp"],
   };
 }
 
@@ -117,7 +141,12 @@ function createOrganizationNode({
     "@id": getOrganizationId(),
     name,
     legalName: siteConfig.legalName,
-    alternateName: [siteConfig.companyName, siteConfig.legalName],
+    alternateName: [
+      siteConfig.companyName,
+      siteConfig.legalName,
+      "MedPobeda",
+      "MedPobeda Tashkent",
+    ],
     url: siteConfig.siteUrl,
     image: absoluteUrl(media.brand.openGraph.src),
     logo: absoluteUrl(media.brand.logo.src),
@@ -130,6 +159,14 @@ function createOrganizationNode({
     sameAs: Object.values(siteConfig.socialLinks).filter(Boolean),
     contactPoint: [createContactPointNode()],
     knowsAbout: [...healthcareTopics],
+    foundingLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Tashkent",
+        addressCountry: "UZ",
+      },
+    },
   };
 }
 
@@ -183,6 +220,12 @@ function createLocalBusinessNode({
       "@id": getOrganizationId(),
     },
     sameAs: Object.values(siteConfig.socialLinks).filter(Boolean),
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "41.2995",
+      longitude: "69.2401",
+    },
+    priceRange: "$$",
   };
 }
 
@@ -225,6 +268,17 @@ function createMedicalBusinessNode({
       })),
     },
     knowsAbout: [...healthcareTopics],
+    medicalSpecialty: [
+      "Oncology",
+      "Cardiology",
+      "Neurology",
+      "Neurosurgery",
+      "Orthopedics",
+      "Organ Transplant",
+      "Reproductive Medicine",
+      "Pediatrics",
+      "General Surgery",
+    ],
   };
 }
 
@@ -447,11 +501,13 @@ export function createServiceSchema({
   description,
   path,
   locale,
+  areaServed,
 }: {
   name: string;
   description: string;
   path: string;
   locale?: AppLocale;
+  areaServed?: string[];
 }) {
   const url = absoluteUrl(locale ? localizePath(path, locale) : path);
 
@@ -464,7 +520,7 @@ export function createServiceSchema({
     provider: {
       "@id": getOrganizationId(),
     },
-    areaServed: [...servedRegions],
+    areaServed: areaServed ?? [...servedRegions],
     serviceType: name,
     audience: {
       "@type": "Audience",
@@ -525,6 +581,7 @@ export function createArticleSchema({
       },
     },
     keywords: keywords.join(", "),
+    inLanguage: locale,
   };
 }
 
@@ -553,7 +610,9 @@ export function createHowToSchema({
       position: index + 1,
       name: step.name,
       text: step.text,
-      ...(step.url ? { url: absoluteUrl(localizePath(step.url, locale ?? "en")) } : {}),
+      ...(step.url
+        ? { url: absoluteUrl(localizePath(step.url, locale ?? "en")) }
+        : {}),
     })),
   };
 }
@@ -565,6 +624,7 @@ export function createMedicalWebPageSchema({
   locale,
   lastReviewed,
   medicalAudience,
+  areaServed,
 }: {
   name: string;
   description: string;
@@ -572,6 +632,7 @@ export function createMedicalWebPageSchema({
   locale?: AppLocale;
   lastReviewed?: string;
   medicalAudience?: string;
+  areaServed?: string[];
 }) {
   const url = absoluteUrl(locale ? localizePath(path, locale) : path);
 
@@ -594,6 +655,7 @@ export function createMedicalWebPageSchema({
           },
         }
       : {}),
+    ...(areaServed ? { areaServed } : {}),
   };
 }
 
@@ -646,277 +708,5 @@ export function createImageObjectSchema({
     ...(caption ? { caption } : {}),
     ...(width ? { width } : {}),
     ...(height ? { height } : {}),
-  };
-}
-
-export function createProfilePageSchema({
-  name,
-  description,
-  path,
-  locale,
-  mainEntity,
-}: {
-  name: string;
-  description: string;
-  path: string;
-  locale?: AppLocale;
-  mainEntity?: Record<string, unknown>;
-}) {
-  const url = absoluteUrl(locale ? localizePath(path, locale) : path);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    name,
-    description,
-    url,
-    inLanguage: locale,
-    isPartOf: { "@id": getWebsiteId() },
-    publisher: { "@id": getOrganizationId() },
-    ...(mainEntity ? { mainEntity } : {}),
-  };
-}
-
-export function createContactPageSchema({
-  name,
-  description,
-  path,
-  locale,
-}: {
-  name: string;
-  description: string;
-  path: string;
-  locale?: AppLocale;
-}) {
-  const url = absoluteUrl(locale ? localizePath(path, locale) : path);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    name,
-    description,
-    url,
-    inLanguage: locale,
-    isPartOf: { "@id": getWebsiteId() },
-    about: { "@id": getMedicalBusinessId() },
-    publisher: { "@id": getOrganizationId() },
-    mainEntity: {
-      "@type": "ContactPoint",
-      contactType: "customer support",
-      email: siteConfig.contactEmail,
-      telephone: siteConfig.contactPhone,
-      areaServed: [...servedRegions],
-      availableLanguage: [...supportedLanguages],
-    },
-  };
-}
-
-export function createAboutPageSchema({
-  name,
-  description,
-  path,
-  locale,
-  foundedDate,
-}: {
-  name: string;
-  description: string;
-  path: string;
-  locale?: AppLocale;
-  foundedDate?: string;
-}) {
-  const url = absoluteUrl(locale ? localizePath(path, locale) : path);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    name,
-    description,
-    url,
-    inLanguage: locale,
-    isPartOf: { "@id": getWebsiteId() },
-    about: { "@id": getOrganizationId() },
-    publisher: { "@id": getOrganizationId() },
-    ...(foundedDate ? { datePublished: foundedDate } : {}),
-  };
-}
-
-export function createServicePageSchema({
-  name,
-  description,
-  path,
-  locale,
-  provider,
-  areaServed,
-}: {
-  name: string;
-  description: string;
-  path: string;
-  locale?: AppLocale;
-  provider?: string;
-  areaServed?: string[];
-}) {
-  const url = absoluteUrl(locale ? localizePath(path, locale) : path);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name,
-    description,
-    url,
-    provider: {
-      "@type": "Organization",
-      name: provider || siteConfig.name,
-      "@id": getOrganizationId(),
-    },
-    areaServed: areaServed || [...servedRegions],
-    serviceType: name,
-    audience: {
-      "@type": "Audience",
-      audienceType: "Patients, hospitals, healthcare institutions",
-    },
-  };
-}
-
-export function createSpeakableSchema({
-  cssSelector,
-  xpath,
-}: {
-  cssSelector?: string[];
-  xpath?: string[];
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "SpeakableSpecification",
-    ...(cssSelector ? { cssSelector } : {}),
-    ...(xpath ? { xpath } : {}),
-  };
-}
-
-export function createPhysicianSchema({
-  name,
-  description,
-  medicalSpecialty,
-  hospital,
-  image,
-  url,
-  qualifications = [],
-  knowsAbout = [],
-}: {
-  name: string;
-  description?: string;
-  medicalSpecialty?: string;
-  hospital?: string;
-  image?: string;
-  url?: string;
-  qualifications?: string[];
-  knowsAbout?: string[];
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Physician",
-    name,
-    ...(description ? { description } : {}),
-    ...(medicalSpecialty ? { medicalSpecialty } : {}),
-    ...(hospital
-      ? { hospital: { "@type": "Hospital", name: hospital } }
-      : {}),
-    ...(image ? { image: absoluteUrl(image) } : {}),
-    ...(url ? { url: absoluteUrl(url) } : {}),
-    ...(qualifications.length > 0 ? { qualifications: qualifications.join(", ") } : {}),
-    ...(knowsAbout.length > 0 ? { knowsAbout } : {}),
-    memberOf: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      "@id": getOrganizationId(),
-    },
-  };
-}
-
-export function createReviewSchema({
-  itemName,
-  itemType,
-  reviewBody,
-  authorName,
-  rating,
-  datePublished,
-}: {
-  itemName: string;
-  itemType?: string;
-  reviewBody: string;
-  authorName: string;
-  rating: number;
-  datePublished?: string;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    itemReviewed: {
-      "@type": itemType || "MedicalBusiness",
-      name: itemName,
-    },
-    reviewBody,
-    author: {
-      "@type": "Person",
-      name: authorName,
-    },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: rating,
-      bestRating: 5,
-    },
-    ...(datePublished ? { datePublished } : {}),
-  };
-}
-
-export function enhanceOrganizationWithGeoAndHours() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": getOrganizationId(),
-    name: siteConfig.legalName,
-    url: siteConfig.siteUrl,
-    logo: absoluteUrl(media.brand.logo.src),
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        email: siteConfig.contactEmail,
-        telephone: siteConfig.contactPhone,
-        availableLanguage: [...supportedLanguages],
-        areaServed: [...servedRegions],
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "partnerships",
-        email: siteConfig.contactEmail,
-        telephone: siteConfig.contactPhone,
-        availableLanguage: ["English", "Russian", "Uzbek"],
-      },
-    ],
-    sameAs: Object.values(siteConfig.socialLinks).filter(Boolean),
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Tashkent",
-      addressCountry: "UZ",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "41.2995",
-      longitude: "69.2401",
-    },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "18:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday"],
-        opens: "10:00",
-        closes: "16:00",
-      },
-    ],
   };
 }

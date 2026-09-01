@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, FileSearch, Hospital, ShieldCheck, Stethoscope } from "lucide-react";
+import dynamic from "next/dynamic";
 
 import { PremiumCtaBanner } from "@/components/marketing/premium-cta-banner";
 import { PremiumPageHero } from "@/components/marketing/premium-page-hero";
@@ -15,6 +16,14 @@ import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
 import { createPremiumVisual } from "@/lib/premium-visuals";
 import { createBreadcrumbSchema, createFaqSchema, createWebPageSchema } from "@/lib/schema";
+import { doctors } from "@/lib/data/doctors";
+import { hospitals } from "@/lib/data/hospitals";
+import { treatments } from "@/lib/data/treatments";
+
+const DoctorDirectory = dynamic(
+  () => import("@/components/doctors/doctor-directory").then((module) => module.DoctorDirectory),
+  { loading: () => <div className="min-h-[24rem]" aria-label="Loading doctor directory" /> },
+);
 
 const hubFaq = [
   {
@@ -167,6 +176,17 @@ export default function DoctorsPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section-shell pt-0">
+        <div className="container-wide">
+          <div className="mb-10 max-w-3xl">
+            <p className="section-kicker">Complete Doctor Directory</p>
+            <h2 className="mt-5 heading-section">Search doctors by specialty, hospital, treatment, city, and language</h2>
+            <p className="mt-4 body-lg">Compare verified specialist profiles and request international patient consultation support.</p>
+          </div>
+          <DoctorDirectory doctors={doctors} hospitals={hospitals} treatments={treatments} />
         </div>
       </section>
 

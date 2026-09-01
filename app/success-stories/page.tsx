@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import { SuccessStoriesPageContent } from "@/components/pages/success-stories-page";
 import { JsonLd } from "@/components/shared/json-ld";
+import { createPatientVideoSchema, homepagePatientVideo } from "@/lib/data/patient-videos";
 import { createMetadata } from "@/lib/metadata";
 import { createBreadcrumbSchema, createWebPageSchema } from "@/lib/schema";
 
@@ -39,7 +40,7 @@ export default function SuccessStoriesPage() {
 
   return (
     <>
-      <JsonLd data={[breadcrumbSchema, pageSchema]} />
+      <JsonLd data={[breadcrumbSchema, pageSchema, createPatientVideoSchema(homepagePatientVideo)]} />
       <Suspense fallback={null}>
         <SuccessStoriesPageContent />
       </Suspense>

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import HospitalDetailPage, {
   generateMetadata as generateHospitalMetadata,
 } from "@/app/hospitals/[slug]/page";
-import { featuredHospitals } from "@/lib/hospital-pages";
+import { hospitals } from "@/lib/data/hospitals";
 import { isSupportedLocale, locales } from "@/lib/i18n/config";
 import { getRouteLocale } from "@/lib/i18n/request";
 
@@ -16,7 +16,7 @@ type LocaleHospitalPageProps = {
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    featuredHospitals.map((hospital) => ({ locale, slug: hospital.slug })),
+    hospitals.map((hospital) => ({ locale, slug: hospital.slug })),
   );
 }
 

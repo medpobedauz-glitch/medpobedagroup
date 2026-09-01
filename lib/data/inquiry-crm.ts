@@ -51,6 +51,7 @@ export type InquiryListItem = {
   organization?: string | null;
   email?: string | null;
   phone?: string | null;
+  whatsapp?: string | null;
   country?: string | null;
   locale?: string | null;
   sourcePage?: string | null;
@@ -432,7 +433,10 @@ function normalizeDetail(
 ) {
   return {
     ...item,
-    whatsappHref: buildWhatsAppFollowUpUrl(item.phone, item.typeLabel),
+    whatsappHref: buildWhatsAppFollowUpUrl(
+      item.whatsapp || item.phone,
+      item.typeLabel,
+    ),
     telegramHref: buildTelegramFollowUpUrl(item.phone),
     emailHref: buildEmailReplyUrl(item.email),
   };
@@ -533,6 +537,7 @@ export async function getInquiryDetail(type: AdminInquiryType, id: string) {
       organization: record.contactPersonName,
       email: record.email,
       phone: record.phone,
+      whatsapp: record.whatsapp,
       country: record.country,
       locale: record.locale,
       sourcePage: record.sourcePage,
@@ -545,6 +550,7 @@ export async function getInquiryDetail(type: AdminInquiryType, id: string) {
         { label: "Contact Person", value: formatFieldValue(record.contactPersonName) },
         { label: "Email", value: formatFieldValue(record.email) },
         { label: "Phone", value: formatFieldValue(record.phone) },
+        { label: "WhatsApp", value: formatFieldValue(record.whatsapp) },
         { label: "Country", value: formatFieldValue(record.country) },
         { label: "Age", value: formatFieldValue(record.age) },
         { label: "Gender", value: formatFieldValue(record.gender ? startCase(record.gender) : null) },

@@ -335,7 +335,7 @@ export function PremiumHomePage({
                   {page.hero.infoCards.map((item) => (
                     <div
                       key={item}
-                      className="rounded-full border border-[#D6E8FF] bg-white/88 px-3.5 py-2.5 text-xs font-semibold text-[#0B1F4D] shadow-[0_14px_36px_rgba(7,27,58,0.06)] backdrop-blur-xl sm:px-4 sm:py-3 sm:text-sm"
+                      className="rounded-full border border-[#D6E8FF] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#0B1F4D] shadow-[0_14px_36px_rgba(7,27,58,0.06)] sm:px-4 sm:py-3 sm:text-sm"
                     >
                       {item}
                     </div>
@@ -346,7 +346,7 @@ export function PremiumHomePage({
                   {page.hero.stats.map((item) => (
                     <div
                       key={item.value}
-                      className="rounded-[1.6rem] border border-[#D6E8FF] bg-white/88 p-4 shadow-[0_18px_48px_rgba(7,27,58,0.06)] backdrop-blur-xl"
+                      className="rounded-[1.6rem] border border-[#D6E8FF] bg-white p-4 shadow-[0_18px_48px_rgba(7,27,58,0.06)]"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#1D4ED8]">
                         {item.value}
@@ -383,7 +383,7 @@ export function PremiumHomePage({
                     </div>
                   </div>
 
-                  <div className="absolute -left-3 bottom-6 hidden w-56 rounded-[1.6rem] border border-[#D6E8FF] bg-white/92 p-4 shadow-[0_24px_60px_rgba(11,31,77,0.12)] backdrop-blur-xl lg:block">
+                  <div className="absolute -left-3 bottom-6 hidden w-56 rounded-[1.6rem] border border-[#D6E8FF] bg-white p-4 shadow-[0_24px_60px_rgba(11,31,77,0.12)] lg:block">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#1D4ED8]">
                       {page.hero.accent.eyebrow}
                     </p>
@@ -395,7 +395,7 @@ export function PremiumHomePage({
                     </p>
                   </div>
 
-                  <div className="absolute -right-3 top-6 hidden w-52 rounded-[1.8rem] border border-[#D6E8FF] bg-white/92 p-3 shadow-[0_24px_60px_rgba(11,31,77,0.12)] backdrop-blur-xl lg:block">
+                  <div className="absolute -right-3 top-6 hidden w-52 rounded-[1.8rem] border border-[#D6E8FF] bg-white p-3 shadow-[0_24px_60px_rgba(11,31,77,0.12)] lg:block">
                     <div className="relative overflow-hidden rounded-[1.4rem] border border-[#E3EEFF]">
                       <Image
                         src={localizedHeroImages.hospital.src}
@@ -413,7 +413,7 @@ export function PremiumHomePage({
                     </p>
                   </div>
 
-                  <div className="absolute bottom-4 right-8 hidden items-center gap-3 rounded-[1.7rem] border border-[#D6E8FF] bg-white/92 p-3 shadow-[0_24px_70px_rgba(29,78,216,0.12)] backdrop-blur-xl xl:flex">
+                  <div className="absolute bottom-4 right-8 hidden items-center gap-3 rounded-[1.7rem] border border-[#D6E8FF] bg-white p-3 shadow-[0_24px_70px_rgba(29,78,216,0.12)] xl:flex">
                     <div className="relative h-20 w-20 overflow-hidden rounded-[1.2rem] border border-[#E3EEFF]">
                       <Image
                         src={localizedHeroImages.travel.src}

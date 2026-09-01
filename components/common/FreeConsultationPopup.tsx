@@ -27,6 +27,12 @@ import {
 } from "react";
 
 import { stripLocaleFromPath } from "@/lib/i18n/config";
+import { useLocale } from "@/lib/i18n/provider";
+import {
+  getFreeConsultationPopupCopy,
+  popupCountryKeys,
+  popupTreatmentKeys,
+} from "@/lib/i18n/free-consultation-popup";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,39 +42,6 @@ import { Textarea } from "@/components/ui/textarea";
 const STORAGE_KEY = "medpobeda-free-consultation-popup-dismissed";
 const WHATSAPP_URL = "https://wa.me/998910124043";
 const TELEGRAM_URL = "https://t.me/+998910124043";
-
-const countries = [
-  "Uzbekistan",
-  "Kazakhstan",
-  "Kyrgyzstan",
-  "Tajikistan",
-  "Turkmenistan",
-  "Russia",
-  "Other",
-] as const;
-
-const treatmentOptions = [
-  "Cancer Treatment",
-  "Cardiac Surgery",
-  "Pediatric Cardiac Surgery",
-  "Orthopedic Surgery",
-  "Spine Surgery",
-  "Neurosurgery",
-  "Kidney Treatment",
-  "Kidney Transplant",
-  "Liver Treatment",
-  "Liver Transplant",
-  "Organ Transplant",
-  "Bone Marrow Transplant",
-  "IVF / Fertility Treatment",
-  "Eye Treatment",
-  "Dental Treatment",
-  "Cosmetic / Plastic Surgery",
-  "Urology",
-  "Bariatric / Weight Loss Surgery",
-  "General Surgery",
-  "Other",
-] as const;
 
 const journeySteps: Array<{
   step: string;
@@ -167,81 +140,83 @@ function FieldLabel({
   );
 }
 
-function readDismissedState() {
+function readDismissedState(locale: string) {
   try {
-    return window.sessionStorage.getItem(STORAGE_KEY) === "true";
+    return window.sessionStorage.getItem(`${STORAGE_KEY}-${locale}`) === "true";
   } catch {
     return false;
   }
 }
 
-function persistDismissedState() {
+function persistDismissedState(locale: string) {
   try {
-    window.sessionStorage.setItem(STORAGE_KEY, "true");
+    window.sessionStorage.setItem(`${STORAGE_KEY}-${locale}`, "true");
   } catch {
     return;
   }
 }
 
-function validateForm(values: FormValues) {
+function validateForm(values: FormValues, copy: ReturnType<typeof getFreeConsultationPopupCopy>) {
   const nextErrors: FormErrors = {};
 
   if (!values.fullName.trim()) {
-    nextErrors.fullName = "Full name is required.";
+    nextErrors.fullName = copy.required.fullName;
   }
 
   if (!values.country.trim()) {
-    nextErrors.country = "Please select your country.";
+    nextErrors.country = copy.required.country;
   }
 
   if (!values.phone.trim()) {
-    nextErrors.phone = "Phone number is required.";
+    nextErrors.phone = copy.required.phone;
   }
 
   if (!values.age.trim()) {
-    nextErrors.age = "Age is required.";
+    nextErrors.age = copy.required.age;
   } else {
     const numericAge = Number(values.age);
     if (!Number.isFinite(numericAge) || numericAge <= 0) {
-      nextErrors.age = "Please enter a valid age.";
+      nextErrors.age = copy.required.validAge;
     }
   }
 
   if (!values.treatment.trim()) {
-    nextErrors.treatment = "Please select a treatment.";
+    nextErrors.treatment = copy.required.treatment;
   }
 
   if (!values.concern.trim()) {
-    nextErrors.concern = "Please describe the medical concern.";
+    nextErrors.concern = copy.required.concern;
   }
 
   return nextErrors;
 }
 
-function buildWhatsAppMessage(values: FormValues, selectedReportName: string) {
+function buildWhatsAppMessage(values: FormValues, selectedReportName: string, copy: ReturnType<typeof getFreeConsultationPopupCopy>) {
   const lines = [
-    "Hello MedPobeda Group, I want a free medical consultation.",
+    copy.whatsappIntro,
     "",
-    "Patient Details:",
+    `${copy.patientDetails}:`,
     `Name: ${values.fullName.trim()}`,
-    `Country: ${values.country}`,
+    `Country: ${copy.countries[values.country] ?? values.country}`,
     `Phone: ${values.phone.trim()}`,
     `Age: ${values.age.trim()}`,
-    `Email: ${values.email.trim() || "Not provided"}`,
-    `Treatment / Medical Concern: ${values.treatment}`,
+    `Email: ${values.email.trim() || copy.notProvided}`,
+    `Treatment / Medical Concern: ${copy.treatments[values.treatment] ?? values.treatment}`,
     `Medical Concern Description: ${values.concern.trim()}`,
     selectedReportName ? `Selected Medical Report: ${selectedReportName}` : "",
     selectedReportName
       ? "I will send the medical reports directly on WhatsApp after submitting."
       : "",
     "",
-    "Please help me get a treatment plan and cost estimate from hospitals in India.",
+    copy.whatsappClosing,
   ];
 
   return lines.filter(Boolean).join("\n");
 }
 
 export default function FreeConsultationPopup() {
+  const locale = useLocale();
+  const copy = getFreeConsultationPopupCopy(locale);
   const pathname = usePathname();
   const routePath = stripLocaleFromPath(pathname);
   const isAdminRoute = routePath.startsWith("/admin");
@@ -253,7 +228,7 @@ export default function FreeConsultationPopup() {
   const [selectedReportName, setSelectedReportName] = useState("");
 
   useEffect(() => {
-    if (isAdminRoute || open || readDismissedState()) {
+    if (isAdminRoute || open || readDismissedState(locale)) {
       return;
     }
 
@@ -264,7 +239,7 @@ export default function FreeConsultationPopup() {
     return () => {
       window.clearTimeout(timer);
     };
-  }, [isAdminRoute, open, routePath]);
+  }, [isAdminRoute, locale, open, routePath]);
 
   if (isAdminRoute) {
     return null;
@@ -299,38 +274,37 @@ export default function FreeConsultationPopup() {
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen && open) {
-      persistDismissedState();
+      persistDismissedState(locale);
     }
 
     setOpen(nextOpen);
   };
 
   const handleClose = () => {
-    persistDismissedState();
+    persistDismissedState(locale);
     setOpen(false);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateForm(values);
+    const nextErrors = validateForm(values, copy);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setStatus({
         tone: "error",
-        message: "Please fill in the required fields before continuing.",
+        message: copy.requiredStatus,
       });
       return;
     }
 
-    const message = buildWhatsAppMessage(values, selectedReportName);
+    const message = buildWhatsAppMessage(values, selectedReportName, copy);
     const whatsappHref = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
 
-    persistDismissedState();
+    persistDismissedState(locale);
     setStatus({
       tone: "success",
-      message:
-        "Your details are ready. Please continue on WhatsApp to send your request.",
+      message: copy.successStatus,
     });
 
     const popupWindow = window.open(whatsappHref, "_blank", "noopener,noreferrer");
@@ -357,12 +331,12 @@ export default function FreeConsultationPopup() {
             <DialogPrimitive.Close asChild>
               <button
                 type="button"
-                aria-label="Close consultation popup"
+                aria-label={copy.close}
                 className="absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#0B3A67_0%,#0F766E_100%)] text-white shadow-[0_18px_42px_rgba(8,22,52,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2"
                 onClick={handleClose}
               >
                 <X className="h-5 w-5" />
-                <span className="sr-only">Close consultation popup</span>
+                <span className="sr-only">{copy.close}</span>
               </button>
             </DialogPrimitive.Close>
 
@@ -378,33 +352,33 @@ export default function FreeConsultationPopup() {
                       variant="success"
                       className="w-fit border-emerald-200/80 bg-emerald-50/90 px-3 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.18em]"
                     >
-                      Trusted International Patient Support
+                      {copy.badge}
                     </Badge>
                     <div className="mt-5 flex flex-wrap gap-3">
                       <div className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/85 px-3 py-2 text-xs font-semibold text-[#0B3A67] shadow-[0_10px_28px_rgba(7,27,58,0.08)]">
                         <Globe2 className="h-4 w-4 text-sky-600" />
-                        Central Asia to India
+                        {copy.region}
                       </div>
                       <div className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/85 px-3 py-2 text-xs font-semibold text-[#0B3A67] shadow-[0_10px_28px_rgba(7,27,58,0.08)]">
                         <MapPin className="h-4 w-4 text-emerald-600" />
-                        24-hour care coordination
+                        {copy.coordination}
                       </div>
                     </div>
 
                     <h2 className="mt-6 font-display text-[2rem] font-semibold leading-[1.06] tracking-[-0.04em] text-[#071B3A] sm:text-[2.45rem]">
-                      Your Treatment Journey in India
+                      {copy.journeyTitle}
                     </h2>
                     <p className="mt-3 text-base font-medium text-[#0F3B63]">
-                      From Medical Opinion to Full Recovery Support
+                      {copy.journeySubtitle}
                     </p>
                     <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-                      MedPobeda Group coordinates hospital options, doctor access,
-                      travel planning, and patient support for families across
-                      Uzbekistan and Central Asia.
+                      {copy.journeyDescription}
                     </p>
 
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      {journeySteps.map(({ step, title, description, icon: Icon }) => (
+                      {journeySteps.map(({ step, icon: Icon }, index) => {
+                        const [title, description] = copy.journeySteps[index] ?? ["", ""];
+                        return (
                         <div
                           key={step}
                           className="rounded-[1.55rem] border border-white/80 bg-white/84 p-4 shadow-[0_16px_38px_rgba(7,27,58,0.08)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_52px_rgba(7,27,58,0.12)]"
@@ -414,7 +388,7 @@ export default function FreeConsultationPopup() {
                               <Icon className="h-5 w-5" />
                             </span>
                             <span className="rounded-full border border-[#CFE4FF] bg-[#F3F9FF] px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-[#0B3A67]">
-                              STEP {step}
+                              {copy.step} {step}
                             </span>
                           </div>
                           <h3 className="mt-4 font-display text-lg font-semibold tracking-[-0.02em] text-[#071B3A]">
@@ -424,18 +398,19 @@ export default function FreeConsultationPopup() {
                             {description}
                           </p>
                         </div>
-                      ))}
+                        );
+                      })}
                     </div>
 
                     <div className="mt-6 rounded-[1.6rem] border border-white/75 bg-white/84 p-4 shadow-[0_16px_36px_rgba(7,27,58,0.08)]">
                       <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
                         <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 font-semibold text-emerald-700">
                           <ShieldCheck className="h-4 w-4" />
-                          Coordinated patient support
+                          {copy.coordinated}
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-semibold text-sky-700">
                           <LockKeyhole className="h-4 w-4" />
-                          Confidential medical handling
+                          {copy.confidentialHandling}
                         </span>
                       </div>
                     </div>
@@ -449,21 +424,19 @@ export default function FreeConsultationPopup() {
                     variant="surface"
                     className="w-fit border-[#D6E8FF] bg-[#F8FBFF] px-3 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[#0B3A67]"
                   >
-                    Free Consultation
+                    {copy.freeConsultation}
                   </Badge>
                   <DialogPrimitive.Title className="mt-5 font-display text-[2rem] font-semibold leading-[1.06] tracking-[-0.04em] text-[#071B3A] sm:text-[2.35rem]">
-                    Get a Free Treatment Plan &amp; Cost Estimate
+                    {copy.formTitle}
                   </DialogPrimitive.Title>
                   <DialogPrimitive.Description
                     id="free-consultation-popup-description"
                     className="mt-3 text-base font-medium leading-7 text-[#0F3B63]"
                   >
-                    Connect with trusted hospitals and expert doctors in India within
-                    24 hours.
+                    {copy.formDescription}
                   </DialogPrimitive.Description>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
-                    Share your medical details and our team will help you get hospital
-                    options, estimated treatment cost, and expert medical guidance.
+                    {copy.formIntro}
                   </p>
                 </div>
 
@@ -471,13 +444,13 @@ export default function FreeConsultationPopup() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                       <FieldLabel htmlFor="free-consultation-full-name" required>
-                        Full Name
+                        {copy.fullName}
                       </FieldLabel>
                       <Input
                         ref={fullNameRef}
                         id="free-consultation-full-name"
                         name="fullName"
-                        placeholder="Enter your full name"
+                        placeholder={copy.fullNamePlaceholder}
                         value={values.fullName}
                         onChange={handleFieldChange}
                         aria-invalid={Boolean(errors.fullName)}
@@ -498,7 +471,7 @@ export default function FreeConsultationPopup() {
 
                     <div>
                       <FieldLabel htmlFor="free-consultation-country" required>
-                        Select Country
+                        {copy.country}
                       </FieldLabel>
                       <select
                         id="free-consultation-country"
@@ -511,10 +484,10 @@ export default function FreeConsultationPopup() {
                         }
                         className={getFieldClasses(Boolean(errors.country))}
                       >
-                        <option value="">Choose your country</option>
-                        {countries.map((country) => (
+                        <option value="">{copy.chooseCountry}</option>
+                        {popupCountryKeys.map((country) => (
                           <option key={country} value={country}>
-                            {country}
+                            {copy.countries[country]}
                           </option>
                         ))}
                       </select>
@@ -530,7 +503,7 @@ export default function FreeConsultationPopup() {
 
                     <div>
                       <FieldLabel htmlFor="free-consultation-phone" required>
-                        Phone Number
+                        {copy.phone}
                       </FieldLabel>
                       <Input
                         id="free-consultation-phone"
@@ -558,14 +531,14 @@ export default function FreeConsultationPopup() {
 
                     <div>
                       <FieldLabel htmlFor="free-consultation-age" required>
-                        Age
+                        {copy.age}
                       </FieldLabel>
                       <Input
                         id="free-consultation-age"
                         name="age"
                         type="number"
                         min="0"
-                        placeholder="Enter age"
+                        placeholder={copy.agePlaceholder}
                         value={values.age}
                         onChange={handleFieldChange}
                         aria-invalid={Boolean(errors.age)}
@@ -586,7 +559,7 @@ export default function FreeConsultationPopup() {
 
                     <div>
                       <FieldLabel htmlFor="free-consultation-email">
-                        Email Address
+                        {copy.email}
                       </FieldLabel>
                       <Input
                         id="free-consultation-email"
@@ -601,7 +574,7 @@ export default function FreeConsultationPopup() {
 
                     <div className="sm:col-span-2">
                       <FieldLabel htmlFor="free-consultation-treatment" required>
-                        Select Treatment / Medical Concern
+                        {copy.treatment}
                       </FieldLabel>
                       <select
                         id="free-consultation-treatment"
@@ -616,10 +589,10 @@ export default function FreeConsultationPopup() {
                         }
                         className={getFieldClasses(Boolean(errors.treatment))}
                       >
-                        <option value="">Choose treatment or concern</option>
-                        {treatmentOptions.map((treatment) => (
+                        <option value="">{copy.chooseTreatment}</option>
+                        {popupTreatmentKeys.map((treatment) => (
                           <option key={treatment} value={treatment}>
-                            {treatment}
+                            {copy.treatments[treatment]}
                           </option>
                         ))}
                       </select>
@@ -635,12 +608,12 @@ export default function FreeConsultationPopup() {
 
                     <div className="sm:col-span-2">
                       <FieldLabel htmlFor="free-consultation-concern" required>
-                        Describe Your Medical Concern
+                        {copy.concern}
                       </FieldLabel>
                       <Textarea
                         id="free-consultation-concern"
                         name="concern"
-                        placeholder="Tell us about the diagnosis, current symptoms, or treatment advice you have received so far."
+                        placeholder={copy.concernPlaceholder}
                         value={values.concern}
                         onChange={handleFieldChange}
                         aria-invalid={Boolean(errors.concern)}
@@ -666,7 +639,7 @@ export default function FreeConsultationPopup() {
 
                     <div className="sm:col-span-2">
                       <FieldLabel htmlFor="free-consultation-reports">
-                        Upload Medical Reports
+                        {copy.reports}
                       </FieldLabel>
                       <Input
                         id="free-consultation-reports"
@@ -677,11 +650,11 @@ export default function FreeConsultationPopup() {
                         className="h-auto min-h-[3.35rem] py-2.5"
                       />
                       <p className="mt-2 text-xs leading-5 text-slate-500">
-                        You can send reports directly on WhatsApp after submitting.
+                        {copy.reportHint}
                       </p>
                       {selectedReportName ? (
                         <p className="mt-2 inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">
-                          Selected file: {selectedReportName}
+                          {copy.selectedFile}: {selectedReportName}
                         </p>
                       ) : null}
                     </div>
@@ -694,11 +667,11 @@ export default function FreeConsultationPopup() {
                       size="xl"
                       className="w-full justify-center rounded-[1.35rem]"
                     >
-                      Get Free Consultation
+                      {copy.submit}
                     </Button>
                     <p className="mt-3 flex items-center justify-center gap-2 text-center text-xs font-medium text-slate-500">
                       <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                      Your information is 100% confidential.
+                      {copy.confidential}
                     </p>
 
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">

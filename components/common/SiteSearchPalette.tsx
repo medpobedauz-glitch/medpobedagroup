@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
+  Activity,
   Building2,
   CornerDownLeft,
   FileQuestion,
@@ -12,6 +13,7 @@ import {
   Loader2,
   Search as SearchIcon,
   Stethoscope,
+  UserRound,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -27,7 +29,15 @@ import {
 import { cn } from "@/lib/utils";
 import { stripLocaleFromPath } from "@/lib/i18n/config";
 
-type PublicSearchItemType = "page" | "cost" | "faq" | "specialty";
+type PublicSearchItemType =
+  | "page"
+  | "disease"
+  | "treatment"
+  | "hospital"
+  | "doctor"
+  | "cost"
+  | "faq"
+  | "specialty";
 
 type PublicSearchItem = {
   id: string;
@@ -48,6 +58,10 @@ type SearchResponse = {
 
 const TYPE_META: Record<PublicSearchItemType, { label: string; icon: LucideIcon; tone: string }> = {
   page: { label: "Page", icon: ArrowRight, tone: "text-sky-700 bg-sky-50 border-sky-100" },
+  disease: { label: "Disease", icon: Activity, tone: "text-rose-700 bg-rose-50 border-rose-100" },
+  treatment: { label: "Treatment", icon: Stethoscope, tone: "text-blue-700 bg-blue-50 border-blue-100" },
+  hospital: { label: "Hospital", icon: Building2, tone: "text-cyan-700 bg-cyan-50 border-cyan-100" },
+  doctor: { label: "Doctor", icon: UserRound, tone: "text-indigo-700 bg-indigo-50 border-indigo-100" },
   cost: { label: "Cost", icon: Hospital, tone: "text-emerald-700 bg-emerald-50 border-emerald-100" },
   faq: { label: "FAQ", icon: FileQuestion, tone: "text-violet-700 bg-violet-50 border-violet-100" },
   specialty: { label: "Specialty", icon: Stethoscope, tone: "text-amber-700 bg-amber-50 border-amber-100" },
@@ -55,11 +69,7 @@ const TYPE_META: Record<PublicSearchItemType, { label: string; icon: LucideIcon;
 
 const QUICK_LINKS_LABEL = "Quick links";
 const RECENT_LABEL = "Recent searches";
-const RESULTS_LABEL = "Results";
 const NO_RESULTS_LABEL = "No matches";
-const FOOTER_HINT = "Press";
-const ENTER_HINT = "to open";
-const ESC_HINT = "to close";
 
 function highlightMatch(text: string, query: string) {
   if (!query) return text;
@@ -407,7 +417,8 @@ export function SiteSearchPalette({ localePathStripper }: SiteSearchPaletteProps
                   <div className="grid gap-0.5 sm:grid-cols-2">
                     {items.length === 0 ? (
                       <p className="col-span-2 px-3 py-4 text-center text-xs text-slate-400">
-                        Start typing to search across {`134+`} items, or pick a quick link below.
+                        Start typing to search pages, diseases, treatments, hospitals, and doctors,
+                        or pick a quick link below.
                       </p>
                     ) : null}
                   </div>

@@ -7,7 +7,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Card } from "@/components/ui/card";
 import { getBlogTaxonomy, getPublishedBlogPosts } from "@/lib/data/blog";
-import { defaultLocale, localizePath } from "@/lib/i18n/config";
+import { defaultLocale, localizePath, type AppLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
@@ -16,6 +16,7 @@ import { createBreadcrumbSchema, createWebPageSchema } from "@/lib/schema";
 type BlogCategoryPageProps = {
   params: {
     slug: string;
+    locale?: AppLocale;
   };
 };
 
@@ -26,16 +27,20 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogCategoryPageProps): Promise<Metadata> {
-  const category = (await getBlogTaxonomy(defaultLocale)).categories.find(
+  // This route is the non-[locale] version.
+  // generateStaticParams() doesn't include locale, so keep metadata generation deterministic.
+  const locale = defaultLocale;
+  const category = (await getBlogTaxonomy(locale)).categories.find(
     (item) => item.slug === params.slug,
   );
 
   if (!category) {
     return createMetadata({
       title: "Blog Category | MedPobeda Group",
-      description: "Browse MedPobeda Group blog categories for medical tourism, patient support, hospital partnerships, and international healthcare.",
+      description:
+        "Browse MedPobeda Group blog categories for medical tourism, patient support, hospital partnerships, and international healthcare.",
       path: `/blog/category/${params.slug}`,
-      locale: defaultLocale,
+      locale,
     });
   }
 
@@ -43,14 +48,14 @@ export async function generateMetadata({ params }: BlogCategoryPageProps): Promi
     title: category.metaTitle,
     description: category.metaDescription,
     path: `/blog/category/${params.slug}`,
-    locale: defaultLocale,
+    locale,
     ogTitle: category.metaTitle,
     ogDescription: category.metaDescription,
   });
 }
 
 export default async function BlogCategoryPage({ params }: BlogCategoryPageProps) {
-  const locale = getRequestLocale();
+  const locale = params.locale ?? getRequestLocale();
   const messages = getMessages(locale);
   const taxonomy = await getBlogTaxonomy(locale);
   const category = taxonomy.categories.find((item) => item.slug === params.slug);

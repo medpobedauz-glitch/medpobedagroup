@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build && npm run postbuild",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
@@ -12,8 +12,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
-    "db:seed-content": "tsx prisma/seed-content.ts",
-    "postbuild": "next-sitemap"
+    "db:seed-content": "tsx prisma/seed-content.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
@@ -24,9 +23,12 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.13.0",
     "jose": "^5.9.6",
+    "jspdf": "^4.2.1",
     "lucide-react": "^0.511.0",
     "next": "14.2.30",
+    "next-sitemap": "^4.2.3",
     "nodemailer": "^6.9.16",
+    "qrcode": "^1.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recharts": "^3.8.1",
@@ -34,12 +36,12 @@
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1",
-    "next-sitemap": "^4.2.3"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@types/nodemailer": "^6.4.17",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",

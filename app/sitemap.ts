@@ -4,29 +4,52 @@ import { BlogStatus } from "@prisma/client";
 import { doctorSpecialtyPages } from "@/lib/doctor-specialty-pages";
 import { getBlogTaxonomy, getPublishedBlogSitemapEntries } from "@/lib/data/blog";
 import { env } from "@/lib/env";
-import { featuredHospitals } from "@/lib/hospital-pages";
-import { defaultLocale, locales, localizePath } from "@/lib/i18n/config";
+import { hospitals } from "@/lib/data/hospitals";
+import { treatments } from "@/lib/data/treatments";
+import { doctors, specialties } from "@/lib/data/doctors";
+import { diseases } from "@/lib/data/diseases";
+import {
+  defaultLocale,
+  locales,
+  localizePath,
+  nonLocalizedPublicRoutes,
+} from "@/lib/i18n/config";
 import { absoluteUrl } from "@/lib/metadata";
 import { patientSupportPages } from "@/lib/patient-support-pages";
 import { prisma } from "@/lib/prisma";
 import { publicRoutes } from "@/lib/site";
+import { uzMedicalSeoPages } from "@/lib/uz-medical-seo-pages";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const lastModified = new Date();
+  const uzGuideLastModified = new Date("2026-07-26T00:00:00.000Z");
   const staticExtraRoutes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/llms.txt"),
-      lastModified,
       changeFrequency: "weekly",
       priority: 0.5,
     },
+    ...uzMedicalSeoPages.map((page) => ({
+      url: absoluteUrl(`/uz/${page.slug}`),
+      lastModified: uzGuideLastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.82,
+    })),
   ];
   const blogTaxonomySets = await Promise.all(locales.map((locale) => getBlogTaxonomy(locale)));
   const blogCategorySlugs = Array.from(
     new Set(blogTaxonomySets.flatMap((taxonomy) => taxonomy.categories.map((category) => category.slug))),
   );
-  const hospitalPaths = featuredHospitals.map((hospital) => `/hospitals/${hospital.slug}`);
-  const doctorPaths = doctorSpecialtyPages.map((page) => `/doctors/${page.slug}`);
+  const hospitalPaths = hospitals.map((hospital) => `/hospitals/${hospital.slug}`);
+  const treatmentDirectoryPaths = treatments.map((treatment) => `/treatments/${treatment.slug}`);
+  const diseasePaths = diseases.map((disease) => `/diseases/${disease.slug}`);
+  const hospitalGroupPaths = ["apollo", "kims", "fortis", "max", "medanta"].map(
+    (slug) => `/hospital-groups/${slug}`,
+  );
+  const doctorPaths = [
+    ...doctors.map((doctor) => `/doctors/${doctor.slug}`),
+    ...doctorSpecialtyPages.map((page) => `/doctors/${page.slug}`),
+  ];
+  const specialtyPaths = specialties.map((specialty) => `/specialties/${specialty.slug}`);
   const patientSupportPaths = patientSupportPages.map((page) => `/patient-support/${page.slug}`);
   const blogCategoryPaths = blogCategorySlugs.map((slug) => `/blog/category/${slug}`);
   const getChangeFrequency = (
@@ -40,10 +63,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const r = route;
     if (r === "/") return 1;
     if (r === "/international-patient-care" || r === "/hospital-partnerships") return 0.9;
-    if (r === "/hospitals" || r === "/doctors" || r === "/patient-support") return 0.88;
+    if (
+      r === "/hospitals" ||
+      r === "/doctors" ||
+      r === "/diseases" ||
+      r === "/patient-support" ||
+      r === "/cost-calculator"
+    )
+      return 0.88;
     if (r === "/treatments") return 0.89;
     if (r === "/company-profile" || r === "/press") return 0.86;
-    if (hospitalPaths.includes(r) || doctorPaths.includes(r) || patientSupportPaths.includes(r))
+    if (
+      hospitalPaths.includes(r) ||
+      diseasePaths.includes(r) ||
+      doctorPaths.includes(r) ||
+      patientSupportPaths.includes(r)
+    )
       return 0.83;
     if (r.startsWith("/blog/category/")) return 0.72;
     const highPriority = [
@@ -72,24 +107,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return 0.8;
   };
 
-  const staticRoutes: MetadataRoute.Sitemap = publicRoutes.flatMap((route) =>
-    locales.map((locale) => ({
-      url: absoluteUrl(localizePath(route, locale)),
-      lastModified,
-      changeFrequency: getChangeFrequency(route),
-      // Use the same priority logic for all locales.
-      priority: getPriority(route),
-    })),
-  );
+  const staticRoutes: MetadataRoute.Sitemap = publicRoutes.flatMap((route) => {
+    if (
+      nonLocalizedPublicRoutes.includes(
+        route as (typeof nonLocalizedPublicRoutes)[number],
+      )
+    ) {
+      return [{
+        url: absoluteUrl(route),
+        changeFrequency: getChangeFrequency(route),
+        priority: getPriority(route),
+      }];
+    }
+
+    return locales.map((locale) => ({
+        url: absoluteUrl(localizePath(route, locale)),
+        changeFrequency: getChangeFrequency(route),
+        // Use the same priority logic for all locales.
+        priority: getPriority(route),
+      }));
+  });
   const structuredDetailRoutes: MetadataRoute.Sitemap = [
     ...hospitalPaths,
+    ...hospitalGroupPaths,
+    ...treatmentDirectoryPaths,
+    ...diseasePaths,
     ...doctorPaths,
+    ...specialtyPaths,
     ...patientSupportPaths,
     ...blogCategoryPaths,
   ].flatMap((route) =>
     locales.map((locale) => ({
       url: absoluteUrl(localizePath(route, locale)),
-      lastModified,
       changeFrequency: "monthly" as const,
       priority:
         locale === defaultLocale

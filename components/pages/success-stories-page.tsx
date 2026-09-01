@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { PatientSuccessStories } from "@/components/sections/patient-success-stories";
+import { homepagePatientVideo } from "@/lib/data/patient-videos";
 import { easeOutExpo } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -227,6 +229,14 @@ export function SuccessStoriesPageContent() {
           </div>
         </div>
       </section>
+
+      <PatientSuccessStories
+        stories={[]}
+        featuredVideo={homepagePatientVideo}
+        eyebrow="Video Patient Review"
+        title="An Uzbekistan patient’s treatment journey in India"
+        description="Watch a published MedPobeda Group patient review about travelling from Uzbekistan to India for medical treatment."
+      />
 
       {/* Featured Stories */}
       {featuredStories.length > 0 && (

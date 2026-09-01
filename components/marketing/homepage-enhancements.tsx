@@ -7,6 +7,7 @@ import { TeamSection } from "@/components/sections/team-section";
 import { AccreditationsSection } from "@/components/sections/accreditations-section";
 import { WhyIndiaComparison } from "@/components/sections/why-india-comparison";
 import { ExitIntentPopup } from "@/components/common/exit-intent-popup";
+import type { PatientVideo } from "@/lib/data/patient-videos";
 
 type TrustStat = {
   value: string;
@@ -18,16 +19,13 @@ type HospitalPartner = {
   id: string;
   name: string;
   slug: string;
-  shortName: string | null;
   logo: string | null;
-  coverImage: string | null;
+  featuredImage: string;
   country: string;
-  city: string | null;
+  city: string;
+  state: string;
+  shortDescription: string;
   specialties: string[];
-  bedCount: number | null;
-  establishedYear: number | null;
-  accreditations: string[];
-  patientRating: number | null;
 };
 
 type SuccessStory = {
@@ -72,6 +70,7 @@ type HomepageEnhancementsProps = {
   trustStats: TrustStat[];
   hospitalPartners: HospitalPartner[];
   successStories: SuccessStory[];
+  featuredPatientVideo: PatientVideo;
   teamMembers: TeamMember[];
   accreditations: Accreditation[];
 };
@@ -80,6 +79,7 @@ export function HomepageEnhancements({
   trustStats,
   hospitalPartners,
   successStories,
+  featuredPatientVideo,
   teamMembers,
   accreditations,
 }: HomepageEnhancementsProps) {
@@ -92,7 +92,10 @@ export function HomepageEnhancements({
       <HospitalPartnersSection partners={hospitalPartners} />
 
       {/* Patient Success Stories */}
-      <PatientSuccessStories stories={successStories} />
+      <PatientSuccessStories
+        stories={successStories}
+        featuredVideo={featuredPatientVideo}
+      />
 
       {/* Why India Comparison */}
       <WhyIndiaComparison />

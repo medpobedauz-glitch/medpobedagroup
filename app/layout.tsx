@@ -12,7 +12,6 @@ import { resolveSeoImage } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { I18nProvider, getMessages } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { locales, localizePath } from "@/lib/i18n/config";
 import { createOrganizationSchema } from "@/lib/schema";
 import { SiteNavigationSchema } from "@/components/shared/site-navigation-schema";
 import { AnalyticsTracker } from "@/components/shared/analytics-tracker";
@@ -53,16 +52,16 @@ export async function generateMetadata(): Promise<Metadata> {
       default: title,
       template: `%s | ${settings.brandName || siteConfig.name}`,
     },
-    description,
-    keywords: [...defaultKeywords, ...localizedKeywords],
-    authors: [{ name: settings.brandName || siteConfig.name }],
-    creator: settings.brandName || siteConfig.name,
-    publisher: settings.brandName || siteConfig.name,
-    applicationName: settings.brandName || siteConfig.name,
-    alternates: {
-      canonical: siteUrl,
-    },
-    manifest: "/manifest.webmanifest",
+      description,
+      keywords: [...defaultKeywords, ...localizedKeywords],
+      authors: [{ name: settings.brandName || siteConfig.name }],
+      creator: settings.brandName || siteConfig.name,
+      publisher: settings.brandName || siteConfig.name,
+      applicationName: settings.brandName || siteConfig.name,
+      // IMPORTANT: page-level metadata should set canonical + hreflang per-route.
+      // Keeping a fixed canonical here can cause locale/canonical conflicts.
+      manifest: "/manifest.webmanifest",
+
     verification: {
       google: "cnane2mjoJ062ZlXCGD8KaB7Y6tLzdutA92GvMVR1es",
     },
@@ -118,19 +117,8 @@ export default function RootLayout({
 
   return (
     <html lang={locale} className={inter.variable}>
-      <head>
-        {/* Canonical URL */}
-        <link rel="canonical" href={absoluteUrl(localizePath('/', locale))} />
-        {/* Hreflang links for each locale */}
-        {locales.map((l) => (
-          <link
-            key={l}
-            rel="alternate"
-            hrefLang={l}
-            href={absoluteUrl(localizePath('/', l as any))}
-          />
-        ))}
-      </head>
+      <head>{/* Canonical + hreflang are emitted by page-level metadata (generateMetadata). */}</head>
+
       <body className="overflow-x-hidden">
         <script
           type="application/ld+json"

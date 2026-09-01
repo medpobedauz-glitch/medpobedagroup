@@ -61,5 +61,7 @@ export default function LocalizedBlogCategoryPage({ params }: LocalePageProps) {
     notFound();
   }
 
-  return <BlogCategoryPage params={{ slug: params.slug }} />;
+  return (
+    <BlogCategoryPage params={{ slug: params.slug, locale: getRouteLocale(params.locale) }} />
+  );
 }

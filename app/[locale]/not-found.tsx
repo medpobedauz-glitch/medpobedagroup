@@ -1,36 +1,26 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import { isSupportedLocale, localizePath } from "@/lib/i18n/config";
+import { localizePath } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/i18n/request";
 import { Button } from "@/components/ui/button";
 import { getWhatsAppUrl } from "@/lib/site";
 
-type LocalePageProps = {
-  params: {
-    locale: string;
-  };
-};
-
-export function generateMetadata({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
-    return {};
-  }
-
-  const messages = getMessages(params.locale);
+export function generateMetadata() {
+  const messages = getMessages(getRequestLocale());
   return {
     title: `404 - ${messages.routes.home.title}`,
     description: "The page you are looking for does not exist.",
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 
-export default function NotFoundPage({ params }: LocalePageProps) {
-  if (!isSupportedLocale(params.locale)) {
-    notFound();
-  }
-
-  const messages = getMessages(params.locale);
-  const locale = params.locale;
+export default function NotFoundPage() {
+  const locale = getRequestLocale();
+  const messages = getMessages(locale);
   const whatsappHref = getWhatsAppUrl(messages.chrome.footer.whatsAppMessage);
 
   const notFoundLabels: Record<string, { title: string; description: string; home: string; contact: string }> = {

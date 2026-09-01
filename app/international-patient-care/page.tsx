@@ -14,6 +14,7 @@ import {
 
 import { FAQAccordion } from "@/components/shared/faq-accordion";
 import { JsonLd } from "@/components/shared/json-ld";
+import { PatientSuccessStories } from "@/components/sections/patient-success-stories";
 import { AuthorityLinksSection } from "@/components/marketing/authority-links-section";
 import { LocationLinksSection } from "@/components/marketing/location-links-section";
 import { PremiumCtaBanner } from "@/components/marketing/premium-cta-banner";
@@ -39,6 +40,7 @@ import {
 import { locationPageIdsForMedicalTourismHub } from "@/lib/location-pages";
 import { authorityPageIdsForMedicalTourismHub } from "@/lib/authority-pages";
 import { createPremiumVisual } from "@/lib/premium-visuals";
+import { createPatientVideoSchema, homepagePatientVideo } from "@/lib/data/patient-videos";
 import {
   createBreadcrumbSchema,
   createServiceSchema,
@@ -104,6 +106,7 @@ export default function InternationalPatientCarePage({
             ],
             locale,
           ),
+          createPatientVideoSchema(homepagePatientVideo),
         ]}
       />
 
@@ -170,6 +173,14 @@ export default function InternationalPatientCarePage({
             page.story.imageAlts[3],
           ),
         ]}
+      />
+
+      <PatientSuccessStories
+        stories={[]}
+        featuredVideo={homepagePatientVideo}
+        eyebrow="Patient Video Review"
+        title="A treatment journey from Uzbekistan to India"
+        description="Watch a published MedPobeda Group patient review about travelling from Uzbekistan to India for medical treatment."
       />
 
       <PremiumFeatureCardsSection

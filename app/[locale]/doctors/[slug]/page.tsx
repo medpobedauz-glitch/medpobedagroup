@@ -4,6 +4,7 @@ import DoctorSpecialtyPage, {
   generateMetadata as generateDoctorMetadata,
 } from "@/app/doctors/[slug]/page";
 import { doctorSpecialtyPages } from "@/lib/doctor-specialty-pages";
+import { doctors } from "@/lib/data/doctors";
 import { isSupportedLocale, locales } from "@/lib/i18n/config";
 import { getRouteLocale } from "@/lib/i18n/request";
 
@@ -16,7 +17,7 @@ type LocaleDoctorPageProps = {
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    doctorSpecialtyPages.map((page) => ({ locale, slug: page.slug })),
+    [...doctors.map((doctor) => ({ locale, slug: doctor.slug })), ...doctorSpecialtyPages.map((page) => ({ locale, slug: page.slug }))],
   );
 }
 

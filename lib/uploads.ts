@@ -55,6 +55,25 @@ function getFileExtension(fileName: string) {
   return path.extname(fileName).toLowerCase();
 }
 
+export function validateUploadedFile(file: File, category: FileCategory) {
+  if (!file || file.size === 0) {
+    throw new Error("Uploaded file is empty.");
+  }
+
+  const allowedMimeTypes = categoryMimeMap[category];
+  const extension = getFileExtension(file.name);
+  const allowedExtensions = categoryExtensionMap[category];
+
+  if (!allowedMimeTypes.includes(file.type) || !allowedExtensions.includes(extension)) {
+    throw new Error(`Unsupported file type for ${category}.`);
+  }
+
+  const maxSizeBytes = getEffectiveUploadSizeLimitMb() * 1024 * 1024;
+  if (file.size > maxSizeBytes) {
+    throw new Error(`File exceeds ${getEffectiveUploadSizeLimitMb()}MB limit.`);
+  }
+}
+
 function resolveUploadVisibility(category: FileCategory, visibility?: FileVisibility) {
   if (visibility) {
     return visibility;
@@ -195,18 +214,7 @@ export async function storeUploadedFile({
     return null;
   }
 
-  const allowedMimeTypes = categoryMimeMap[category];
-  const extension = getFileExtension(file.name);
-  const allowedExtensions = categoryExtensionMap[category];
-
-  if (!allowedMimeTypes.includes(file.type) || !allowedExtensions.includes(extension)) {
-    throw new Error(`Unsupported file type for ${category}.`);
-  }
-
-  const maxSizeBytes = getEffectiveUploadSizeLimitMb() * 1024 * 1024;
-  if (file.size > maxSizeBytes) {
-    throw new Error(`File exceeds ${getEffectiveUploadSizeLimitMb()}MB limit.`);
-  }
+  validateUploadedFile(file, category);
 
   const date = new Date();
   const entityDirectory = resolveEntityDirectory({

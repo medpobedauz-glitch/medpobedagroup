@@ -6,6 +6,16 @@ export type LocalePreferenceSource = "auto" | "manual";
 export const defaultLocale: AppLocale = "en";
 export const rtlLocales: AppLocale[] = [];
 
+// These English-only pages do not have localized route implementations.
+// Keep them at their canonical unprefixed URLs instead of redirecting to 404s.
+export const nonLocalizedPublicRoutes = [
+  "/success-stories",
+  "/faq",
+  "/cost-guide",
+  "/team",
+  "/why-india",
+] as const;
+
 export const LOCALE_COOKIE_NAME = "medpobeda-locale";
 export const LOCALE_SOURCE_COOKIE_NAME = "medpobeda-locale-source";
 export const LOCALE_HEADER_NAME = "x-medpobeda-locale";
@@ -142,6 +152,8 @@ export const localizedRouteKeys = [
   "doctors",
   "patient-support",
   "treatments",
+  "diseases",
+  "cost-calculator",
   "medical-tourism",
   "medical-tourism-uzbekistan",
   "treatment-in-india-from-uzbekistan",
@@ -185,6 +197,8 @@ const routeKeyByPath: Record<string, LocalizedRouteKey> = {
   "/doctors": "doctors",
   "/patient-support": "patient-support",
   "/treatments": "treatments",
+  "/diseases": "diseases",
+  "/cost-calculator": "cost-calculator",
   "/medical-tourism": "medical-tourism",
   "/international-patient-care": "medical-tourism",
   "/medical-tourism-uzbekistan": "medical-tourism-uzbekistan",

@@ -139,6 +139,24 @@
       radial-gradient(circle at bottom right, rgba(191, 219, 254, 0.2), transparent 20%);
   }
 
+  /*
+   * Full-viewport fixed gradients and backdrop filters force large repaints on
+   * every wheel frame in desktop browsers. The body background already
+   * provides the same visual atmosphere, so keep the overlays for compact
+   * screens and use the cheaper rendering path on laptops and desktops.
+   */
+  @media (min-width: 768px) {
+    body::before,
+    body::after {
+      display: none;
+    }
+
+    [class*="backdrop-blur"] {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
+
   ::selection {
     background: rgba(125, 211, 252, 0.36);
   }
@@ -218,6 +236,16 @@
     background: var(--surface-dashboard);
     box-shadow: var(--shadow-panel);
     backdrop-filter: blur(24px);
+  }
+
+  @media (min-width: 768px) {
+    .surface-glass,
+    .surface-panel,
+    .surface-panel-strong,
+    .surface-admin {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   .surface-light {

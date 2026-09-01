@@ -5,9 +5,71 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageCircle, Send, Phone, ShieldCheck, Clock, Gift } from "lucide-react";
 
 import { getWhatsAppUrl, getTelegramUrl, siteConfig } from "@/lib/site";
+import { useLocale } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
+const copyByLocale = {
+  en: {
+    close: "Close popup", offer: "Free Consultation Offer",
+    title: "Get a Free Medical Consultation",
+    description: "Talk to our medical coordinators for a personalized treatment plan and cost estimate for India.",
+    reply: "Reply within 2 hours", free: "100% Free", whatsapp: "Chat on WhatsApp",
+    telegram: "Chat on Telegram", call: "Call Now", dismiss: "No thanks, I will come back later",
+    message: "Hello! I am interested in medical treatment in India. Can you provide me with a free consultation?",
+  },
+  uz: {
+    close: "Oynani yopish", offer: "Bepul konsultatsiya taklifi",
+    title: "Bepul tibbiy konsultatsiya oling",
+    description: "Hindistonda individual davolash rejasi va narx smetasi uchun tibbiy koordinatorlarimiz bilan bog‘laning.",
+    reply: "2 soat ichida javob", free: "100% bepul", whatsapp: "WhatsApp orqali yozish",
+    telegram: "Telegram orqali yozish", call: "Hozir qo‘ng‘iroq qilish", dismiss: "Yo‘q, rahmat. Keyinroq qaytaman",
+    message: "Salom! Men Hindistonda davolanishga qiziqyapman. Bepul tibbiy konsultatsiya bera olasizmi?",
+  },
+  ru: {
+    close: "Закрыть окно", offer: "Бесплатная консультация",
+    title: "Получите бесплатную медицинскую консультацию",
+    description: "Свяжитесь с нашими координаторами, чтобы получить индивидуальный план лечения и расчёт стоимости в Индии.",
+    reply: "Ответ в течение 2 часов", free: "100% бесплатно", whatsapp: "Написать в WhatsApp",
+    telegram: "Написать в Telegram", call: "Позвонить сейчас", dismiss: "Нет, спасибо. Я вернусь позже",
+    message: "Здравствуйте! Меня интересует лечение в Индии. Могу ли я получить бесплатную медицинскую консультацию?",
+  },
+  kk: {
+    close: "Терезені жабу", offer: "Тегін кеңес ұсынысы",
+    title: "Тегін медициналық кеңес алыңыз",
+    description: "Үндістандағы жеке емдеу жоспары мен құн есебін алу үшін координаторларымызбен хабарласыңыз.",
+    reply: "2 сағат ішінде жауап", free: "100% тегін", whatsapp: "WhatsApp арқылы жазу",
+    telegram: "Telegram арқылы жазу", call: "Қазір қоңырау шалу", dismiss: "Жоқ, рақмет. Кейінірек ораламын",
+    message: "Сәлеметсіз бе! Мені Үндістандағы емдеу қызықтырады. Тегін медициналық кеңес бере аласыз ба?",
+  },
+  ky: {
+    close: "Терезени жабуу", offer: "Акысыз кеңеш сунушу",
+    title: "Акысыз медициналык кеңеш алыңыз",
+    description: "Индиядагы жеке дарылоо планын жана баа эсебин алуу үчүн координаторлорубуз менен байланышыңыз.",
+    reply: "2 саат ичинде жооп", free: "100% акысыз", whatsapp: "WhatsApp аркылуу жазуу",
+    telegram: "Telegram аркылуу жазуу", call: "Азыр чалуу", dismiss: "Жок, рахмат. Кийинчерээк кайтам",
+    message: "Саламатсызбы! Мени Индиядагы дарылоо кызыктырат. Акысыз медициналык кеңеш бере аласызбы?",
+  },
+  tg: {
+    close: "Пӯшидани равзана", offer: "Пешниҳоди машварати ройгон",
+    title: "Машварати ройгони тиббӣ гиред",
+    description: "Барои нақшаи инфиродии табобат ва ҳисоби арзиш дар Ҳиндустон бо ҳамоҳангсозони мо тамос гиред.",
+    reply: "Ҷавоб дар давоми 2 соат", free: "100% ройгон", whatsapp: "Навиштан дар WhatsApp",
+    telegram: "Навиштан дар Telegram", call: "Ҳозир занг занед", dismiss: "Не, ташаккур. Баъдтар бармегардам",
+    message: "Салом! Ман ба табобат дар Ҳиндустон шавқ дорам. Метавонам машварати ройгони тиббӣ гирам?",
+  },
+  tk: {
+    close: "Penjiräni ýapmak", offer: "Mugt maslahat teklibi",
+    title: "Mugt lukmançylyk maslahatyny alyň",
+    description: "Hindistandaky şahsy bejergi meýilnamasy we çykdajy hasaby üçin koordinatorlarymyz bilen habarlaşyň.",
+    reply: "2 sagadyň dowamynda jogap", free: "100% mugt", whatsapp: "WhatsApp arkaly ýazmak",
+    telegram: "Telegram arkaly ýazmak", call: "Häzir jaň etmek", dismiss: "Ýok, sag boluň. Soň dolanaryn",
+    message: "Salam! Men Hindistanda bejergi bilen gyzyklanýaryn. Mugt lukmançylyk maslahatyny alyp bilerinmi?",
+  },
+} as const;
+
 export function ExitIntentPopup() {
+  const locale = useLocale();
+  const copy = copyByLocale[locale];
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -63,12 +125,8 @@ export function ExitIntentPopup() {
     return () => clearTimeout(autoShowTimer);
   }, [hasShown]);
 
-  const whatsappHref = getWhatsAppUrl(
-    "Hello! I'm interested in medical treatment in India. Can you provide me with a free consultation?"
-  );
-  const telegramHref = getTelegramUrl(
-    "Hello! I'm interested in medical treatment in India. Can you provide me with a free consultation?"
-  );
+  const whatsappHref = getWhatsAppUrl(copy.message);
+  const telegramHref = getTelegramUrl(copy.message);
 
   return (
     <AnimatePresence>
@@ -96,7 +154,7 @@ export function ExitIntentPopup() {
               <button
                 onClick={handleClose}
                 className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-400 shadow-md transition hover:text-slate-700"
-                aria-label="Close popup"
+                aria-label={copy.close}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -105,13 +163,13 @@ export function ExitIntentPopup() {
               <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-6 py-8 text-white sm:px-8">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-100">
                   <Gift className="h-4 w-4" />
-                  <span>Free Consultation Offer</span>
+                  <span>{copy.offer}</span>
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
-                  Get a Free Medical Consultation
+                  {copy.title}
                 </h2>
                 <p className="mt-3 text-sm text-blue-100/90">
-                  Talk to our medical coordinators for a personalized treatment plan and cost estimate for India.
+                  {copy.description}
                 </p>
               </div>
 
@@ -119,11 +177,11 @@ export function ExitIntentPopup() {
               <div className="flex flex-wrap gap-3 border-b border-slate-100 px-6 py-4 sm:px-8">
                 <div className="flex items-center gap-1.5 text-xs text-slate-500">
                   <Clock className="h-3.5 w-3.5 text-blue-500" />
-                  <span>Reply within 2 hours</span>
+                  <span>{copy.reply}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-slate-500">
                   <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-                  <span>100% Free</span>
+                  <span>{copy.free}</span>
                 </div>
               </div>
 
@@ -141,7 +199,7 @@ export function ExitIntentPopup() {
                     )}
                   >
                     <MessageCircle className="h-5 w-5" />
-                    Chat on WhatsApp
+                    {copy.whatsapp}
                   </a>
                 ) : null}
 
@@ -157,7 +215,7 @@ export function ExitIntentPopup() {
                     )}
                   >
                     <Send className="h-5 w-5" />
-                    Chat on Telegram
+                    {copy.telegram}
                   </a>
                 ) : null}
 
@@ -170,14 +228,14 @@ export function ExitIntentPopup() {
                   )}
                 >
                   <Phone className="h-5 w-5 text-[#1D4ED8]" />
-                  Call Now: {siteConfig.contactPhone}
+                  {copy.call}: {siteConfig.contactPhone}
                 </a>
 
                 <button
                   onClick={handleClose}
                   className="mt-2 text-center text-xs text-slate-400 transition hover:text-slate-600"
                 >
-                  No thanks, I will come back later
+                  {copy.dismiss}
                 </button>
               </div>
             </div>

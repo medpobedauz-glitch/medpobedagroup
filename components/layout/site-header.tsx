@@ -49,10 +49,10 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 px-3 pt-2.5 sm:px-6 sm:pt-3 lg:px-8">
       <div
-        className={`mx-auto flex max-w-[92rem] items-center justify-between gap-2 rounded-[1.7rem] border px-2.5 py-2.5 transition-all duration-300 sm:gap-4 sm:rounded-[1.9rem] sm:px-5 sm:py-3 xl:gap-6 ${
+        className={`mx-auto flex max-w-[92rem] items-center justify-between gap-2 rounded-[1.7rem] border px-2.5 py-2.5 transition-[background-color,border-color,box-shadow] duration-200 sm:gap-4 sm:rounded-[1.9rem] sm:px-5 sm:py-3 xl:gap-6 ${
           scrolled
-            ? "border-[#D6E8FF] bg-white/94 shadow-[0_26px_80px_rgba(7,27,58,0.1)] backdrop-blur-2xl"
-            : "border-white/80 bg-white/82 shadow-[0_18px_54px_rgba(7,27,58,0.07)] backdrop-blur-xl"
+            ? "border-[#D6E8FF] bg-white shadow-[0_14px_42px_rgba(7,27,58,0.1)]"
+            : "border-white bg-white/95 shadow-[0_10px_32px_rgba(7,27,58,0.07)]"
         }`}
       >
         <Link

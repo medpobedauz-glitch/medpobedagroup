@@ -16,6 +16,11 @@ import { getRequestLocale } from "@/lib/i18n/request";
 import { createMetadata } from "@/lib/metadata";
 import { createPremiumVisual } from "@/lib/premium-visuals";
 import { createBreadcrumbSchema, createFaqSchema, createWebPageSchema } from "@/lib/schema";
+import { DoctorProfile } from "@/components/doctors/doctor-profile";
+import { doctors, getDoctorBySlug } from "@/lib/data/doctors";
+import { getHospitalBySlug, hospitals } from "@/lib/data/hospitals";
+import { getTreatmentBySlug } from "@/lib/data/treatments";
+import { absoluteUrl } from "@/lib/metadata";
 
 type DoctorSpecialtyProps = {
   params: {
@@ -24,12 +29,26 @@ type DoctorSpecialtyProps = {
 };
 
 export function generateStaticParams() {
-  return doctorSpecialtyPages.map((page) => ({ slug: page.slug }));
+  return [...doctors.map((doctor) => ({ slug: doctor.slug })), ...doctorSpecialtyPages.map((page) => ({ slug: page.slug }))];
 }
 
 export function generateMetadata({ params }: DoctorSpecialtyProps): Metadata {
   const locale = getRequestLocale();
   const page = getDoctorSpecialtyPage(params.slug);
+  const doctor = getDoctorBySlug(params.slug);
+
+  if (doctor) {
+    return createMetadata({
+      title: doctor.seo.title,
+      description: doctor.seo.description,
+      path: `/doctors/${doctor.slug}`,
+      locale,
+      keywords: doctor.seo.keywords,
+      image: doctor.image,
+      ogTitle: doctor.seo.title,
+      ogDescription: doctor.seo.description,
+    });
+  }
 
   if (!page) {
     return createMetadata({
@@ -55,6 +74,41 @@ export default function DoctorSpecialtyPage({ params }: DoctorSpecialtyProps) {
   const locale = getRequestLocale();
   const messages = getMessages(locale);
   const page = getDoctorSpecialtyPage(params.slug);
+  const doctor = getDoctorBySlug(params.slug);
+
+  if (doctor) {
+    const hospital = getHospitalBySlug(doctor.hospitalId);
+    if (!hospital) notFound();
+    const doctorTreatments = doctor.treatments.map(getTreatmentBySlug).filter((item): item is NonNullable<typeof item> => Boolean(item));
+    const relatedDoctors = doctors.filter((item) => item.slug !== doctor.slug && (item.hospitalId === doctor.hospitalId || item.specialization === doctor.specialization || item.procedures.some((procedure) => doctor.procedures.includes(procedure)))).slice(0, 3);
+    const path = `/doctors/${doctor.slug}`;
+    const personSchema = {
+      "@context": "https://schema.org",
+      "@type": ["Person", "Physician"],
+      name: doctor.name,
+      jobTitle: doctor.title,
+      description: doctor.biography,
+      image: absoluteUrl(doctor.image),
+      url: absoluteUrl(path),
+      medicalSpecialty: doctor.specialization,
+      knowsLanguage: doctor.languages,
+      worksFor: {
+        "@type": ["Hospital", "MedicalOrganization"],
+        name: hospital.name,
+        url: absoluteUrl(`/hospitals/${hospital.slug}`),
+      },
+    };
+    return (
+      <>
+        <JsonLd data={[
+          createWebPageSchema({ name: doctor.name, description: doctor.seo.description, path, locale }),
+          createBreadcrumbSchema([{ name: messages.chrome.navigation.home, path: "/" }, { name: "Doctors", path: "/doctors" }, { name: doctor.name, path }], locale),
+          personSchema,
+        ]} />
+        <DoctorProfile doctor={doctor} hospital={hospital} treatments={doctorTreatments} relatedDoctors={relatedDoctors} allDoctors={doctors} allHospitals={hospitals} />
+      </>
+    );
+  }
 
   if (!page) {
     notFound();

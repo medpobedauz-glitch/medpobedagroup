@@ -65,6 +65,7 @@ export const publicRoutes = [
   "/hospitals",
   "/treatments",
   "/tremor",
+  "/diseases",
   "/medical-tourism",
   "/medical-tourism-uzbekistan",
   "/treatment-in-india-from-uzbekistan",
@@ -99,6 +100,7 @@ export const publicRoutes = [
   "/success-stories",
   "/faq",
   "/cost-guide",
+  "/cost-calculator",
   "/team",
   "/why-india",
 ] as const;

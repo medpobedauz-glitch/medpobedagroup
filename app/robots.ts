@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 1,
       },
       {
-        userAgent: ["OAI-SearchBot", "ChatGPT-User", "ChatGPT-User"],
+        userAgent: ["OAI-SearchBot", "ChatGPT-User"],
         allow: ["/", "/llms.txt"],
         disallow: restrictedPaths,
       },
