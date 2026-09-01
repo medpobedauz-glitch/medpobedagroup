@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { SESSION_COOKIE_NAME, verifySessionToken } from "./lib/auth/token";
 import {
   defaultLocale,
   getPathLocale,
@@ -17,6 +16,58 @@ import {
 } from "./lib/i18n/config";
 
 const ONE_YEAR_IN_SECONDS = 60 * 60 * 24 * 365;
+const SESSION_COOKIE_NAME = "medpobeda_admin_session";
+
+function decodeBase64Url(value: string) {
+  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=");
+  return Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
+}
+
+async function verifySessionToken(token: string) {
+  const [encodedHeader, encodedPayload, encodedSignature] = token.split(".");
+
+  if (!encodedHeader || !encodedPayload || !encodedSignature) {
+    throw new Error("Invalid session token");
+  }
+
+  const header = JSON.parse(
+    new TextDecoder().decode(decodeBase64Url(encodedHeader)),
+  ) as { alg?: string };
+
+  if (header.alg !== "HS256") {
+    throw new Error("Unsupported session token algorithm");
+  }
+
+  const secret = new TextEncoder().encode(
+    process.env.AUTH_SECRET ?? "change-this-to-a-long-random-secret-key",
+  );
+  const key = await crypto.subtle.importKey(
+    "raw",
+    secret,
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"],
+  );
+  const valid = await crypto.subtle.verify(
+    "HMAC",
+    key,
+    decodeBase64Url(encodedSignature),
+    new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`),
+  );
+
+  if (!valid) {
+    throw new Error("Invalid session token signature");
+  }
+
+  const payload = JSON.parse(
+    new TextDecoder().decode(decodeBase64Url(encodedPayload)),
+  ) as { exp?: number };
+
+  if (typeof payload.exp !== "number" || payload.exp <= Date.now() / 1000) {
+    throw new Error("Expired session token");
+  }
+}
 
 function isAdminRoute(pathname: string) {
   if (pathname === "/admin/login") {
